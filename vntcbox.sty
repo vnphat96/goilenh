@@ -1,0 +1,3227 @@
+%%15:39:17 10/5/2022 -VieTeX creates E:\biasach\sotay-frames\vntcbox.sty
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{vntcbox}[2022/05/15 Lam cac hop: Nguyen Huu Dien]
+\RequirePackage{xcolor}
+\RequirePackage[most]{tcolorbox}
+%\RequirePackage{varwidth}
+% \RequirePackage{tikz}
+
+\newcounter{coter}
+\setcounter{coter}{0}
+\def\sodem{\stepcounter{coter}\thecoter}
+
+\newcommand{\vien}[1]{
+        \path[fill=#1,draw=#1] (interior.south east)--++(0,0.2)
+        --([xshift=-2cm,yshift=0.2cm]interior.south east) to[bend right=3pt] ([xshift=-2.75cm,yshift=0mm]interior.south east)--cycle;
+}
+
+\newcommand{\gapgoc}[1]{
+        \path[fill=white!60!#1]
+        ([yshift=6mm]interior.south east)-- ++ (-0.7,-0.1)--++(0.1,-0.5);
+        \path[draw=#1,shorten <=-0.05mm,shorten >=-0.05mm] ([yshift=6mm]interior.south east) -- ++(-0.7,-0.1)--++(0.1,-0.5);
+}
+
+\newcommand{\loxoh}[1]{%
+    \tikzpicture[transform shape,scale=0.5]
+    \node[circle,scale=1.2,draw=#1,fill=lightgray](1){};
+    \foreach \i in {0,2}{
+    \draw[#1,line width=.3mm]([shift={(-0.\i,-.08)}]1.north east)arc(-40:-338:1.3mm and 5.3mm);}
+    \endtikzpicture}
+
+\def\xegiay#1{\begin{tcolorbox}[enhanced,sharp corners,frame hidden,
+interior style={draw=blue,line width=1pt,left color=blue!0,right color=white,
+decoration={random steps,segment length=0.3cm,amplitude=.1cm},
+decorate,blur shadow},
+boxsep=0mm,top=5mm,halign=left,after skip=5mm,bottom=4mm]		
+#1
+\end{tcolorbox}
+}
+%%%%%%%%
+\newtcolorbox{outerbox}{enhanced, sharp corners, boxrule=0pt, interior style={top color=yellow, bottom color=yellow!50!red}, notitle}
+%%%%%%%%%%%%%%%
+\newcommand{\numi}[2][regular polygon,regular polygon sides=5,inner sep=.5mm]{
+\renewcommand{\labelenumi}{%
+ \begin{tikzpicture}[baseline=(1.base)]
+ \node[draw,#1,fill=#2,font=\bfseries](1){\arabic{enumi}};
+\end{tikzpicture} }
+}
+
+\newcommand{\numii}[2][chamfered rectangle,inner sep=.2mm]{
+\renewcommand{\labelenumii}{%
+ \begin{tikzpicture}[baseline=(1.base)]
+ \node[draw,#1,fill=#2,font=\bfseries\footnotesize,minimum size=5mm](1){\alph{enumii}};
+\end{tikzpicture}}
+}
+
+\newcommand{\datnumsec}[3][regular polygon,regular polygon sides=5,inner sep=.1mm]{
+ \begin{tikzpicture}[baseline=(1.base)]
+ \node[draw,#1,fill=#2,font=\bfseries](1){#3};
+\end{tikzpicture} 
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb01]{tcb01}{O{teal} m d"" O{} d''}
+{enhanced,
+breakable,
+colframe=#1,
+colback=white!95!#1,
+colbacktitle=white!80!#1,
+coltitle=black!80!#1,
+fonttitle=\large\bfseries,
+IfValueTF={#3}{watermark text={#3}}{},
+attach boxed title to top center=
+        {yshift=-0.25mm-\tcboxedtitleheight/2,
+         yshifttext=2mm-\tcboxedtitleheight/2},
+boxed title style={         
+boxrule=0.5mm,
+        frame code={\path[tcb fill frame]
+            ([xshift=-4mm]frame.west)
+            -- (frame.north west) -- (frame.north east) -- ([xshift=4mm]frame.east)
+            -- (frame.south east) -- (frame.south west) -- cycle;},
+        interior code={\path[tcb fill interior]
+        ([xshift=-2mm]interior.west)
+        -- (interior.north west)
+        -- (interior.north east)
+        -- ([xshift=2mm]interior.east)
+        -- (interior.south east)
+        -- (interior.south west)-- cycle;},
+            },
+title style={left color=black!50!#1,right color=blue},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb02]{tcb02}{O{teal} m d"" O{} d''}
+    {enhanced,
+    breakable,
+    colframe=#1,
+    colback=white!95!#1,
+    colbacktitle=#1,
+    coltitle=white!95!#1,
+    fonttitle=\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    top=0mm,
+    boxrule=0.5mm,
+    attach boxed title to top left={
+        xshift=-4mm,
+        yshift=-0.5mm},
+    fonttitle=\large\bfseries,
+    boxed title style={empty,
+        arc=0pt,
+        outer arc=0pt,
+        boxrule=0pt
+        },
+    underlay boxed title={
+        \fill[#1] (title.north west) -- (title.north east)-- +(\tcboxedtitleheight-1mm,-\tcboxedtitleheight+1mm) -- ([xshift=4mm,yshift=0.5mm]frame.north east) -- +(0mm,-1mm) -- (title.south west) -- cycle;
+        \fill[blue!45!white!50!black] ([yshift=-0.5mm]frame.north west) -- +(-0.4,0) -- +(0,-0.3) -- cycle;
+        \fill[blue!45!white!50!black] ([yshift=-0.5mm]frame.north east) -- +(0,-0.3) -- +(0.4,0) -- cycle;
+        },
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb03]{tcb03}{O{teal}  m d"" O{} d''}
+    {enhanced,
+    breakable,
+    colframe=#1,
+    colback=white!95!#1,
+    colbacktitle=#1,
+    coltitle=white!95!#1,
+    fonttitle=\large\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    boxrule=0.5mm,
+    attach boxed title to top center={
+        xshift=0mm,
+        yshift=-0.25mm-\tcboxedtitleheight/2,
+        yshifttext=2mm-\tcboxedtitleheight/2
+        },
+    boxed title style={
+        boxrule=0.75mm,
+        colframe=white,
+        borderline={0.3mm}{0mm}{green!50!#1},
+        borderline={0.3mm}{0.75mm}{green!50!#1},
+        interior style={
+            top color=white!10!#1,
+            bottom color=white!10!#1,
+            middle color=white!50!#1},
+},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb04]{tcb04}{O{purple} m d"" O{} d''}
+    {enhanced,
+    breakable,
+    arc=2mm,
+    colframe=#1,
+    colback=white!95!#1,
+    colbacktitle=#1,
+    coltitle=black!95!#1,
+    fonttitle=\large\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    top=4mm,
+    boxrule=0.5mm,
+    boxsep=0pt,
+    fonttitle=\bfseries,
+    attach boxed title to bottom center,   
+    boxed title style={empty,boxrule=0.5mm},
+    underlay boxed title={
+        \draw[white!95!#1,line width=0.5mm] ([xshift=0.3mm-\tcboxedtitleheight*2,yshift=0.3mm]title.north west)--([xshift=-0.3mm+\tcboxedtitleheight*2,yshift=0.3mm]title.north east);
+        \path[draw=#1,
+            top color=white!95!#1,
+            middle color=white!50!#1,
+            bottom color=#1,
+            line width=0.5mm] ([xshift=0.25mm-\tcboxedtitleheight*2,yshift=0.25mm]title.north west) cos +(\tcboxedtitleheight,-\tcboxedtitleheight/2) sin +(\tcboxedtitleheight,-\tcboxedtitleheight/2)-- ([xshift=0.25mm,yshift=0.25mm]title.south west)-- ([yshift=0.25mm]title.south east) cos +(\tcboxedtitleheight,\tcboxedtitleheight/2) sin +(\tcboxedtitleheight,\tcboxedtitleheight/2); },
+    drop fuzzy shadow=#1,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb05]{tcb05}{O{blue} m d"" O{} d''}
+    {enhanced,
+    breakable,
+    arc=2mm,
+    colframe=#1,
+    colback=white!96!#1,
+    colbacktitle=#1,
+    coltitle=white!95!#1,
+    fonttitle=\large\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    top=0mm,
+    boxrule=0.5mm,
+    attach boxed title to top center={xshift=0cm,yshift*=1mm-\tcboxedtitleheight},
+    boxed title style={
+        frame code={
+            \path[fill=red!80!#1]
+                ([yshift=-1mm,xshift=-1mm]frame.north west)
+                arc[start angle=0,end angle=180,radius=1mm]
+                ([yshift=-1mm,xshift=1mm]frame.north east)
+                arc[start angle=180,end angle=0,radius=1mm];
+            \path[top color=#1,
+            bottom color=white!20!#1,
+            middle color=white!50!#1]
+                ([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
+                [rounded corners=1mm]-- ([xshift=1mm,yshift=-1mm]frame.north east)
+                -- (frame.south east) -- (frame.south west)
+                -- ([xshift=-1mm,yshift=-1mm]frame.north west)
+                [sharp corners]-- cycle;
+                },
+        interior engine=empty,
+        },
+    title style={left color=black!50!#1,right color=blue},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb06]{tcb06}{O{teal} m d"" O{} d''}{
+enhanced,
+breakable,
+skin=enhancedlast jigsaw,
+attach boxed title to top center={xshift=0mm,yshift=-0.5mm},
+fonttitle=\large\bfseries,
+colbacktitle=#1,
+colframe=#1,
+IfValueTF={#3}{watermark text={#3}}{},
+boxed title style={empty, arc=0pt,outer arc=0pt, boxrule=0pt},
+underlay boxed title={
+  \fill[#1!65!white](title.north west) -- (title.north east) --
+    +(\tcboxedtitleheight-1mm,-\tcboxedtitleheight+1mm)
+    --([shift={(-\tcboxedtitleheight+1mm,-\tcboxedtitleheight+1mm)}]title.north west) -- cycle;
+  \fill[#1!35!white!50!black]
+     ([yshift=-0.5mm]frame.north west) -- +(-0.4,0) -- +(0,-0.3) -- cycle;
+  \fill[#1!35!white!50!black]
+     ([yshift=-0.5mm]frame.north east) -- +(0,-0.3) -- +(0.4,0) -- cycle;
+  \draw[#1!65!white, line width=4pt]
+     ([xshift=-4mm,yshift=0mm]frame.north west)
+     -- ([xshift=4mm,yshift=0mm]frame.north east);
+         },
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb07]{tcb07}{O{teal} m d"" O{} d''}
+    {enhanced,
+    breakable,
+    colframe=#1,
+    colback=white!95!#1,
+    colbacktitle=#1,
+    coltitle=white!95!#1,
+    fonttitle=\large\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    top=0mm,
+    boxrule=0.5mm,
+    attach boxed title to top left={
+        xshift=0cm,
+        yshift*=0mm-\tcboxedtitleheight
+        },
+    boxed title style={
+        frame code={
+            \path[fill=#1]
+             ([xshift=+0.5cm]frame.north east)[rounded corners=2mm]--(frame.north west)[sharp corners]--(frame.south west) --(frame.south east)to[out=0,in=180]cycle;
+             \draw[#1]([yshift=-0.5mm]frame.south west)--([yshift=-0.5mm,xshift=+0.4mm]frame.south east)to[out=0,in=180]([yshift=0mm,xshift=+0.58cm]frame.north east);
+            },
+        interior engine=empty,
+        },
+    title style={right color=black!50!#1,left color=blue},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb08]{tcb08}{O{teal} m d"" O{} d''}
+    {enhanced,
+    breakable,
+    colframe=#1,
+    colback=white!95!#1,
+    colbacktitle=#1,
+    coltitle=white!95!#1,
+    fonttitle=\large\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    top=0mm,
+    boxrule=0.5mm,
+    attach boxed title to top left={
+        xshift=0cm,
+        yshift*=0mm-\tcboxedtitleheight
+        },
+    boxed title style={
+        frame code={
+            \coordinate (A) at (frame.north east);
+            \coordinate (B) at (frame.south east);
+            \path[fill=#1]([xshift=3mm]frame.north east)--(frame.north west)--(frame.south west)--(frame.south east)--cycle;
+            },
+        interior engine=empty,
+        },
+    title style={right color=black!50!#1,left color=blue},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb09]{tcb09}{O{teal} m d"" O{} d''}
+    {enhanced,
+    breakable,
+    colframe=#1,
+    colback=white!95!#1,
+    colbacktitle=#1,
+    coltitle=white!95!#1,
+    fonttitle=\large\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    top=0mm,
+    boxrule=0.5mm,
+    attach boxed title to top center={
+        yshift*=1mm-\tcboxedtitleheight
+        },
+    boxed title style={
+        frame code={
+            \draw[color=#1,thick,fill=#1]
+            ([yshift=-1mm,xshift=-1mm]frame.north west)
+            arc[start angle=0,end angle=180,radius=1mm]
+            ([yshift=-1mm,xshift=1mm]frame.north east)
+            arc[start angle=180,end angle=0,radius=1mm];
+            \draw[color=#1,thick,fill=#1]
+            ([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
+            [rounded corners=1mm]-- ([xshift=1mm,yshift=-1mm]frame.north east)
+            -- (frame.south east)--(frame.south)[sharp corners]--(frame.south west)
+            --([xshift=-1mm,yshift=-1mm]frame.north west)
+            [sharp corners]-- cycle;
+            },
+        interior engine=empty,
+        },
+    overlay unbroken and first={
+        \foreach \i in {0.1,0.2,...,0.9}
+            {
+            \node at ($([yshift=-2.4mm,xshift=2mm]title.north east)!\i!([yshift=-1.4mm]frame.north east)$){\loxoh{#1}};
+            }
+        \foreach \i in {0.1,0.2,...,0.9}
+            {
+            \node at ($([yshift=-2.4mm,xshift=-2mm]title.north west)!\i!([yshift=-1.4mm]frame.north west)$){\loxoh{#1}};
+            }
+        },
+    title style={right color=black!50!#1,left color=blue},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb10]{tcb10}{O{teal} m d"" O{} d''}
+    {enhanced,
+    breakable,
+    colframe=#1,
+    colback=white!95!#1,
+    colbacktitle=#1,
+    coltitle=black!95!#1,
+    fonttitle=\large\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    top=0mm,
+    boxrule=0.5mm,
+    attach boxed title to top right =
+        {xshift=0cm,yshift*=3.5mm-\tcboxedtitleheight},
+    boxed title style={
+        frame code={
+            \path
+            (frame.south east)coordinate(A)
+            (frame.north east)coordinate(B)
+            (frame.north west)coordinate(C)
+            (frame.south west)coordinate(D);
+            \path[fill=#1]([xshift=2mm]A)--([xshift=2mm]B)
+                --([xshift=-2mm]C)-- ([xshift=-5mm]$(C)!0.5!(D)$)
+                --([xshift=-2mm]D)--cycle;
+            \draw[cap=round,white,line width=2pt,transform canvas={xshift=2mm}]
+            ([xshift=-2mm]C)-- ([xshift=-5mm]$(C)!0.5!(D)$)
+                --([xshift=-2mm]D);
+            \path[fill=white!50!#1]
+                ([xshift=2mm]A)--([yshift=-2mm]A)
+                --(A)--cycle;
+            },
+        interior engine=empty,
+        },
+    title style={right color=black!50!#1,left color=blue},
+    frame style={left color=black!25!#1,right color=blue},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb11]{tcb11}{O{teal} m d"" O{} d''}
+    {enhanced,
+    breakable,
+    colframe=#1,
+    colback=white!95!#1,
+    colbacktitle=#1,
+    coltitle=white!95!#1,
+    fonttitle=\large\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    top=0mm,
+    boxrule=0.5mm,
+    attach boxed title to top left =
+        {xshift=0cm,yshift*=4.8mm-\tcboxedtitleheight},
+    boxed title style={
+        frame code={
+            \coordinate (A) at (frame.north east);
+            \coordinate (B) at (frame.south east);
+            \path[fill=#1](frame.north east)--([xshift=-2mm]frame.north west)--([xshift=-2mm]frame.south west)--(frame.south east) --([xshift=3mm]$(A)!0.5!(B)$)--cycle;
+            \draw[white,line width=2pt]([xshift=-2mm]frame.north east)--([xshift=1mm]$(A)!0.5!(B)$)--([xshift=-2mm]frame.south east);
+            \path[fill=white!50!#1]([xshift=-2mm]frame.south west)--+(2mm,-2mm)|-cycle;
+            },
+        interior engine=empty,
+        },
+    title style={right color=black!50!#1,left color=blue},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb12]{tcb12}{O{blue} m d"" O{} d''}
+{enhanced,
+breakable,
+colframe=#1,
+colback=white!95!#1,
+colbacktitle=white!80!#1,
+coltitle=black!80!#1,
+fonttitle=\large\bfseries,
+IfValueTF={#3}{watermark text={#3}}{},
+attach boxed title to top center=
+        {yshift=-0.25mm-\tcboxedtitleheight/2,
+         yshifttext=2mm-\tcboxedtitleheight/2},
+boxed title style={
+        colback=pink!55,
+        boxrule=1.5pt,
+        boxsep=2pt,
+        underlay={%
+            \coordinate (dotA) at ($(interior.west) + (-0.5pt,0)$);
+            \coordinate (dotB) at ($(interior.east) + (0.5pt,0)$);
+            \begin{scope}
+            \clip (interior.north west) rectangle ([xshift=3ex]interior.east);
+            \filldraw [pink!25, blur shadow={shadow opacity=60, shadow yshift=-.75ex}, rounded corners=2pt] (interior.north west) rectangle (interior.south east);
+            \end{scope}
+            \begin{scope}[purple]
+            \fill (dotA) circle (2.5pt);
+            \fill (dotB) circle (2.5pt);
+            \end{scope}
+                },
+             },
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb13]{tcb13}{O{teal} m d"" O{} d''}
+{
+enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!90!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+  attach boxed title to  top center={
+    yshift=-1.5pt,
+    yshifttext=-0.2\baselineskip},
+  before skip=2mm,
+  after skip=2mm,
+  boxsep=1pt,
+ boxed title style={
+    enhanced,
+    skin=enhancedfirst jigsaw,
+    interior style={
+           top color=white!80!#1,
+           bottom color=white!80!#1,
+           middle color=white!90!#1},
+        boxsep=2pt,
+},
+   top=1ex,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb14]{tcb14}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!90!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+attach boxed title to  top center={
+    yshift=-\tcboxedtitleheight,
+    yshifttext=-\baselineskip},
+  before skip=2mm,
+  after skip=2mm,
+  boxsep=1pt,
+ boxed title style={
+       interior style={
+           top color=white!80!#1,
+           bottom color=white!80!#1,
+           middle color=white!90!#1},
+        boxsep=2pt,
+},
+   top=3ex,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb15]{tcb15}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+  attach boxed title to  top center={
+    yshift=-2pt,
+    yshifttext=-0.2\baselineskip},
+  before skip=2mm,
+  after skip=2mm,
+  boxsep=1pt,
+  boxed title style={
+    enhanced,
+     skin=enhancedfirst jigsaw,
+        interior style={
+            top color=white!80!#1,
+            bottom color=white!80!#1,
+            middle color=white!90!#1},
+   boxsep=2pt,
+   sharp corners,
+   rounded corners=northwest, 
+   rounded corners=northeast, 
+   arc is curved,
+   arc=3mm,
+   bottom=2pt},
+   top=1ex,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb16]{tcb16}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+  attach boxed title to  top center={
+    yshift=-\tcboxedtitleheight,
+    yshifttext=-\baselineskip},
+  before skip=2mm,
+  after skip=2mm,
+  boxsep=1pt,
+  boxed title style={
+        interior style={
+            top color=white!80!#1,
+            bottom color=white!80!#1,
+            middle color=white!90!#1},
+   boxsep=2pt,
+   sharp corners,
+   rounded corners=southwest,
+   rounded corners=southeast,
+   arc is curved,
+    arc=3mm,
+    bottom=2pt},
+   top=3ex,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb17]{tcb17}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+  attach boxed title to  top left={
+    yshift=-2pt,%-\tcboxedtitleheight,
+    yshifttext=-0.2\baselineskip},
+  before skip=2mm,
+  after skip=2mm,
+  boxsep=1pt,
+%   after skip=2mm,
+  boxed title style={
+    enhanced,
+     skin=enhancedfirst jigsaw,
+        interior style={
+            top color=white!80!#1,
+            bottom color=white!80!#1,
+            middle color=white!90!#1},
+    boxsep=2pt,
+sharp corners,
+rounded corners=northeast, 
+arc is curved,
+    arc=3mm,
+    bottom=2pt},
+   top=1ex,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb18]{tcb18}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+  attach boxed title to  top left={
+    yshift=-\tcboxedtitleheight,
+    yshifttext=-\baselineskip},
+  before skip=2mm,
+  after skip=2mm,
+  boxsep=1pt,
+  boxed title style={
+        interior style={
+            top color=white!80!#1,
+            bottom color=white!80!#1,
+            middle color=white!90!#1},
+    boxsep=2pt,
+sharp corners,
+ rounded corners=southeast,
+arc is curved,
+    arc=3mm,
+    bottom=2pt},
+   top=3ex,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb19]{tcb19}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+  attach boxed title to  top right={
+    yshift=-2pt,
+    yshifttext=-0.2\baselineskip},
+  before skip=2mm,
+  after skip=2mm,
+  boxsep=1pt,
+  boxed title style={
+    enhanced,
+     skin=enhancedfirst jigsaw,
+        interior style={
+            top color=white!80!#1,
+            bottom color=white!80!#1,
+            middle color=white!90!#1},
+    boxsep=2pt,
+   sharp corners,
+   rounded corners=northwest, 
+   arc is curved,
+    arc=3mm,
+    bottom=2pt},
+    top=1ex,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb20]{tcb20}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+  attach boxed title to  top right={
+    yshift=-\tcboxedtitleheight,
+    yshifttext=-\baselineskip},
+  before skip=2mm,
+  after skip=2mm,
+  boxsep=1pt,
+  boxed title style={
+        interior style={
+            top color=white!80!#1,
+            bottom color=white!80!#1,
+            middle color=white!90!#1},
+    boxsep=2pt,
+sharp corners,
+rounded corners=southwest,
+arc is curved,
+    arc=3mm,
+    bottom=2pt},
+   top=3ex,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb21]{tcb21}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+  attach boxed title to  top center={
+    yshift=-2pt,
+    yshifttext=-0.2\baselineskip},
+  before skip=2mm,
+  after skip=2mm,
+  boxsep=1pt,
+  boxed title style={
+bottomrule=0pt,
+        interior style={
+            top color=white!80!#1,
+            bottom color=white!80!#1,
+            middle color=white!90!#1},
+    boxsep=2pt,
+sharp corners,
+rounded corners=northwest, 
+rounded corners=northeast, 
+rounded corners=southwest,
+rounded corners=southeast,
+arc is curved,
+    arc=3mm,
+    bottom=2pt},
+   top=1ex,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb22]{tcb22}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+  attach boxed title to  top center={
+    yshift=-\tcboxedtitleheight,
+    yshifttext=-\baselineskip},
+  before skip=2mm,
+  after skip=2mm,
+  boxsep=1pt,
+  boxed title style={
+        interior style={
+            top color=white!80!#1,
+            bottom color=white!80!#1,
+            middle color=white!90!#1},
+    boxsep=2pt,
+sharp corners,
+rounded corners=northwest, 
+rounded corners=northeast, 
+rounded corners=southwest,
+rounded corners=southeast,
+arc is curved,
+    arc=3mm,
+    bottom=2pt},
+   top=1ex,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb23]{tcb23}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+  attach boxed title to  top center={
+    yshift=-2pt,
+    yshifttext=-0.2\baselineskip},
+  before skip=2mm,
+  after skip=2mm,
+  boxsep=1pt,
+  boxed title style={
+bottomrule=0pt,
+        interior style={
+            top color=white!80!#1,
+            bottom color=white!80!#1,
+            middle color=white!90!#1},
+    boxsep=2pt,
+sharp corners,
+rounded corners=northwest, 
+rounded corners=northeast, 
+rounded corners=southwest,
+rounded corners=southeast,
+arc is angular,
+    arc=3.5mm,
+    bottom=2pt},
+   top=1ex,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb24]{tcb24}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+  attach boxed title to  top center={
+    yshift=-2pt,
+    yshifttext=-0.2\baselineskip},
+  before skip=2mm,
+  after skip=2mm,
+  boxsep=1pt,
+  boxed title style={
+bottomrule=0pt,
+        interior style={
+            top color=white!80!#1,
+            bottom color=white!80!#1,
+            middle color=white!90!#1},
+    boxsep=8pt,
+ boxrule=0.0mm,
+borderline={0.3mm}{0mm}{white!50!#1},
+borderline={0.3mm}{0.75mm}{white!50!#1},
+    bottom=2pt},
+   top=1ex,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb25]{tcb25}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+  attach boxed title to  top center={
+    yshift=-2pt,
+    yshifttext=-0.2\baselineskip},
+  before skip=2mm,
+  after skip=2mm,
+  boxsep=1pt,
+  boxed title style={
+bottomrule=0pt,
+        interior style={
+            top color=white!80!#1,
+            bottom color=white!80!#1,
+            middle color=white!90!#1},
+    boxsep=8pt,
+ boxrule=0.0mm,
+arc=6mm,
+outer arc=3mm,
+    bottom=2pt},
+   top=1ex,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb26]{tcb26}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+    drop fuzzy shadow,
+    boxrule = 2pt,  
+    attach boxed title to top center={
+        xshift = -3.5mm,
+        yshift=-3mm,
+        yshifttext=-1mm
+    },
+    boxed title style={empty},    
+IfValueTF={#5}{
+    title= {
+        \tcbox[on line,size=title,arc=4mm,
+        colframe=#1,boxrule = 2pt,
+        colback=white!85!#1, 
+        enlarge top by=0.5mm, 
+        enlarge bottom by=0.5mm,
+        enhanced,
+         sharp corners,
+         rounded corners=north]{#2~#5}},
+      list entry={#2~#5}
+}{
+    title= {
+        \tcbox[on line,size=title,arc=4mm,
+        colframe=#1,boxrule = 2pt,
+        colback=white!85!#1, 
+        enlarge top by=0.5mm, 
+        enlarge bottom by=0.5mm,
+        enhanced,
+         sharp corners,
+         rounded corners=north]{#2}},
+    list entry={#2}
+},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb27]{tcb27}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+    drop fuzzy shadow,
+    boxrule = 2pt, 
+    attach boxed title to top left={
+        xshift = -4.5mm,
+        yshift=-3mm,
+        yshifttext=-1mm
+    },
+    boxed title style={empty},    
+IfValueTF={#5}{
+    title= {
+        \tcbox[on line,size=title,arc=4mm,
+        colframe=#1,boxrule = 2pt,
+        colback=white!85!#1,  
+        enlarge top by=0.5mm, 
+        enlarge bottom by=0.5mm,
+        enhanced,
+         sharp corners,
+         rounded corners=east]{#2~#5}},
+     list entry={#2~#5},
+}{
+    title= {
+        \tcbox[on line,size=title,arc=4mm,
+        colframe=#1,boxrule = 2pt,
+        colback=white!85!#1,  
+        enlarge top by=0.5mm, 
+        enlarge bottom by=0.5mm,
+        enhanced,
+         sharp corners,
+         rounded corners=east]{#2}},
+     list entry={#2},
+},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb28]{tcb28}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+    drop fuzzy shadow,
+    boxrule = 2pt, 
+    attach boxed title to top left={
+        xshift = -7.5mm,
+        yshift=-3mm,
+        yshifttext=-1mm
+    },
+    boxed title style={empty},    
+IfValueTF={#5}{
+    title= {
+        \tcbox[on line,size=title,arc=4mm,
+        colframe=#1,boxrule = 2pt,
+        colback=white!85!#1,  
+        enlarge top by=0.5mm, 
+        enlarge bottom by=0.5mm,
+        enhanced,
+         sharp corners,
+         rounded corners=west]{#2~#5}},
+     list entry={#2~#5},
+}{
+    title= {
+        \tcbox[on line,size=title,arc=4mm,
+        colframe=#1,boxrule = 2pt,
+        colback=white!85!#1,  
+        enlarge top by=0.5mm, 
+        enlarge bottom by=0.5mm,
+        enhanced,
+         sharp corners,
+         rounded corners=west]{#2}},
+    list entry={#2},
+},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb29]{tcb29}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+    drop fuzzy shadow,
+    boxrule = 2pt, 
+    attach boxed title to top left={
+        xshift = -4.5mm,
+        yshift=-3mm,
+        yshifttext=-1mm
+    },
+    boxed title style={empty},    
+IfValueTF={#5}{
+    title= {
+        \tcbox[on line,size=title,arc=4mm,
+        colframe=#1,boxrule = 2pt,
+        colback=white!85!#1,  
+        enlarge top by=0.5mm, 
+        enlarge bottom by=0.5mm,
+        enhanced,
+         sharp corners,
+         rounded corners=downhill]{#2~#5}},
+    list entry={#2~#5},
+}{
+    title= {
+        \tcbox[on line,size=title,arc=4mm,
+        colframe=#1,boxrule = 2pt,
+        colback=white!85!#1,  
+        enlarge top by=0.5mm, 
+        enlarge bottom by=0.5mm,
+        enhanced,
+         sharp corners,
+         rounded corners=downhill]{#2}},
+    list entry={#2},
+},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb30]{tcb30}{O{teal} m d"" O{} d''}
+{enhanced,
+  breakable,
+  colframe=#1,
+  colback=white!95!#1,
+  colbacktitle=white!80!#1,
+  coltitle=black!90!#1,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+    drop fuzzy shadow,
+    boxrule = 2pt,  
+    attach boxed title to top left={
+        xshift = -4.5mm,
+        yshift=-3mm,
+        yshifttext=-1mm
+    },
+    boxed title style={empty},    
+IfValueTF={#5}{
+    title= {
+        \tcbox[on line,size=title,arc=4mm,
+        colframe=#1,boxrule = 2pt,
+        colback=white!85!#1,  
+        enlarge top by=0.5mm, 
+        enlarge bottom by=0.5mm,
+         sharp corners=southwest]{#2~#5}},
+    list entry={#2~#5},
+}{
+    title= {
+        \tcbox[on line,size=title,arc=4mm,
+        colframe=#1,boxrule = 2pt,
+        colback=white!85!#1,  
+        enlarge top by=0.5mm, 
+        enlarge bottom by=0.5mm,
+         sharp corners=southwest]{#2}},
+    list entry={#2},
+},
+#4}
+
+
+%%%%%%%%%%%%%%%%%%%%%,number within=section
+\DeclareTColorBox[auto counter,list inside=listtcb31]{tcb31}{O{teal} m d"" O{} d''}
+    {enhanced,
+    breakable,
+    colframe=#1,
+    colback=white!98!#1,
+    colbacktitle=#1,
+    coltitle=white!95!#1,
+    fonttitle=\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    top=2mm,
+    boxrule=0.8mm,
+   sharp corners,
+    attach boxed title to top left={
+        xshift=-0mm,
+        yshift=-0.5mm},
+    fonttitle=\large\bfseries,
+    subtitle style={ boxrule=0.2pt,
+   colback=#1!70!white}, 
+boxed title style={
+    enhanced,
+    colframe=#1,
+    colback=#1,
+    arc=5pt,
+    sharp corners,
+    rounded corners=northeast,
+},
+frame style={},
+IfValueTF={#5}{
+overlay unbroken and first={
+    \node[anchor=west,font=\bfseries] 
+    at (title.east) { #5 };},title=#2,list entry={#2~#5} }{title=#2,list entry={#2}},
+    #4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb32]{tcb32}{O{teal} m d"" O{} d''}
+ { enhanced,
+    breakable,
+    colframe=#1,
+    colback=white!95!#1,
+    colbacktitle=#1,
+    coltitle=white!95!#1,
+    fonttitle=\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    top=2mm,
+    boxrule=0.8mm,
+    arc=.3mm, 
+    enlarge top by=10mm,
+    subtitle style={ boxrule=0.2pt,
+   colback=#1!60!white}, 
+    %%overlay={%
+IfValueTF={#5}{
+overlay unbroken and first={%
+        \node[fill=#1, rounded rectangle, rounded rectangle right arc=none, anchor=south west, text=white, font=\bfseries\sffamily, minimum width=24mm, minimum height=8mm] at (frame.north west) (n2) {#2};
+    \node[fill=red!65!blue, right=0pt of n2, minimum height=8mm, minimum width=7mm, text=white, font=\bfseries\sffamily] (n3) {\thetcbcounter};
+\node[anchor=west, right=0mm of n3, minimum height=8mm, font=\bfseries\itshape\sffamily] {#5};
+},
+list entry={#2~#5}
+}{
+overlay unbroken and first={%
+        \node[fill=#1, rounded rectangle, rounded rectangle right arc=none, anchor=south west, text=white, font=\bfseries\sffamily, minimum width=24mm, minimum height=8mm] at (frame.north west) (n2) {#2};
+    \node[fill=red!65!blue, right=0pt of n2, minimum height=8mm, minimum width=7mm, text=white, font=\bfseries\sffamily] (n3) {\thetcbcounter};},
+list entry={#2}
+},
+  #4
+}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb33]{tcb33}{O{teal} m d"" O{} d''}
+ { enhanced,
+    breakable,
+    colframe=#1,
+    colback=white!95!#1,
+    colbacktitle=#1,
+    coltitle=#1,
+    fonttitle=\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    top=2mm,
+    boxrule=0.8mm,
+    subtitle style={ boxrule=0.2pt,
+   colback=#1!30!white}, 
+  outer arc=0pt,
+  arc=0pt,
+  attach boxed title to top left,
+  boxed title style={
+    colback=#1!30,
+    outer arc=0pt,
+    arc=10pt,
+    top=3pt,
+    bottom=3pt,
+    },
+  title=#2,
+IfValueTF={#5}{
+  overlay unbroken and first={
+      \path
+        let
+        \p1=(title.north east),
+        \p2=(frame.north east)
+        in  node[anchor=west,font=\bfseries,color=black,text width=\x2-\x1] 
+        at (title.east) {#5};
+  }}{},
+#4
+}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb34]{tcb34}{O{teal} m d"" O{} d''}
+ { enhanced,
+    breakable,
+    colframe=#1,
+    colback=white!95!#1,
+    colbacktitle=white!80!#1,,
+    coltitle=#1,
+    fonttitle=\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    top=2mm,
+    boxrule=0.8mm,
+  outer arc=0pt,
+  arc=0pt,
+  attach boxed title to top left={yshift=-1mm},
+  boxed title style={
+boxrule=0.8mm,
+colbacktitle=#1!50!white,
+    outer arc=0pt,
+     top=4pt,
+     bottom=4pt,
+    },
+  title=#2,
+IfValueTF={#5}{
+  overlay unbroken and first={
+      \path
+        let
+        \p1=(title.north east),
+        \p2=(frame.north east)
+        in  node[anchor=west,font=\bfseries,color=black,text width=\x2-\x1] 
+        at (title.east) {#5};
+  },list entry={#2~#5}}{list entry={#2}},
+#4
+}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb35]{tcb35}{O{orange} m d"" O{} d''}
+ { colbacktitle=#1,
+    coltitle=#1!30!black,
+    fonttitle=\bfseries\large\strut,
+    IfValueTF={#3}{watermark text={#3}}{},
+  breakable,
+  enhanced,
+    colback=white!95!#1,
+  boxrule=0.8pt,
+  arc=0pt,
+  outer arc=0pt,
+ title style={
+    left color=#1!60,
+ middle color=#1!20,   
+ right color=#1!10,
+  },
+IfValueTF={#5}{
+  title={#2~#5},list entry={#2~#5}
+}{ title={#2},list entry={#2}},
+  overlay unbroken and first={
+ \draw[line width=1.5pt,#1] (frame.south west) -- (frame.south east);
+ \draw[line width=1.5pt,#1] (frame.north west) -- (frame.north east);
+ \draw[line width=1.5pt,#1] (frame.north west) -- (frame.south west);
+ \draw[line width=1.5pt,#1] (frame.north east) -- (frame.south east);
+},
+#4
+}
+
+%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\DeclareTColorBox[auto counter,list inside=listtcb36]{tcb36}{O{orange} m d"" O{} d''}{
+        enhanced, 
+        breakable,
+        sharp corners,
+        rounded corners=northwest,
+        colback=white,
+        boxrule=2pt,
+        colframe=#1!80!black,
+        fonttitle=\bfseries\large\sffamily,
+  title=#2,
+    IfValueTF={#3}{watermark text={#3}}{},
+        attach boxed title to top left,
+        boxed title size=standard,
+        boxed title style={%
+                empty,
+                rounded corners=north, 
+                boxrule=0pt,
+                bottom=4pt,
+        },
+IfValueTF={#5}{
+          underlay boxed title={%
+                \filldraw[rounded corners=\kvtcb@arc, 
+                     #1!80!black, line width=.1mm]
+                    (title.south east)--++(93:\tcboxedtitleheight)
+                  --++(183:\tcboxedtitlewidth)
+                  --++(-87:\tcboxedtitleheight)|-cycle;
+%                \draw[tcbcolframe, line width=.5mm] (title.south)|-(frame.north east);
+ \path
+        let
+        \p1=(title.north east),
+        \p2=(frame.north east)
+        in  node[anchor=west,font=\bfseries,color=black,text width=\x2-\x1] 
+        at (title.east) {#5};},
+  list entry={#2~#5}
+       }{
+          underlay boxed title={%
+                \filldraw[rounded corners=\kvtcb@arc, 
+                     #1!80!black, line width=.1mm]
+                    (title.south east)--++(93:\tcboxedtitleheight)
+                  --++(183:\tcboxedtitlewidth)
+                  --++(-87:\tcboxedtitleheight)|-cycle;
+   %      \draw[tcbcolframe, line width=.5mm] (title.south)|-(frame.north east);
+        },list entry={#2}},
+        #4
+    }
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\DeclareTColorBox[auto counter,list inside=listtcb37]{tcb37}{O{orange} m d"" O{} d''}{
+        enhanced, 
+        breakable,
+        sharp corners,
+        rounded corners=northwest,
+        colback=white,
+        boxrule=2pt,
+        colframe=#1!80!black,
+        fonttitle=\bfseries\large\sffamily,
+  title=#2,
+    IfValueTF={#3}{watermark text={#3}}{},
+        attach boxed title to top left,
+        boxed title size=standard,
+        boxed title style={%
+                empty,
+                rounded corners=north, 
+                boxrule=1pt,
+                bottom=4pt,
+        },
+arc=5mm,
+rounded corners,
+attach boxed title to top left={xshift=0mm, yshift=-1.5pt},
+IfValueTF={#5}{
+    underlay boxed title={%
+         \filldraw[rounded corners=\kvtcb@arc, 
+                     #1!80!black, line width=.1mm]
+                    (title.south east)--++(93:\tcboxedtitleheight)
+                  --++(183:\tcboxedtitlewidth)
+                  --++(-87:\tcboxedtitleheight)|-cycle;
+ \path
+        let
+        \p1=(title.north east),
+        \p2=(frame.north east)
+        in  node[anchor=west,font=\bfseries,color=black,text width=\x2-\x1] 
+        at (title.east) {#5};},
+   list entry={#2~#5}
+       }{
+          underlay boxed title={%
+                \filldraw[rounded corners=\kvtcb@arc, 
+                     #1!80!black, line width=.1mm]
+                    (title.south east)--++(93:\tcboxedtitleheight)
+                  --++(183:\tcboxedtitlewidth)
+                  --++(-87:\tcboxedtitleheight)|-cycle;
+        },list entry={#2}},
+        #4
+    }
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb38]{tcb38}{O{teal} m d"" O{} d''}{
+    enhanced,
+    colback=#1!10, 
+    %frame hidden, 
+    colframe=#1,
+    borderline={1pt}{0pt}{#1, sharp corners},
+    top=1mm, 
+     bottom=2mm, 
+    left=1mm, 
+    right=1mm,
+    %    check odd page,
+%             grow to left by =\dimexpr-\marginwidth+\@totalleftmargin
+%             ,
+%        grow to right by=\dimexpr\marginwidth-\@totalleftmargin,
+%         toggle enlargement=evenpage,
+    enlarge top by=8mm,
+    arc=0mm,
+     width=\textwidth,
+%     fontupper=\sffamily,
+    IfValueTF={#3}{watermark text={#3}}{},
+IfValueTF={#5}{
+    overlay unbroken and first={%
+        \node[trapezium,trapezium left angle=90, trapezium right angle=60,
+              fill=#1!60!black,inner xsep=2mm,inner ysep=2pt,yshift=-1pt,
+              anchor=bottom left corner,minimum height=8mm,
+              text=white,font=\large\bfseries\sffamily]
+        at (frame.north west) (na){#2};
+\node[anchor=west, right=0mm of na, minimum height=8mm, font=\bfseries\itshape\sffamily] {#5};
+},list entry={#2~#5}}{
+    overlay unbroken and first={%
+        \node[trapezium,trapezium left angle=90, trapezium right angle=60,
+              fill=#1!60!black,inner xsep=2mm,inner ysep=2pt,yshift=-1pt,
+              anchor=bottom left corner,minimum height=8mm,
+              text=white,font=\large\bfseries\sffamily]
+        at (frame.north west) (na){#2};},
+list entry={#2}
+},
+#4
+}
+
+%%%%%%%%%%%%%%%%%%%%%
+\newtcbox{\titleboxd}[1][blue]{
+    enhanced,
+    overlay={
+        \draw[#1,fill=#1](frame.south east)
+         --+(0,.2)to[bend right]+(.2,-0)--cycle;},
+        colback=#1,
+        top=1pt,bottom=2pt,left=2pt,right=2pt,
+        boxrule=1pt,
+        colframe=#1,
+        sharp corners=south,
+        colupper=white,
+        fontupper=\bfseries
+}
+
+\DeclareTColorBox[auto counter,list inside=listtcb39]{tcb39}{O{teal} m d"" O{} d''}{
+    enhanced,
+    left=2pt,
+    right=2pt,
+    colframe=#1,
+    boxrule=1pt,
+    colback=#1!10, 
+    enlarge top by=8mm,
+     width=\textwidth,
+    IfValueTF={#3}{watermark text={#3}}{},
+IfValueTF={#5}{
+overlay={
+        \node [font=\large\bfseries,
+            anchor=south west,
+            inner sep=0pt,
+            outer sep=0pt
+        ]at(frame.north west) (na) {\titleboxd[#1]{#2}};
+\node[anchor=west, right=0mm of na, minimum height=8mm, font=\bfseries\itshape\sffamily] {#5};
+},list entry={#2~#5}}{
+    overlay={
+        \node [font=\large\bfseries,
+            anchor=south west,
+            inner sep=0pt,
+            outer sep=0pt
+        ]at(frame.north west) (na) {\titleboxd[#1]{#2}};},
+   list entry={#2}
+},
+#4
+}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb40]{tcb40}{O{teal} m d"" O{} d''}
+    { breakable,
+  enhanced standard,
+  boxrule=0.4pt,
+  titlerule=-0.2pt,
+  drop fuzzy shadow,
+  width=\linewidth,
+colback=white!90!#1,
+    colbacktitle=white!90!#1,
+    fonttitle=\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    top=4mm,
+  title style={top color=#1!30,
+     bottom color=#1!5},
+overlay unbroken and first={
+    \path[fill=#1]
+    ([xshift=5pt,yshift=-\pgflinewidth]frame.north west) 
+to[out=0,in=180] ([xshift=20pt,yshift=-5pt]title.south west) 
+-- ([xshift=-20pt,yshift=-5pt]title.south east) 
+to[out=0,in=180] ([xshift=-5pt,yshift=
+-\pgflinewidth]frame.north east) 
+-- cycle;
+  },
+  fonttitle=\large\bfseries\sffamily,
+  fontupper=\slshape,
+  fontlower=\sffamily,
+  before=\par\medskip\noindent,
+  after=\par\medskip,
+  center title,
+  toptitle=3pt,
+  top=11pt,
+  topsep at break=-5pt,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}
+}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter]{tcb41}{O{teal} m d"" O{} d''}{
+enhanced, 
+breakable,
+rounded corners=southeast,%% 
+fonttitle=\large\bfseries,
+toptitle=6pt,
+bottomtitle=7pt,
+IfValueTF={#5}{title={#2~#5},
+}{title={#2},},
+attach boxed title to top,
+boxed title style={
+  colframe=#1,
+  rounded corners},
+  IfValueTF={#3}{watermark text={#3}}{},
+titlerule style={
+#1,
+  line width=1pt,
+  rounded corners=8pt}, 
+coltitle=black,
+colbacktitle=white!70!#1, 
+before skip=10pt,
+boxrule=1pt,
+boxsep=0pt,
+left=12pt,
+right=12pt,
+top=6.5pt,
+bottom=12pt,
+arc=8pt, %% 
+colframe=#1,
+ colback=#1!5,%
+width=\linewidth,
+#4
+}
+%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb42]{tcb42}{O{cyan} m d"" O{} d''}
+{
+enhanced,
+coltitle=violet,
+attach boxed title to top center={yshift*=-3mm},
+colback=white,
+colframe=#1,
+boxed title style={
+  size=small,
+  colback=white,
+  colframe=white},
+fonttitle=\large\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}
+}{title={#2},list entry={#2}},
+#4}
+%%%%%%%%%%%%%%%%%%%%
+\tikzset{noted/.style={rectangle callout,fill=#1}}
+\DeclareTColorBox[auto counter,list inside=listtcb43]{tcb43}{O{orange} m d"" O{} d''}{
+    colback=white!90!#1,
+    left=0.5ex,
+    top=1ex,
+    right=0.5ex,
+    bottom=0ex,
+    arc=0pt,
+    outer arc=0pt,
+    leftrule=2pt,
+    rightrule=2pt,
+    toprule=1pt,
+    bottomrule=1pt,
+    breakable,
+    nobeforeafter,
+    enhanced jigsaw,
+    IfValueTF={#3}{watermark text={#3}}{},
+IfValueTF={#5}{
+    overlay={
+      \node[noted=white!50!#1,callout  absolute pointer={([shift={(0.75in,-1ex)}]frame.north west)},callout pointer width=0.5cm,draw,line width=1pt,anchor=south west,align=center,minimum width=1in]
+        at ([shift={(-2ex,0ex)}]frame.north west) (na) {\large\textbf{#2}};
+\node[anchor=west, right=0mm of na, minimum height=8mm, font=\bfseries\itshape] {#5};    
+},list entry={#2~#5}
+}{
+    overlay={
+      \node[noted=white!50!#1,callout  absolute pointer={([shift={(0.75in,-1ex)}]frame.north west)},callout pointer width=0.5cm,draw,line width=1pt,anchor=south west,align=center,minimum width=1in]
+        at ([shift={(-2ex,0ex)}]frame.north west) (na) {\large\textbf{#2}};
+ },list entry={#2}},
+    before=\vspace*{2em}\noindent,
+    #4
+  }
+%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb44]{tcb44}{O{teal} m d"" O{} d''}{
+enhanced,
+skin=enhanced jigsaw,
+attach boxed title to top left={xshift=-3mm,
+yshift=-\tcboxedtitleheight/2},
+coltitle=black,
+varwidth boxed title=0.7\linewidth,
+colbacktitle=#1!55,
+fonttitle=\large\bfseries, 
+colback=white!90!#1,
+sharp corners,
+top=2ex,
+boxed title style={sharp corners, boxrule=0pt},
+underlay boxed title={
+\fill[#1] (title.south west) -- (title.south-|frame.west)--++(0,-.5*\tcboxedtitleheight)--cycle;
+\fill[#1] (title.north east) --++(-.5*\tcboxedtitleheight,0)--++(0,.5*\tcboxedtitleheight)--cycle;},
+width=\linewidth,
+IfValueTF={#3}{watermark text={#3}}{},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}
+}{title={#2},list entry={#2}},
+#4
+}
+
+%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb45]{tcb45}{O{yellow} m d"" O{} d''}
+{
+enhanced,
+arc=3mm,
+boxrule=1.5mm,
+boxsep=1.5mm,
+colback=white!90!#1,
+ colbacktitle=white!70!#1,
+coltitle=black,
+fonttitle=\large\bfseries, 
+colframe=teal,
+borderline={1mm}{1mm}{white},
+borderline={1mm}{2mm}{red},
+attach boxed title to top center={yshift=-3mm,yshifttext=-1mm},
+IfValueTF={#3}{watermark text={#3}}{},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}
+}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb46]{tcb46}{O{teal} m d"" O{} d''}
+{
+enhanced,
+drop fuzzy shadow= lightgray,%
+colframe=#1,
+colback=white!95!#1,
+colbacktitle=blue,
+fonttitle=\large\bfseries,
+boxrule=1pt,%
+coltitle=white!5!#1,
+ IfValueTF={#3}{watermark text={#3}}{},
+attach boxed title to top right=
+{yshift=-0.25mm-\tcboxedtitleheight/2,yshifttext=2mm-\tcboxedtitleheight/2},%
+boxed title style={
+  empty,
+  arc=0pt,
+  outer arc=0pt,
+  boxrule=0pt},
+frame code={
+\draw[fill=white!95!#1,rounded corners=2pt,line width=2pt]  let \p1=($(title.north)-(frame.north)$) in
+(title.north) --  (title.north west) -- ++ (-\y1+0.2pt,-\y1+0.2pt) -|
+([xshift=-0.2pt,yshift=-0.2pt]frame.south west) -| ([xshift=0.2pt]frame.east)   |- ([xshift=1em]title.north) [rounded corners=0pt] -- cycle ;
+},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\DeclareTColorBox[auto counter,list inside=listtcb47]{tcb47}{O{cyan} m d"" O{} d''}
+{
+enhanced, 
+breakable,
+colback=white!90!#1,
+colframe=blue!30!black,
+attach boxed title to top right={yshift=-2pt}, 
+fonttitle=\large\bfseries,
+%boxed title size=standard,
+boxrule=0pt,
+boxed title style={%
+    sharp corners, 
+    rounded corners=northeast, 
+    colback=tcbcolframe, 
+    boxrule=0pt},
+sharp corners=north,
+overlay unbroken={%
+    \path[fill=tcbcolback] 
+        ([xshift=2pt]title.south west) 
+        to[out=180, in=0] ([xshift=-1cm]title.west)--
+        (title.west-|frame.west) |- 
+        ([xshift=2pt]title.south west)--cycle;
+    \path[fill=tcbcolframe] (title.south west) 
+        to[out=180, in=0] ([xshift=-1cm]title.west)--
+        (title.west-|frame.west)
+        [rounded corners=\kvtcb@arc] |- 
+        (title.north-|frame.north) 
+        [sharp corners] -| (title.south west);
+    \draw[line width=.5mm, rounded corners=\kvtcb@arc, 
+        tcbcolframe] 
+        (title.north east) rectangle 
+        (frame.south west);
+}, 
+overlay first={%
+    \path[fill=tcbcolback] \kvtcb@arc
+        ([xshift=2pt]title.south west) 
+        to[out=180, in=0] ([xshift=-1.5cm]title.west)--
+        (title.west-|frame.west) |- 
+        ([xshift=2pt]title.south west)--cycle;
+    \path[fill=tcbcolframe] (title.south west) 
+        to[out=180, in=0] ([xshift=-1.5cm]title.west)--
+        (title.west-|frame.west)
+        [rounded corners=\kvtcb@arc] |- 
+        (title.north-|frame.north) 
+        [sharp corners] -| (title.south west);
+    \draw[line width=.5mm, rounded corners=\kvtcb@arc, 
+        tcbcolframe] 
+        (frame.south west) |- (title.north) -| 
+        (frame.south east);
+}, 
+overlay middle={%
+    \draw[line width=.5mm, tcbcolframe] 
+    (frame.north west)--(frame.south west) 
+    (frame.north east)--(frame.south east);
+}, 
+overlay last={%
+    \draw[line width=.5mm, rounded corners=\kvtcb@arc, 
+        tcbcolframe] 
+        (frame.north west) |- (frame.south) -|
+        (frame.north east);
+}, 
+IfValueTF={#3}{watermark text={#3}}{},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb48]{tcb48}{O{red} m d"" O{} d''}
+{
+enhanced,
+colback=#1!10!white,
+colframe=#1!75!black,
+colbacktitle=#1!50!yellow,
+fonttitle=\large\bfseries,
+frame hidden,
+title={LỜI VÀNG NGỌC},
+boxrule=0pt,
+titlerule=1mm,
+titlerule style=#1!50!black, 
+IfValueTF={#3}{watermark text={#3}}{},
+IfValueTF={#5}{title={#2~#5},list entry={#2}
+}{title={#2},list entry={#2}},
+#4}
+%%%%%%%%%%%%%%%%%%
+ \makeatletter
+\DeclareTColorBox[auto counter,list inside=listtcb49]{tcb49}{O{red} m d"" O{} d''}
+{
+breakable,
+enhanced,
+colback=white!95!#1,
+colframe=black!30!#1,
+left=8mm,
+fonttitle=\large\bfseries,
+IfValueTF={#5}{
+overlay={
+\node[rotate=90, anchor=north west, inner sep=2mm,
+ text=white] (title@aux) at (frame.south west) {#2~#5};
+\path[fill=tcbcolframe] (title@aux.south west)--
+(title@aux.south east)
+to[out=90, in=270] ([yshift=5mm]title@aux.east)--
+(title@aux.center|-frame.north)
+[rounded corners=\kvtcb@arc] -|
+(frame.west) |- (title@aux.west)[sharp corners] -- cycle;
+\node[rotate=90, inner sep=2mm,font=\large\bfseries, text=white] at (title@aux) {#2~#5};
+},list entry={#2~#5}
+}{
+overlay={
+\node[rotate=90, anchor=north west, inner sep=2mm,
+ text=white] (title@aux) at (frame.south west) {#2};
+\path[fill=tcbcolframe] (title@aux.south west)--
+(title@aux.south east)
+to[out=90, in=270] ([yshift=5mm]title@aux.east)--
+(title@aux.center|-frame.north)
+[rounded corners=\kvtcb@arc] -|
+(frame.west) |- (title@aux.west)[sharp corners] -- cycle;
+\node[rotate=90, inner sep=2mm,font=\large\bfseries, text=white] at (title@aux) {#2};
+},list entry={#2}
+},
+IfValueTF={#3}{watermark text={#3},}{},
+#4
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%
+\newlength{\mywidth}
+\DeclareTColorBox[auto counter,list inside=listtcb50]{tcb50}{O{red} m d"" O{}}
+{enhanced,
+before skip=3mm,
+after skip=3mm,
+boxrule=2pt,
+left=7mm,right=2mm,top=1mm,bottom=1mm,
+colback=white!90!#1,
+colframe=#1,
+sharp corners,
+    IfValueTF={#3}{watermark text={#3}}{},
+% code={\settowidth{\mywidth}{\large\bfseries #2}},
+% height=\mywidth,
+underlay={%
+    \path[draw=none] (interior.south west) 
+rectangle node[black, font=\large\bfseries,rotate=90]{#2} 
+([xshift=4mm]interior.north west);
+},
+list entry={#2},
+width=\textwidth,
+#4
+}
+
+%%%%%%%%%%%%%%%%%
+\newlength{\boxwidth}
+\DeclareTColorBox[auto counter,list inside=listtcb50]{tcb51}{O{teal} m d"" O{} d''}
+{
+  arc=20pt,
+  outer arc=20pt,
+fonttitle=\large\bfseries,
+  enhanced,
+  freelance,
+colframe=#1,
+  IfValueTF={#3}{watermark text={#3}}{},
+ frame code={},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}
+}{title={#2},list entry={#2}},
+IfValueTF={#5}{code={\settowidth{\boxwidth}{\large\bfseries #2~#5}},
+}{code={\settowidth{\boxwidth}{\large\bfseries #2}},},
+  interior titled code={
+    \fill[white!20!#1,rounded corners=12pt]
+      ([xshift=-1pt,yshift=-10pt]interior.west)
+      rectangle
+      ([xshift=\boxwidth+10mm,yshift=3pt]title.north west); 
+    \draw[rounded corners=20pt,color=#1,
+      line width=2pt,fill=white!95!#1]
+      (frame.south west) -- 
+      (title.south west) -- 
+      (title.south east) --
+      (frame.south east) -- cycle;
+  },
+#4
+}
+
+%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb52]{tcb52}{O{teal} m d"" O{} d''}
+{
+colback=white!95!#1,
+colframe=black!75!#1,
+fonttitle=\large\bfseries,
+coltitle=white!90!#1,
+enhanced,
+title style image=blueshade.png,
+  IfValueTF={#3}{watermark text={#3}}{},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}
+}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb53]{tcb53}{O{yellow} m d"" O{} d'' O{snake}}
+{enhanced,
+  breakable,
+   enlarge top by=5mm,
+  IfValueTF={#3}{watermark text={#3}}{},
+    enhanced jigsaw, % allow page breaks
+    frame hidden, % hide the default frame
+finish raised fading vignette,
+    overlay={%
+        \draw [
+            fill=#1!15, % fill paper
+            draw=red, % boundary colour
+            decorate, % decoration
+           decoration={#6},
+        ]
+        % top line
+        (frame.north west)--(frame.north east)--
+        % right line
+        (frame.north east)--(frame.south east)--
+        % bottom line
+        (frame.south east)--(frame.south west)--
+        % left line
+      (frame.south west)--(frame.north west);
+    },
+IfValueTF={#5}{
+    finish={%
+        \node[%
+            draw=red, 
+            rounded corners, 
+            fill=white!50!#1, 
+font=\bfseries,
+ text=red,
+            anchor=west, 
+            xshift=0.75cm, 
+            yshift=2pt, 
+            minimum width=2cm] at (frame.north west) {#2~#5};},
+list entry={#2~#5}
+}{
+    finish={%
+        \node[%
+            draw=red, 
+            rounded corners, 
+            fill=white!50!#1, 
+font=\bfseries,
+ text=red,
+            anchor=west, 
+            xshift=0.75cm, 
+            yshift=2pt, 
+            minimum width=2cm] at (frame.north west) {#2};},
+list entry={#2}
+},
+    % paragraph skips obeyed within tcolorbox
+    parbox=false,
+#4}
+%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb54]{tcb54}{O{teal} m d"" O{} d'' O{star}}
+{enhanced,
+  breakable,
+   enlarge top by=5mm,
+  IfValueTF={#3}{watermark text={#3}}{},
+    enhanced jigsaw, % allow page breaks
+    frame hidden, % hide the default frame
+finish raised fading vignette,
+colback=white!80!#1,
+    overlay={%
+        \draw [
+            fill=white,%%yellow!70!#1, % fill paper
+            draw=red, % boundary colour
+            decorate, % decoration
+           decoration={shape backgrounds,shape=#6, 
+                       shape size=.3cm,shape sep=0.5cm},
+           drop shadow, % shadow
+        ]
+        % top line
+        (frame.north west)--(frame.north east)--
+        % right line
+        (frame.north east)--(frame.south east)--
+        % bottom line
+        (frame.south east)--(frame.south west)--
+        % left line
+        (frame.south west)--(frame.north west);
+    },
+IfValueTF={#5}{
+    finish={%
+        \node[%
+            draw=red, 
+            rounded corners, 
+            fill=white!50!#1, 
+font=\bfseries,
+ text=red,
+            anchor=west, 
+            xshift=0.75cm, 
+            yshift=2pt, 
+            minimum width=2cm] at (frame.north west) {#2~#5};},
+list entry={#2~#5}
+}{
+    finish={%
+        \node[%
+            draw=red, 
+            rounded corners, 
+            fill=white!50!#1, 
+            font=\bfseries,
+            text=red,
+            anchor=west, 
+            xshift=0.75cm, 
+            yshift=2pt, 
+            minimum width=2cm] at (frame.north west) {#2};},
+  list entry={#2}
+},
+    % paragraph skips obeyed within tcolorbox
+    parbox=false,
+#4}
+%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb55]{tcb55}{O{teal} m d"" O{} d'' O{human}}
+{enhanced,
+  breakable,
+  colback=white!95!#1,
+   enlarge top by=5mm,
+ finish raised fading vignette,
+  fonttitle=\large\bfseries,
+  IfValueTF={#3}{watermark text={#3}}{},
+    enhanced jigsaw, % allow page breaks
+    frame hidden, % hide the default frame
+colback=white!80!#1,
+    overlay={%
+        \draw [
+            fill=white,%%!70!#1, % fill paper
+            draw=red, % boundary colour
+            decorate, % decoration
+decoration={footprints,foot angle=-45, foot of=#6},
+           drop shadow, % shadow
+        ]
+        % top line
+        (frame.north west)--(frame.north east)--
+        % right line
+        (frame.north east)--(frame.south east)--
+        % bottom line
+        (frame.south east)--(frame.south west)--
+        % left line
+        (frame.south west)--(frame.north west);
+    },
+IfValueTF={#5}{
+    finish={%
+        \node[%
+            draw=red, 
+            rounded corners, 
+            anchor=west, 
+            fill=white!50!#1, 
+             font=\bfseries,
+            text=red,
+            xshift=0.75cm, 
+            yshift=2pt, 
+            minimum width=2cm] at (frame.north west) {#2~#5};},
+list entry={#2~#5}
+}{
+    finish={%
+        \node[%
+            draw=red, 
+            rounded corners, 
+            fill=white!50!#1, 
+            anchor=west, 
+            xshift=0.75cm, 
+            yshift=0.05cm, 
+font=\bfseries,
+ text=red,
+            minimum width=2cm] at (frame.north west) {#2};},
+list entry={#2}
+},
+    % paragraph skips obeyed within tcolorbox
+    parbox=false,
+#4}
+%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb56]{tcb56}{O{teal} m d"" O{} d''}
+{
+enhanced,
+breakable,
+boxrule=.5pt,
+colframe=#1,
+before skip=0.3cm,after skip=0.3cm,
+interior style={top color=white,bottom color=white},
+drop fuzzy shadow southwest=#1!50,
+top=.8cm,
+fonttitle=\bfseries\large,coltitle=#1,
+attach boxed title to top left={xshift=1cm,yshift=-\tcboxedtitleheight/2},
+IfValueTF={#3}{watermark text={#3}}{},
+boxed title style={boxsep=1mm,
+  interior code={
+\coordinate (1)at(interior.north east);
+\coordinate (2)at(interior.north west);
+\coordinate (3)at(interior.south west);
+\coordinate (4)at(interior.south east);
+  \fill[#1,fill opacity=.5]([xshift=3mm]interior.east)--([shift={(1.5mm,-1.5pt)}]4)--([shift={(-1.5mm,-1.5pt)}]3)--([xshift=-3mm]interior.west)--cycle;
+ \fill[#1,fill opacity=.5,rounded corners=.5mm]([xshift=1.5mm,yshift=1.5pt]1)--([xshift=3mm]interior.east)--([xshift=1.5mm,yshift=-1.5pt]4)--(interior.east)--cycle;
+\fill[#1,fill opacity=.5,rounded corners=.5mm]([xshift=-1.5mm,yshift=1.5pt]2)--([xshift=-3mm]interior.west)--([xshift=-1.5mm,yshift=-1.5pt]3)--(interior.west)--cycle;
+\fill[white]([xshift=-1.5mm]1)--(interior.east)--([xshift=-1.5mm]4)--([xshift=1.5mm]3)--(interior.west)--([xshift=1.5mm]2)--cycle;
+\fill[gray,fill opacity=.14]([xshift=3mm]interior.east)--([shift={(1.5mm,-1.5pt)}]4)--([shift={(-1.5mm,-1.5pt)}]3)--([xshift=-3mm]interior.west)--cycle;
+},
+frame code={
+\coordinate (1)at(interior.north east);
+\coordinate (2)at(interior.north west);
+\coordinate (3)at(interior.south west);
+\coordinate (4)at(interior.south east);
+\fill[#1!25,rounded corners=.5mm]([xshift=1.5mm,yshift=-1.5pt]4)--([xshift=3mm]interior.east)--([xshift=1.5mm,yshift=1.5pt]1)--([xshift=-1.5mm,yshift=1.5pt]2)--([xshift=-3mm]interior.west)--([xshift=-1.5mm,yshift=-1.5pt]3)--cycle;
+}},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb57]{tcb57}{O{red} m d"" O{} d''}
+{enhanced, 
+  frame hidden,opacityfill=0,
+   fonttitle=\large\bfseries,
+   coltitle=white,top=0.3cm,
+before skip=0.3cm,after skip=0.3cm,
+IfValueTF={#3}{watermark text={#3}}{},
+attach boxed title to top left={yshift=-0.25mm-\tcboxedtitleheight/2,yshifttext=2mm-\tcboxedtitleheight/2,xshift=4mm},
+boxed title style={
+      enhanced,colframe=#1,left=1cm,right=1cm ,
+     interior code={\draw[rounded corners=6pt] (frame.north west)rectangle(frame.south east);
+   \fill[black]([xshift=0.3cm]frame.west)circle(3pt);
+   \fill[black]([xshift=-0.3cm]frame.east)circle(6pt);}  },
+overlay unbroken and first app ={ 
+   \draw[#1!50!black,rounded corners,line width=2pt]([xshift=4mm]frame.north west)-|(frame.south west)--(frame.south east)|-([xshift=4mm+\tcboxedtitlewidth]frame.north west);},
+overlay last={\draw[#1!30!black,rounded corners,line width=1pt](frame.north west)rectangle(frame.south east); },
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb58]{tcb58}{O{red} m d"" O{} d''}
+{breakable,
+enhanced,
+detach title,blanker,
+coltitle=white,
+enlarge top by=8mm,
+boxsep=3mm,top=2mm,left=2mm,right=2mm,
+before skip=1.5cm,after skip=1.1cm,
+IfValueTF={#3}{watermark text={#3}}{},
+overlay={\scoped[on background layer]{
+	\draw[fill=#1!60!blue!3,draw=none](interior.north west)rectangle(interior.south east);
+	\draw[#1!60!blue](interior.north west)|-(interior.south east);
+   },
+  \node[anchor=west,font=\large\bfseries,
+	scale=1.2,above right,fill=#1!60!blue,xshift=-2mm,yshift=-2mm,drop shadow] (1) at (interior.north west){\tcbtitle};
+	},
+overlay first={\scoped[on background layer]{
+	\draw[fill=#1!60!blue!3,draw=none](interior.north west)rectangle(interior.south east);
+	\draw[#1!60!blue](interior.north west)--(interior.south west);},
+\node[anchor=west,font=\large\bfseries,
+		scale=1.2,above right,fill=#1!60!blue,xshift=-2mm,yshift=-2mm,drop shadow] (1) at (interior.north west){\tcbtitle};
+	},
+overlay middle={\draw[fill=#1!60!blue!3,draw=none](interior.north west)rectangle(interior.south east);
+	\draw[red!60!blue](interior.north west)--(interior.south west);
+},
+overlay last={\draw[fill=#1!60!blue!3,draw=none](interior.north west)rectangle(interior.south east);
+	\draw[#1!60!blue](interior.north west)|-(interior.south east);
+},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%
+\newcounter{exerc}
+\newcommand{\exercicenum}{\addtocounter{exerc}{1}\Large \theexerc}%
+\DeclareTColorBox[auto counter,list inside=listtcb59]{tcb59}{O{blue} m d"" O{} d''}
+{breakable,enhanced,detach title,blanker,
+% title={#2},
+coltitle= blue,enlarge top by=8mm,
+boxsep=3mm,top=3mm,left=2mm,right=2mm,
+before skip=1cm,	after skip=1cm,
+IfValueTF={#3}{watermark text={#3}}{},
+overlay={
+	\scoped[on background layer]{
+		\draw[fill=white,draw=none](interior.north west)rectangle
+			(interior.south east);}
+	\node[anchor=north west,above right,font=\large\bfseries] (1) at (interior.north west){\tcbtitle};
+	\draw[very thick, #1](1.south west)--([xshift=4mm]1.south east)node[above=-3mm ,circle,draw,fill=white,font=\large\bfseries , anchor=south, minimum size=0.9cm](2){\ };
+	\node[font=\bfseries,  #1] at (2.center){\exercicenum };
+		\scoped[on background layer]{
+			\draw[very thick, #1](interior.south west)|-(1.south west)--([xshift=4mm]1.south east);}
+	},
+overlay first={
+	\scoped[on background layer]{
+		\draw[fill=white,draw=none](interior.north west)rectangle
+			(interior.south east);}
+	\node[anchor=north west,above right,font=\large\bfseries] (1) at (interior.north west){\tcbtitle};
+	\draw[very thick, #1](1.south west)--([xshift=4mm]1.south east)node[above=-3mm ,circle,draw,fill=white,text=black,font=\large\bfseries , anchor=south, minimum size=0.9cm](2){\ };
+	\node[font=\bf , #1] at (2.center){\exercicenum };
+	\scoped[on background layer]{
+			\draw[very thick, #1](interior.south west)|-(1.south west)--([xshift=4mm]1.south east);}
+	},
+overlay middle={
+	\draw[fill=white,draw=none](interior.north west)rectangle
+		(interior.south east);
+	\draw[very thick, #1](interior.north west)--
+		(interior.south west);
+	},
+overlay last={
+	\draw[fill=white,draw=none](interior.north west)rectangle
+		(interior.south east);
+	\draw[very thick, #1](interior.north west)--
+		(interior.south west);
+},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb60]{tcb60}{O{white} m d"" O{} d''}
+{breakable,enhanced,detach title,blanker,
+coltitle=black,enlarge top by=10mm,
+boxsep=3mm,top=2mm,left=2mm,right=2mm,
+before skip=1.5cm,	after skip=1cm,
+IfValueTF={#3}{watermark text={#3}}{},
+overlay={
+  \scoped[on background layer]{
+	\draw([xshift=0.3cm]interior.north west)|-
+			(interior.south east)--(interior.north east);}
+\node[fill=#1, anchor=west,font=\large\bfseries, scale=1.2,above right] (1) at (interior.north west){\tcbtitle};
+\scoped[on background layer]{
+			\draw([yshift=-0.5mm]1.north west)|-(1.south east);
+			\fill(1.south east) circle(2pt);
+			\fill[black](interior.north west)--+(0.3cm,-0.3cm)|-cycle;
+	}},
+overlay first={
+	\node[anchor=west,font=\large\bfseries, above right] (1) at (interior.north west){\tcbtitle};
+\scoped[on background layer]{
+	\draw([xshift=0.3cm]interior.north west)-- ([xshift=0.3cm]interior.south west);
+	\draw(interior.north east)--	(interior.south east);
+	\draw([yshift=-0.5mm]1.north west)|-(1.south east);
+	\fill[black](interior.north west)--+(0.3cm,-0.3cm)|-cycle;
+ }
+},
+overlay middle={
+  	\draw([xshift=0.3cm]interior.north west)--([xshift=0.3cm]interior.south west);
+	\draw[fill=pink](interior.north east)--(interior.south east);
+	},
+overlay last={
+	\draw([xshift=0.3cm]interior.north west)|-
+		(interior.south east)--(interior.north east);
+   },
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%
+  \definecolor{colr}{RGB}{230, 88, 79}
+ \newcommand{\sterr}[1]{\def\rp{\color{green}\faStarHalf*\ } 
+\def\gp{\color{red!55!yellow}\faStarHalf*\ } 
+ \ifcase#1\gp\gp\gp 
+ \or\rp\gp\gp 
+ \or\rp\rp\gp 
+ \or\rp\rp\rp
+ \fi
+ }
+
+\DeclareTColorBox[auto counter,list inside=listtcb61]{tcb61}{O{cyan} m O{1} d"" O{} d''}
+{enhanced, 
+breakable,
+ colframe=white,colback=white,colbacktitle=blue,
+ fonttitle=\large\bfseries,coltitle=red,right=1mm,
+IfValueTF={#4}{watermark text={#4}}{},
+ interior code app={\draw[green!75!black,line width=1.2pt] ([xshift=\tcboxedtitlewidth+2.8cm]frame.north west)--++(0.3,0)--++(3pt,3pt)--++(6pt,-6pt)--++(6pt,6pt)--++(6pt,-6pt)--++(6pt,6pt)--++(3pt,-3pt)--(frame.north east);
+   }, 
+ attach boxed title to top left={xshift=0.3cm,yshift=-\tcboxedtitleheight/2,yshifttext=2mm-\tcboxedtitleheight/2},
+ boxed title style={enhanced,arc=0pt,outer arc=0pt,colframe=#1,
+     interior code={ 
+    \node[font=\large\bfseries,anchor=west,fill=#1,minimum height=2em,inner ysep=6pt](a) at ([xshift=2pt]interior.east){\color{red}\thetcbcounter}; 
+   \node[anchor=west,fill=white,minimum height=0.5cm,inner xsep=0pt] at (a.east){\sterr{#3}};
+   }  
+  },
+IfValueTF={#6}{title={#2~#6},list entry={#2~#6},
+}{title={#2},list entry={#2}},
+ #5}
+
+%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb62]{tcb62}{O{red} m d"" O{} d''}
+{enhanced,
+ top=0pt, left=1mm,
+ colframe=white,colback=white,colbacktitle=white,
+ fonttitle=\large\bfseries,coltitle=blue!50!red,
+IfValueTF={#3}{watermark text={#3}}{},
+frame code app={ \draw[line width=1pt,#1,rounded corners] ([xshift=3mm]frame.north west) -- (frame.north east)--(frame.south east) -- (frame.south west);},
+ attach boxed title to top left={xshift=1mm,yshifttext=2mm-\tcboxedtitleheight/2},
+ boxed title style={enhanced,boxrule=.5mm ,right=1mm,
+        frame code={ \draw[line width=1pt,#1,rounded corners=6pt] (frame.north east) -- (frame.north west)--(frame.south west) -- (frame.south east); }},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%
+\def\rsr{%
+	\scalebox{0.08}{\begin{tikzpicture}
+		\path[draw,right color=gray!50,left color=gray!50,middle color=white,very thick] (0,0)circle(1.5);
+		\draw[rotate=-90,line width=1pt,yscale=0.2,double=gray,double distance=6mm] (0,0)arc(-45:250:4);
+		\end{tikzpicture}}\hskip-2mm\ }
+
+\definecolor{col631}{RGB}{12, 102, 98}
+\definecolor{col632}{RGB}{248, 193, 12}
+
+\DeclareTColorBox[auto counter,list inside=listtcb63]{tcb63}{O{col631} m O{10} d"" O{} d''}
+{colframe=#1,colback=white!80!col632,left=.5cm,
+enhanced,center title,
+before skip=1cm,	after skip=1cm,
+fonttitle=\large\bfseries,
+% title=#2~\thetcbcounter,
+toprule=4mm,after skip=0.3cm,sharp corners,
+IfValueTF={#4}{watermark text={#4}}{},
+overlay={frame code={
+		\foreach \i in{1,...,#3}{
+		\path ([xshift=-0.5cm]frame.north west)--node[pos=\i/#3]{\rsr\rsr}([xshift=-0.5cm]frame.north east);
+		\filldraw[white](frame.south east)--+(-6mm,0.01mm)coordinate(1)--+(-0.01,3mm)coordinate(2)--cycle;
+		\filldraw[#1](1)--(2)to[bend left]++(-.2,.2)--cycle;
+		} } },
+IfValueTF={#6}{title={#2~#6},list entry={#2~#6},
+}{title={#2},list entry={#2}},
+#5}
+
+%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb64]{tcb64}{O{magenta} m d"" O{arc=5mm,outer arc=1mm} d''}
+{enhanced,
+colback=white,
+colframe=#1,
+fonttitle=\large\bfseries,
+coltitle=black,
+colbacktitle=#1,
+IfValueTF={#3}{watermark text={#3}}{},
+attach boxed title to top left={yshift=-2mm},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb65]{tcb65}{O{red} m d"" O{} d''}
+{enhanced,
+colframe=white,colback=white,colbacktitle=#1!55,
+fonttitle=\large\bfseries,coltitle=blue, 
+IfValueTF={#3}{watermark text={#3}}{},
+interior code app={\draw[#1, line width=1pt] (frame.north west)--(frame.north east)node[scale=0.5]{$ \blacksquare $};},
+attach boxed title to top left={yshift=-0.25mm-\tcboxedtitleheight/2,yshifttext=2mm-\tcboxedtitleheight/2},
+boxed title style={enhanced,boxrule=.5mm  },
+ IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+%%%%%%%%%%%%%%%%
+\definecolor{mau66}{RGB}{45, 136, 119}
+\DeclareTColorBox[auto counter,list inside=listtcb66]{tcb66}{O{mau66} m d"" O{} d''}
+{enhanced,
+arc=0mm,outer arc=0mm,
+colframe=#1,colback=white,
+colbacktitle=blue!5!yellow!50!white,
+fonttitle=\bfseries,top=1cm,
+coltitle=white,fonttitle=\large\bfseries,
+colbacktitle=#1,
+IfValueTF={#3}{watermark text={#3}}{},
+boxed title style={arc=0mm},
+attach boxed title to top left={yshift=-0.4cm-\tcboxedtitleheight,yshifttext=2mm-\tcboxedtitleheight/2},
+frame code app={\fill[#1] ([shift={(-0.2,-0.2)}]frame.north west)--([shift={(-0.2,0.2)}]frame.north east)--([shift={(0.2,0.2)}]frame.south east)--([shift={(0.2,-0.2)}]frame.south west)--cycle;},
+ IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb67]{tcb67}{O{pink} m O{\thetcbcounter} d"" O{} d''}
+{breakable,enhanced,detach title,blanker,
+title={#3},coltitle=red!50!black,
+boxsep=3mm,top=4mm,left=1.2cm,right=2mm
+,before skip=0.5cm,bottom=0.5cm,
+after skip=0.5cm,
+IfValueTF={#4}{watermark text={#4}}{},
+overlay={
+\draw[fill=#1!5,draw=black,line width=1.2pt]([xshift=2cm]interior.north west)[rounded corners=0.3cm]-|(interior.south east)--(interior.south west)[sharp corners]--([yshift=-2cm]interior.north west)[sharp corners]--cycle
+(interior.south east);
+\coordinate (A) at ($([xshift=2cm]interior.north west)!0.5!([yshift=-2cm]interior.north west)$);
+\node[circle,draw,fill=#1!25,font=\large\bfseries ,minimum size=0.8cm,inner sep=1pt,text=red!50!black]at (A){\tcbtitle};
+\draw[decorate,decoration={ text along path,text={|\bf\large\color{#1!85!black} |#2||{}},
+text align={align=center}}]([yshift=-2cm,xshift=0.3cm]interior.north west)to[bend left=90]([xshift=2cm,yshift=-0.3cm]interior.north west);
+},
+overlay first={
+\draw[fill=#1!15,draw=black,line width=1.2pt](interior.south west)--([yshift=-2cm]interior.north west)--([xshift=2cm]interior.north west)[rounded corners=0.3cm]--(interior.north east);%--(interior.south east);
+\coordinate (A) at ($([xshift=2cm]interior.north west)!0.5!([yshift=-2cm]interior.north west)$);
+\node[circle,draw,fill=#1!65,font=\large\bfseries ,minimum size=0.8cm,inner sep=1pt,
+text=red!50!black]at (A){\tcbtitle};
+\draw[decorate,decoration={ text along path,text={|\bf\large\color{#1!85!black} |#2||{}},
+text align={align=center}}]([yshift=-2cm,xshift=0.3cm]interior.north west)to[bend left=90]([xshift=2cm,yshift=-0.3cm]interior.north west);
+},
+overlay middle={
+\draw[fill=#1!15,draw=none](interior.north west)rectangle
+(interior.south east);
+\draw[line width=1.2pt](interior.north east)--(interior.south east);
+\draw[line width=1.2pt](interior.north west)--(interior.south west);
+},
+overlay last={
+\draw[fill=#1!15,draw=none](interior.north west)rectangle
+(interior.south east);
+\draw[line width=1.2pt](interior.north west)[rounded corners=0.3cm]|-(interior.south east)--(interior.north east);
+},
+IfValueTF={#6}{list entry={#2~#3~#6},
+}{list entry={#2~#3}},
+#5}
+%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb68]{tcb68}{O{yellow} m d"" O{}}
+{
+enhanced,
+before skip=2mm,after skip=3mm,
+boxrule=0.4pt,left=5mm,right=2mm,top=1mm,bottom=1mm,
+colback=#1!50,
+colframe=#1!20!black,
+sharp corners,rounded corners=southeast,
+arc is angular,arc=3mm,
+IfValueTF={#3}{watermark text={#3}}{},
+underlay={%
+\path[fill=tcbcolback!80!black] ([yshift=3mm]interior.south east)
+--++(-0.4,-0.1)--++(0.1,-0.2);
+\path[draw=tcbcolframe,shorten <=-0.05mm,
+shorten >=-0.05mm] ([yshift=3mm]interior.south east)
+--++(-0.4,-0.1)--++(0.1,-0.2);
+\path[fill=#1!50!black,draw=none] (interior.south west) 
+rectangle node[white]{\Huge\bfseries #2} 
+([xshift=5mm]interior.north west);
+},
+drop fuzzy shadow,
+#4}
+%%%%%%%%%%%%%%%%%
+
+\DeclareTColorBox[auto counter,list inside=listtcb69]{tcb69}{O{violet} m d"" O{} d''}
+{enhanced, 
+top=2pt,bottom=2pt,
+boxrule=0pt,arc=0pt,
+colframe=white, coltitle=white,colback=white,
+fonttitle=\large\bfseries,
+IfValueTF={#3}{watermark text={#3}}{},
+attach boxed title to top left={yshift=-1pt,xshift=-1pt},
+borderline north={0.5mm}{0mm}{#1,dash pattern=on 0.1pt off 4pt,
+line width=2pt,line cap=round},
+borderline south={0.5mm}{0mm}{#1,dash pattern=on 0.1pt off 4pt, 
+line width=2pt,line cap=round},
+boxed title style = {colback=#1!70, colframe=red, sharp corners, 
+rounded corners=northeast, arc=3mm, boxrule=0pt},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+
+%%%%%%%%%%%%%%%%%
+
+%%%%\newtcolorbox{methode}[1][]
+\DeclareTColorBox[auto counter,list inside=listtcb70]{tcb70}{O{pink} m d"" O{} d''}
+{%
+    notitle, 
+enhanced,    
+toprule=1pt, 
+    rightrule=1pt, 
+   colframe=#1, 
+    colback=#1!15, 
+enlarge top by=8mm,
+IfValueTF={#3}{watermark text={#3}}{},
+IfValueTF={#5}{
+    overlay={%
+        \node[label={[yshift=0.3cm, anchor=west]right: #5}] 
+        at (frame.north west) 
+        {#2};},
+      list entry={#2~#5},
+}{
+    overlay={%
+        \node[label={[yshift=0.3cm, anchor=west]right:}] 
+        at (frame.north west) 
+        {#2};},
+         list entry={#2}},
+    #4}
+
+
+%%%%%%%%%%%%%%%%%
+
+\DeclareTColorBox[auto counter,list inside=listtcb71]{tcb71}{O{blue} m d"" O{} d''}
+{
+freelance,
+enhanced,
+breakable,
+colback=white,
+top=4pt,
+enlarge top by=8mm,
+left =4pt,
+before=\par\vspace{2\bigskipamount}\noindent,
+after=\par\medskip,
+detach title,
+IfValueTF={#3}{watermark text={#3}}{},
+frame code={
+  \node[anchor=south west,
+  inner xsep=8pt,
+  xshift=8pt,
+  rounded corners=5pt,
+  font=\large\sffamily\bfseries\color{white},
+  fill=#1] at (frame.north west) (tit) {\strut \tcbtitle};
+  \draw[line width=3pt,  rounded corners=5pt,
+#1] (tit.west) -| (frame.south west) -- ([xshift=15pt]frame.south west);
+},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+%interior code={},
+#4}
+
+%%%%%%%%%%%%%%%%%
+
+\definecolor{mybrown}{RGB}{33,34,28}
+\definecolor{myyellow}{RGB}{242,226,149}
+\DeclareTColorBox[auto counter,list inside=listtcb72]{tcb72}{O{myyellow} d"" O{}}
+{
+  enhanced,
+  frame code=empty,
+  boxsep=0.5cm,
+  top=0.4cm,
+IfValueTF={#2}{watermark text={#2}}{},
+  interior code={
+  \fill[#1,drop shadow]
+    (interior.south west) {[rounded corners=1.5cm]--
+    (interior.south east)} --
+    (interior.north east) --
+    (interior.north west) --
+    cycle;
+  \fill[black!80!#1] 
+    ([shift={(-0.9cm,0.5ex)}]interior.south east) to[out=30,in=-70]
+    ([shift={(-0.55cm,0.7cm)}]interior.south east) to[out=-10,in=220]
+    ([shift={(-0.7ex,0.9cm)}]interior.south east) to[out=250,in=30]
+    cycle;  
+  \fill[mybrown]
+    ([yshift=-10pt]interior.north) circle [radius=0.23cm];
+  \fill[mybrown!40]
+    ([yshift=-10pt]interior.north) circle [radius=0.175cm];
+  \node[
+    cylinder,
+    cylinder uses custom fill, 
+    cylinder end fill=mybrown!60,
+    cylinder body fill=mybrown,
+    rotate=115,
+    minimum width=9pt,
+    minimum height=16pt,
+  ] 
+  at ([shift={(-0.2pt,-9.8pt)}]interior.north) {};
+  },
+%title={#2},list entry={#2},
+  #3}
+
+%%%%%%%%%%%%%%%%%
+\makeatletter
+\DeclareTColorBox[auto counter,list inside=listtcb73]{tcb73}{O{pink} m d"" O{}}
+{
+  enhanced,
+enlarge top by=4mm,
+  colframe=black, 
+colback=white!70!#1,
+  sharp corners,
+  boxrule=0.6pt,
+left=20pt,
+  detach title,
+  coltitle=black,
+IfValueTF={#3}{watermark text={#3}}{},
+  colbacktitle=white!20!#1,
+  fonttitle=\bfseries\footnotesize,
+  overlay={
+    \node[rotate=90,
+          fill=white!20!#1,
+          font=\kvtcb@fonttitle,
+          minimum width=1cm]
+          at (frame.west)
+      {\begin{varwidth}{\tcbtextheight}
+         \centering\tcbtitle\par
+       \end{varwidth}};
+  },
+title={#2},list entry={#2},
+#4}
+\makeatother
+
+%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb74]{tcb74}{O{teal} d"" O{}}
+{%
+    enhanced,
+    frame style={draw=none},
+    colback=white!80!#1,
+interior style={left color=#1!5,right color=#1!50,middle color=#1!30,
+},
+drop large lifted shadow=#1,
+    boxrule=0pt,
+    sharp corners,
+    frame hidden,
+    notitle,
+enlarge top by=4mm,
+IfValueTF={#2}{watermark text={#2}}{},
+    overlay={%
+        \draw[{Triangle[right]}-{Triangle[left]}, , line width=2pt](frame.north west)--(frame.north east); 
+        \draw[{Triangle[left]}-{Triangle[right]}, , line width=2pt](frame.south west)--(frame.south east);
+},
+    #3}
+%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb75]{tcb75}{O{brown} d"" O{}}
+{%
+    enhanced,
+    colback=white!80!#1,%%white!70!#1,
+interior style={left color=#1!5,right color=#1!60,middle color=#1!30,
+},
+drop large lifted shadow=#1,
+    boxrule=0pt,
+    sharp corners,
+%     frame hidden,
+%leftrule=2pt,
+enlarge top by=8mm,
+ %   fontupper=\bfseries,
+    notitle,
+IfValueTF={#2}{watermark text={#2}}{},
+    overlay={%
+        \draw[Circle-Circle, black!60!brown, line width=2pt]([yshift=8pt]frame.north west)--([yshift=-8pt]frame.south west); 
+        \draw[Circle-Circle, black!60!brown, line width=2pt]([yshift=8pt]frame.north east)--([yshift=-8pt]frame.south east);
+            \draw[{Triangle[right]}-{Triangle[left]}, brown!70!black, line width=2pt](frame.north west)--(frame.north east); 
+        \draw[{Triangle[left]}-{Triangle[right]}, brown!70!black, line width=2pt](frame.south west)--(frame.south east);
+},
+#3}
+%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb76]{tcb76}{O{red} m d"" O{} d''}
+    {enhanced,
+    breakable,
+    arc=2mm,
+%         enlarge top by=2mm, 
+%         enlarge bottom by=2mm,
+    colback=white!95!#1,
+    coltitle=black!95!#1,
+    fonttitle=\large\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    top=4mm,
+  attach boxed title to top center,
+  boxed title style={empty},
+  fonttitle=\large\bfseries,
+frame code={
+    \fill[draw=white,top color=#1!60,bottom color=white]
+      ([xshift=-20pt]title.south west) -- (title.north west) --
+      (title.north east) -- ([xshift=20pt]title.south east) -- cycle;
+    \draw[#1,line width=0.4mm,rounded corners]
+      (frame.south west) -- (frame.north west) --
+      ([xshift=-20pt]title.south west) -- (title.north west) --
+      (title.north east) -- ([xshift=20pt]title.south east) --
+      (frame.north east) -- (frame.south east)-- cycle;
+  },
+    drop fuzzy shadow=#1,
+IfValueTF={#5}{title={\strut #2~#5},list entry={#2~#5}}{title={\strut #2},list entry={#2}},
+#4}
+%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb77]{tcb77}{O{purple} m d"" O{} d''}
+    {enhanced,
+    breakable,
+    arc=2mm,
+    colframe=#1,
+    colback=white!95!#1,
+    colbacktitle=#1,
+    coltitle=black!95!#1,
+    fonttitle=\large\bfseries,
+    IfValueTF={#3}{watermark text={#3}}{},
+    before skip=2mm,
+    after skip=2mm,
+    top=4mm,
+    boxrule=0.5mm,
+    boxsep=0pt,
+%     fonttitle=\large\bfseries, 
+    attach boxed title to top center={xshift=0cm,yshift*=-\tcboxedtitleheight},  
+    boxed title style={empty,boxrule=0.5mm},
+    underlay boxed title={
+        \draw[white!95!#1,line width=0.5mm] ([xshift=0.3mm-\tcboxedtitleheight*2,yshift=0.3mm]title.north west)--([xshift=-0.3mm+\tcboxedtitleheight*2,yshift=0.3mm]title.north east);
+        \path[draw=#1,
+            top color=white!95!#1,
+            middle color=white!50!#1,
+            bottom color=#1,
+            line width=0.5mm] ([xshift=0.25mm-\tcboxedtitleheight*2,yshift=0.25mm]title.north west) cos +(\tcboxedtitleheight,-\tcboxedtitleheight/2) sin +(\tcboxedtitleheight,-\tcboxedtitleheight/2)-- ([xshift=0.25mm,yshift=0.25mm]title.south west)-- ([yshift=0.25mm]title.south east) cos +(\tcboxedtitleheight,\tcboxedtitleheight/2) sin +(\tcboxedtitleheight,\tcboxedtitleheight/2); },
+    drop fuzzy shadow=#1,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb78]{tcb78}{O{pink} d"" O{}}
+{
+valign lower=top,
+    enhanced,
+    breakable,
+    colback=#1!10,
+    colframe=#1!55!black,
+    left=.7in,
+    bottom=2.75mm,
+    IfValueTF={#2}{watermark text={#2}}{},
+fontupper=\slshape,
+%    drop fuzzy shadow=#1,
+drop large lifted shadow=#1!60,
+    underlay={%
+        \begin{tcbclipinterior}
+%       \shade[inner color=green!60!yellow,outer color=yellow!10!white]
+       \shade[inner color=#1!90!yellow,outer color=#1!10!white]
+(interior.north west) circle (2cm);
+        \draw[help lines, ystep=\baselineskip, xstep=\linewidth, 
+             ](interior.north west) grid (interior.south east);
+        \draw[help lines] ([xshift=.5in]interior.north west)--
+            ([xshift=.5in]interior.south west);
+        \end{tcbclipinterior}},
+    #3}
+%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb79]{tcb79}{O{black} m d"" O{} d''}
+{%
+    enhanced, breakable,
+    sharp corners,
+    colframe=#1,
+    colback=white,
+    boxrule=1pt,
+ segmentation style={solid, #1!30},
+    coltitle=#1,
+   IfValueTF={#3}{watermark text={#3}}{},
+    colbacktitle=white,
+    attach boxed title to top left={yshift=-1pt},
+IfValueTF={#5}{
+    title={#2~\thetcbcounter\ (#5 điểm)},
+}{title={#2~\thetcbcounter\ }},
+    boxed title style={sharp corners, boxrule=1pt},
+    fonttitle=\bfseries,
+    right=0.2cm,
+    overlay={\draw ([xshift=-1.1cm]frame.north east)--([xshift=-1.1cm]frame.south east);},
+    #4}
+
+\newcommand{\diem}[2]{
+\tcbsidebyside[sidebyside adapt=right,
+blanker,sidebyside gap=5mm
+]{%
+#1
+}{\makebox[1cm][r]{\textbf{#2}}}
+}
+%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb80]{tcb80}{O{teal} m d"" O{} d''}
+{enhanced,
+breakable,
+colframe=#1,
+colback=white!97!#1,
+colbacktitle=white!80!#1,
+coltitle=black!80!#1,
+fonttitle=\large\bfseries,
+top =4mm,
+before skip=4mm,after skip=2mm,
+IfValueTF={#3}{watermark text={#3}}{},
+attach boxed title to top left=
+  {yshift=-0.25mm-\tcboxedtitleheight/2,yshifttext=2mm-\tcboxedtitleheight/3},
+boxed title style={boxrule=0.5mm,
+  frame code={ \path[tcb fill frame] ([xshift=-0mm]frame.west)
+-- (frame.north west) -- (frame.north east) -- ([xshift=4mm]frame.east)
+-- (frame.south east) -- (frame.south west) -- cycle; },
+interior code={ \path[tcb fill interior] ([xshift=-0mm]interior.west)
+-- (interior.north west) -- (interior.north east)
+-- ([xshift=2mm]interior.east) -- (interior.south east) -- (interior.south west)
+-- cycle;} ,
+},
+title style={left color=black!50!#1,right color=blue},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb81]{tcb81}{O{teal} m d"" O{} d''}
+{enhanced,
+breakable,
+colframe=#1,
+colback=white!97!#1,
+colbacktitle=white!80!#1,
+coltitle=black!80!#1,
+fonttitle=\large\bfseries,
+top =4mm,
+before skip=4mm,after skip=2mm,
+IfValueTF={#3}{watermark text={#3}}{},
+attach boxed title to top right=
+  {yshift=-0.25mm-\tcboxedtitleheight/2,yshifttext=2mm-\tcboxedtitleheight/3},
+boxed title style={boxrule=0.5mm,
+  frame code={ \path[tcb fill frame] ([xshift=-0mm]frame.east)
+-- (frame.north east) -- (frame.north west) -- ([xshift=-4mm]frame.west)
+-- (frame.south west) -- (frame.south east) -- cycle; },
+interior code={ \path[tcb fill interior] ([xshift=-0mm]interior.east)
+-- (interior.north east) -- (interior.north west)
+-- ([xshift=-2mm]interior.west) -- (interior.south west) -- (interior.south east)
+-- cycle;} ,
+},
+title style={left color=black!50!#1,right color=blue},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb82]{tcb82}{O{teal} m d"" O{} d''}
+{enhanced,
+breakable,
+colframe=#1,
+colback=white!97!#1,
+colbacktitle=white!80!#1,
+coltitle=black!80!#1,
+fonttitle=\large\bfseries,
+IfValueTF={#3}{watermark text={#3}}{},
+attach boxed title to top center=
+        {yshift=-0.25mm-\tcboxedtitleheight/2,
+         yshifttext=2mm-\tcboxedtitleheight/2},
+boxed title style={         
+boxrule=0.5mm,
+        frame code={\path[tcb fill frame]
+            ([xshift=-4mm]frame.west)
+            -- (frame.north west) -- (frame.north east) -- ([xshift=4mm]frame.east)
+            -- (frame.south east) -- (frame.south west) -- cycle;},
+        interior code={\path[tcb fill interior]
+        ([xshift=2mm]interior.west)
+        -- (interior.north west)
+        -- (interior.north east)
+        -- ([xshift=-2mm]interior.east)
+        -- (interior.south east)
+        -- (interior.south west)-- cycle;},
+            },
+title style={left color=black!50!#1,right color=blue},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+%%%%%%%%%%%%%
+\definecolor{color1}{RGB}{249,179,72}
+\definecolor{color2}{RGB}{0,112,131}
+
+\DeclareTColorBox[auto counter,list inside=listtcb83]{tcb83}{O{color1} m d"" O{} d''}
+{
+sidebyside,
+lefthand width=4cm,
+sidebyside gap=14pt,
+freelance,
+interior code={},
+frame code={},
+IfValueTF={#3}{watermark text={#3}}{},
+overlay={
+  \shade[top color=#1!10!blue,bottom color=#1!90!blue] %%
+  ([xshift=6pt,yshift=8pt]frame.north west) 
+    rectangle
+  ([xshift=11pt,yshift=-6pt]frame.south west);
+  \draw[color=#1!90!blue,line width=1.5pt]
+  ([yshift=4pt]title.north west) --
+  ([yshift=4pt]title.north east);
+  \draw[color=#1!90!blue,line width=1.5pt]
+  ([yshift=-2pt]frame.south west) --
+  ([yshift=-2pt]frame.south east);
+  },
+colback=white,  
+%title=Historical,
+center title,
+title code={
+  \fill[left color=#1,right color=#1!10]
+  (title.north west)
+    rectangle
+  (title.south east);
+  },
+segmentation code={},
+fonttitle=\large\sffamily\bfseries,
+coltitle=black,
+enlarge left by=-16pt,
+enlarge right by=-16pt,
+width=\textwidth+32pt,
+left=15pt,
+right=15pt,
+before=\par\bigskip\noindent,  
+after=\par\medskip,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+
+\newcommand\Name[1]{%
+  \textcolor{color2}{\sffamily\bfseries #1}%
+}
+\newcommand\PersonInfo[1]{%
+  {\par\smallskip\noindent\footnotesize\raggedright #1\par}%
+}
+%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb84]{tcb84}{O{red} m d"" O{} d''}
+{%
+ %   empty,
+enhanced,
+  breakable,
+  frame engine=path,
+    colframe=yellow!10,
+    colbacktitle=yellow!10,
+    sharp corners,
+  colback=white!95!#1,    
+%title={Example-Example \thetcbcounter},
+  IfValueTF={#3}{watermark text={#3}}{},
+    attach boxed title to top left={yshift*=-\tcboxedtitleheight},
+    boxed title style={size=minimal, top=4pt, left=4pt},
+    coltitle=#1!75!black,
+fonttitle=\large\bfseries\sffamily,
+  boxed title style={overlay={
+    \draw[#1!75!black,line width=3pt,] (frame.north west)--(frame.north east);
+  }},
+  overlay unbroken={
+    \draw[#1!75!black] ([yshift=-1.5pt]title.north east)--([xshift=-0.5pt, yshift=-1.5pt]title.north-|frame.east);
+  },
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb85]{tcb85}{O{teal} m d"" O{} d''}
+{%
+%  base,
+enhanced,
+  breakable,
+  frame engine=path,
+    colframe=yellow!10,
+    colbacktitle=yellow!10,
+    sharp corners,
+  colback=white!95!#1,    
+  %  coltitle=#1!75!black,
+fonttitle=\large\bfseries\sffamily,
+  IfValueTF={#3}{watermark text={#3}}{},
+  drop fuzzy shadow,
+  coltitle=black,
+  borderline west={3pt}{-3pt}{#1!50},
+  attach boxed title to top left={xshift=-3mm, yshift*=-\tcboxedtitleheight/2},
+  boxed title style={right=3pt, bottom=3pt, overlay={
+    \draw[draw=#1!70, fill=#1!70, line join=round]
+      (frame.south west) -- (frame.north west) -- (frame.north east) --
+      (frame.south east) -- ++(-2pt, 0) -- ++(-2pt, -4pt) --
+      ++(-2pt, 4pt) -- cycle;
+  }},
+  overlay unbroken={
+    \scoped \shade[left color=#1!10!black, right color=#1]
+    ([yshift=-0.2pt]title.south west) -- ([xshift=-1.5pt, yshift=-0.2pt]title.south-|frame.west) -- ++(0, -6pt) -- cycle;
+  },
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb86]{tcb86}{O{red} m d"" O{} d''}
+{
+enhanced,arc=0mm,outer arc=0mm,
+boxrule=0mm,toprule=1mm,bottomrule=1mm,
+left=1mm,right=1mm,
+titlerule=0mm,toptitle=0mm,
+bottomtitle=0mm,top=0mm,
+colframe=#1!50!black,colback=#1!5!white,coltitle=#1!50!black,
+colbacktitle=yellow!50!white,colback=#1!5!white,
+  IfValueTF={#3}{watermark text={#3}}{},
+fonttitle=\large\bfseries\sffamily,
+fontupper=\normalsize\slshape,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+%%%%%%%%%%
+\DeclareTCBListing[auto counter,list inside=listtcb87]{tcb87}{O{pink} m d"" O{}}
+{ 
+enhanced,
+breakable,
+skin=bicolor ,
+colback=white!95!#1,
+colbacklower=white ,
+colupper=black,%%red!40!black ,
+collower=blue ,
+fontlower=\itshape,
+listing options={language={Maple}} ,
+enlarge top by=0.6mm, 
+fontupper=\ttfamily\bfseries ,
+  IfValueTF={#3}{watermark text={#3}}{}, 
+boxrule=0mm ,
+frame hidden,
+borderline west={1pt}{0pt}{black},
+overlay unbroken and last={%
+\draw[line width=1pt, black] (frame.south west)   -- ++(0:0.5cm);
+\draw[line width=1pt, black] (frame.north west)   -- ++(0:0.5cm);
+},
+top=-2mm,bottom=-1mm,middle=0mm , left=0mm,
+center lower ,
+nobeforeafter ,
+listing and comment ,
+comment={\begin{tabular}{c}#2\end{tabular}},
+#4}
+%%%%%%%%%%%%%
+\makeatletter
+\DeclareTColorBox[auto counter,list inside=listtcb88]{tcb88}{O{teal} m d"" O{} d''}
+{%
+    enhanced,
+    colback=#1!10,
+    coltitle=black,
+    colframe=#1!30,
+    fonttitle=\large\bfseries,
+ %   title=#2, 
+  IfValueTF={#3}{watermark text={#3}}{}, 
+    sharp corners,
+    rounded corners=southeast,
+    arc is angular,
+    arc=3mm,
+    boxrule=0pt,
+    overlay={
+        \node[font=\Huge, text=cyan!70!black] at ([yshift=-4mm]interior.north west) {\ding{228}};
+    },
+    underlay={
+        \path[fill=tcbcolback!80!black] ([yshift=3mm]interior.south east) -- ++(-0.4,-0.1) -- ++(0.1,-0.2);
+        \path[draw=tcbcolframe,shorten <=-0.05mm,shorten >=-0.05mm] ([yshift=3mm]interior.south east) -- ++(-0.4,-0.1) -- ++(0.1,-0.2);
+    },
+    interior titled code app={
+        \path[save path=\mytcb@dots]
+          let \p1=($(interior.north) - (interior.south)$),
+              \n{r}={\kvtcb@leftupper+\kvtcb@boxsep},
+              \n1={int(scalar((\y1)/5mm))},
+          in
+            ([xshift=.5*\n{r},yshift=-\n{r}+2.5mm]interior.south west)
+            foreach \i in {1, 2, ..., \n1} {
+              ++(0mm, +5mm) circle (.23*\n{r})
+            };
+         \begin{scope}
+            \clip[use path=\mytcb@dots];
+            \fill[black, opacity=0.25, use path=\mytcb@dots];
+            \fill[white, transform canvas={xshift=.3mm,yshift=-.3mm}, use path=\mytcb@dots];
+         \end{scope}
+    },
+    drop fuzzy shadow,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+    #4
+}
+\makeatother
+%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb89]{tcb89}{O{cyan} m d"" O{} d''}
+{%
+    enhanced,  
+    arc=3mm, boxrule=1mm, 
+    colback=white, colframe=#1, 
+    title style={left color=black, right color=#1}, 
+   fonttitle=\large\bfseries,
+   IfValueTF={#3}{watermark text={#3}}{},    
+separator sign none,
+    description delimiters parenthesis,
+    drop fuzzy shadow,
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+    #4}
+%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb90]{tcb90}{O{red} m d"" O{} d''}
+{
+enhanced,
+leftrule=1.5mm,top=0.27cm,
+ arc=0pt, outer arc=0pt,
+ colframe=white,colback=blue!5,
+enlarge top by=5mm, enlarge bottom by=5mm,
+colbacktitle=#1!25!yellow!50!white,
+ fonttitle=\large\bfseries,coltitle=violet,
+   IfValueTF={#3}{watermark text={#3}}{},    
+interior code app={\draw[#1!25!yellow!55!black,line width=3pt]([yshift=6mm]frame.north west)--(frame.south west);},
+attach boxed title to top left={xshift=0.5cm,yshift=-8mm },
+ boxed title style={enhanced,boxrule=0mm,interior code={  \path[tcb fill interior,#1!25!yellow!75!black] ([xshift=-0.5cm,yshift=8mm]interior.north west)to[out=180,in=90]++(-0.5cm,-3mm)--++(0,-5mm)--++(0.5cm,0)--cycle;
+\path[tcb fill interior] ([xshift=-1cm,yshift=5mm]interior.north west)to[out=-70,in=180](interior.north west)--(interior.north east)-- ([xshift=2mm]interior.east) -- (interior.south east) -- (interior.south west)to[in=-70,out=180]([xshift=-1cm,yshift=5mm]interior.south west)-- cycle;
+}  },
+interior style={top color=blue!5,bottom color=#1!25},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5}}{title={#2},list entry={#2}},
+#4}
+%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb91]{tcb91}{O{violet} m d"" O{} d''}
+{
+enhanced, 
+breakable,
+frame hidden,
+colback=white,
+after skip=1cm,
+top=3mm,
+enlarge top by=5mm, 
+%         enlarge bottom by=2mm,
+   IfValueTF={#3}{watermark text={#3}}{},   
+underlay={%
+   \fill[#1, rounded corners] (frame.north west)--([shift={(1mm,1mm)}]frame.north east)--([shift={(3mm,-3mm)}]frame.south east) -- ([shift={(0mm,-1mm)}]frame.south west) -- cycle;
+  \fill[white, rounded corners] (interior.north west) rectangle (interior.south east);},
+overlay unbroken and first={%
+  \node[font=\large\sffamily\bfseries, text=black, anchor=west, rotate=5,fill=#1!15] at ([xshift=5mm] frame.north west) {#2};},
+IfValueTF={#5}{list entry={#2~#5}}{list entry={#2}},
+#4}
+%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb92]{tcb92}{O{blue} m d"" O{} d''}
+{
+    enhanced, 
+    frame hidden,
+    top=4mm,
+enlarge top by=5mm, enlarge bottom by=5mm,
+   IfValueTF={#3}{watermark text={#3}}{},   
+     interior style={bottom color=green!5,top color=#1!25},
+    overlay={%
+        \draw[rounded corners, #1 , dashed, ultra thick] (frame.north west) rectangle (frame.south east);
+        \node[rectangle,draw, font=\large\sffamily\bfseries, anchor=west, text=white,rotate=5,fill=#1!85] (c)at ([xshift=-5mm] frame.north west) {#2}; }, 
+IfValueTF={#5}{list entry={#2~#5}}{list entry={#2}},
+  #4}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ondor}[1]{
+\tikzpicture
+\begin{scope}[rotate=-90,smooth cycle, line width=1.6pt, scale=0.35]
+\draw[line join=miter, color=#1!80]  (0,0) -- ++ (-0.7,0.5) -- ++ (-0.7,-0.5);
+\draw[line join=miter, color=#1!68]  (0,0.35) -- ++ (-0.7,0.5) -- ++ (-0.7,-0.5);
+\draw[line join=miter, color=#1!48]  (0,0.75) -- ++ (-0.7,0.5) -- ++ (-0.7,-0.5);
+\draw[line join=miter, color=#1!28]  (0,1.15) -- ++ (-0.7,0.5) -- ++ (-0.7,-0.5);
+\end{scope}
+\endtikzpicture}
+
+\DeclareTColorBox[auto counter,number within=chapter,
+number freestyle={\noexpand\arabic{\tcbcounter}},list inside=listtcb93]{tcb93}{O{teal} m d"" O{}}
+{
+	breakable,
+	enhanced,
+	toprule=0pt,rightrule=0mm,leftrule=0mm,
+	before skip=0.3cm,
+	after skip=0.3cm,
+	bottomrule=0mm,top=4mm,
+	arc=0pt,
+	colframe=#1!50!black,
+	colback=#1!3!white,
+	fonttitle=\large\sffamily\bfseries,
+IfValueTF={#3}{watermark text={#3}}{},
+	title={#2},
+	attach boxed title to top left,
+	boxed title style={
+		enhanced,
+		colframe=#1!70!black,
+		colback=#1!70!black,
+		arc=0pt,
+		bottomrule=0pt,
+		leftrule=0pt
+	},
+	frame style={
+		fill=#1!50!black},
+	overlay={
+		\draw[draw=#1!80!black,line width=1.2pt,rounded corners=2mm]
+		(title.north west)--([xshift=10mm]title.north east)[sharp corners]--([xshift=10mm]title.south east)[sharp corners]--(title.south west)--(title.north west)|-
+		(interior.south east)--([yshift=0.6cm]interior.south east);
+		\node[anchor=west,text=black] at ([yshift=0mm,xshift=0mm]title.east)(M){
+			\bf\thetcbcounter};
+		\scoped[on background layer]{
+			\draw[#1!50!black,fill=white,line width=1.2pt,rounded corners=2mm](title.north west)--([xshift=-10mm]title.north east)[sharp corners]--([xshift=-10mm]title.south east)[sharp corners]--(title.south west)--cycle;
+			\node at ([xshift=10mm]title.east)(K){};
+			\node[anchor=west] at ([xshift=2mm]K.east)(N){\ondor{#1!80!black}};
+			\node[anchor=west,text=red!40!black] at (N.east){Lời giải của bài tập tại trang	{\pageref{solution@\thetcbcounter}} };
+	}},
+	overlay first={
+		\draw[draw=#1!80!black,line width=1.2pt,rounded corners=2mm]
+		(title.north west)--([xshift=10mm]title.north east)[sharp corners]--([xshift=10mm]title.south east)[sharp corners]--(title.south west)--(title.north west)--(interior.south west);
+	%	|--([yshift=0.6cm]interior.south east);
+		\node[anchor=west,text=black] at ([yshift=0mm,xshift=0mm]title.east)(M){
+			\bf\thetcbcounter};
+		\scoped[on background layer]{\draw[#1!50!black,fill=white,line width=1.2pt,rounded corners=0.5mm](title.north west)--([xshift=10mm]title.north west)[sharp corners]--([xshift=10mm]title.south west)[sharp corners]--(title.south east)--cycle;
+			\node at ([xshift=10mm]title.east)(K){};
+			\node[anchor=west] at ([xshift=0.5mm]K.east)(N){\ondor{#1!80!black}};
+			\node[anchor=west,text=red!40!black] at (N.east){Solution de l'exercice dans la page
+					{\pageref{solution@\thetcbcounter}}};
+	}},overlay middle={
+\draw[draw=#1!80!black,line width=1.2pt](interior.north west)--
+(interior.south west);},
+	overlay last={
+		\draw[draw=#1!80!black,line width=1.2pt](interior.north west)|-
+		(interior.south east)--([yshift=0.6cm]interior.south east);},
+	label={exercise@\thetcbcounter},
+	lowerbox=ignored,
+	savelowerto=exercise-\thetcbcounter.tex,
+	record={\string\vnsolution{\thetcbcounter}{exercise-\thetcbcounter.tex}[-#1]},
+	#4,
+	code={\parnotereset}, % <-- parnotes
+}
+
+\NewTotalTColorBox{\vnsolution}{mmO{red}}{%
+	breakable,
+	enhanced,
+	toprule=0pt,rightrule=0mm,leftrule=0mm,
+	bottomrule=0mm,top=4mm,
+	before skip=0.3cm,
+	after skip=0.3cm,
+	arc=0pt,
+	colframe=#3!70!yellow,
+	colback=-#3!5!white,
+	fonttitle=\large\sffamily\bfseries,
+	title={Lời giải bài tập},
+	attach boxed title to top left,
+	boxed title style={
+		enhanced,
+		colframe=#3!70!yellow,
+		colback=#3!70!yellow,
+		arc=0pt,
+		bottomrule=0pt,
+		leftrule=0pt
+	},
+	frame style={
+		fill=#3!70!yellow},
+	overlay={
+		\draw[draw=#3!70!yellow,line width=1.2pt,rounded corners=2mm]
+		(title.north west)--([xshift=10mm]title.north east)[sharp corners]--([xshift=10mm]title.south east)[sharp corners]--(title.south west)--(title.north west)|-
+		(interior.south east)--([yshift=0.6cm]interior.south east);
+		\node[anchor=west,text=black] at ([yshift=0mm,xshift=0mm]title.east)(M){
+			\bf\ref{exercise@#1}};
+		\scoped[on background layer]{
+			\draw[#3!70!yellow,fill=white,line width=1.2pt,rounded corners=2mm](title.north west)--([xshift=10mm]title.north east)[sharp corners]--([xshift=10mm]title.south east)[sharp corners]--(title.south west)--cycle;
+			\node at ([xshift=10mm]title.east)(K){};
+			\node[anchor=west] at ([xshift=0.5mm]K.east)(N){\ondor{#3!70!yellow}};
+			\node[anchor=west,text=#3!70!yellow] at (N.east){Trở lại đề bài 	\bf\ref{exercise@#1}};
+	}} ,
+overlay first={
+		\draw[draw=#3!70!yellow,line width=1.2pt,rounded corners=2mm]
+		(title.north west)--([xshift=10mm]title.north east)[sharp corners]--([xshift=10mm]title.south east)[sharp corners]--(title.south west)--(title.north west)|-
+		(interior.south west);
+		\node[anchor=west,text=black] at ([yshift=0mm,xshift=0mm]title.east)(M){\bf\ref{exercise@#1}};
+		\scoped[on background layer]{
+			\draw[#3!70!yellow,fill=white,line width=1.2pt,rounded corners=2mm](title.north west)--([xshift=10mm]title.north east)[sharp corners]--([xshift=10mm]title.south east)[sharp corners]--(title.south west)--cycle;
+			\node at ([xshift=10mm]title.east)(K){};
+			\node[anchor=west] at ([xshift=0.5mm]K.east)(N){\ondor{#3!70!yellow}};
+			\node[anchor=west,text=#3!70!yellow] at (N.east){Trở lại đề bài 	\bf\ref{exercise@#1}};
+	}},
+overlay middle={\draw[draw=#3!70!yellow,line width=1.2pt](interior.north west)--(interior.south west);},
+overlay last={\draw[draw=#3!70!yellow,line width=1.2pt](interior.north west)|-(interior.south east)--([yshift=0.6cm]interior.south east);},
+	phantomlabel={solution@#1},
+}{\input{#2}}
+\tcbset{no solution/.style={no recording,after upper=}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb94]{tcb94}{O{blue} m d"" O{} m}
+{%
+enhanced jigsaw, breakable,
+colback=white, colframe=white,
+sharp corners,
+boxrule = 0mm,
+top=2mm, bottom=2mm, left=2mm, right=2mm,
+    enlarge top by=5mm,
+varwidth boxed title,
+   IfValueTF={#3}{watermark text={#3}}{}, 
+attach boxed title to top right={%
+xshift=.5mm,yshift=- \tcboxedtitleheight+.5mm},
+boxed title style={%
+enhanced,
+sharp corners,
+colframe=#1!75!black,
+right=1mm,
+boxrule=.5mm},
+colbacktitle=#1!5!white,
+coltitle=black,
+extrude right by=-15mm,
+underlay unbroken and first={%
+\node[fill=#1!5!white, draw=#1!75!black, line width=.5pt, 
+    below right, minimum height=2em, 
+   text width=0.8cm, align=center,
+   font=\bfseries] at ([xshift=3mm,yshift=-1mm]frame.north west) 
+   {#2 \thetcbcounter};
+\draw [#1!75!black,line width=.5mm]
+([xshift=14.75mm,yshift=.25mm]frame.north east)--+(0,-15mm);
+\draw [#1!75!black,line width=.5mm]
+([xshift=15mm,yshift=.25mm]frame.north east)--+(-\textwidth/4,0);
+\draw [#1!75!black,line width=.5mm]
+([yshift=.25mm]frame.north west)--+(\textwidth/4,0);
+\draw [#1!75!black,line width=.5mm]
+([xshift=.25mm,yshift=.25mm]frame.north west)--+(0,-15mm);
+},
+underlay unbroken and last={%
+\draw [#1!75!black,line width=.5mm]
+([yshift=.25mm]frame.south west)(\textwidth/4,0)--(0,0);
+\draw [#1!75!black,line width=.5mm]
+([xshift=.25mm,yshift=.25mm]frame.south west)--+(0,15mm);
+\draw [#1!75!black,line width=.5mm]
+([xshift=14.75mm,yshift=.25mm]frame.south east)--+(0,15mm);
+\draw [#1!75!black,line width=.5mm]
+([yshift=.25mm]frame.south east)(3*\textwidth/4,0)--(\textwidth,0);
+},
+code={%
+\ifstrempty{#5}
+{\tcbset{
+before upper={\parshape 4
+14mm  \dimexpr \hsize-14mm\relax
+14mm  \dimexpr \hsize-14mm\relax
+14mm  \dimexpr \hsize-14mm\relax
+0pt \hsize}}}
+{\tcbset{
+title={#5},
+before upper={\vspace*{\baselineskip}\parshape 3
+14mm \dimexpr \hsize-14mm\relax
+0pt \dimexpr \hsize-14mm\relax
+0pt \hsize}}}
+},
+#4}
+%%%%%%%%%%%%%
+\DeclareTColorBox[auto counter,list inside=listtcb95]{tcb95}{O{cyan} m d"" O{} d''}
+{breakable,enhanced,
+arc=1.5mm, 
+   enlarge top by=5mm,
+boxrule=2pt,colback=#1!3,
+fonttitle=\large\bfseries,
+coltitle=white, 
+IfValueTF={#3}{watermark text={#3}}{},
+frame style={
+left color=#1!80!blue,middle color=green!80,right color=#1!20,},
+ attach boxed title to top left={xshift=+0.51cm,yshift*=-0.42cm}, 
+boxed title style={top=.5mm,bottom=+.5mm},
+underlay unbroken and first={ 
+\fill[green!30,draw=cyan]([xshift=-2pt,yshift=+2pt]title.north west) -- ([xshift=+8pt,yshift=+2pt]title.north east)--([xshift=+9pt]$(title.east)+(0.3cm,0)$)--([xshift=+8pt,yshift=-2pt]title.south east) -- ([xshift=-2pt,yshift=-2pt]title.south west)--cycle;
+%
+\draw[white,thick]([xshift=-1pt,yshift=+1pt]title.north west) -- ([xshift=+7pt,yshift=+1pt]title.north east)--([xshift=+8pt]$(title.east)+(0.3cm,0)$)--
+([xshift=+7pt,yshift=-1pt]title.south east) -- ([xshift=-1pt,yshift=-1pt]title.south west)--cycle;
+%
+\fill[#1!90](title.north west) -- (title.north east)--($(title.east)+(0.3cm,0)$)--
+(title.south east) -- (title.south west)--cycle;
+\node[font=\bf] at(title.center){\tcbtitle}
+;},
+IfValueTF={#5}{title={#2~#5},list entry={#2~#5},
+}{title={#2},list entry={#2}},
+#4}
+
+\endinput

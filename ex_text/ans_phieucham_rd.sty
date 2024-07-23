@@ -1,0 +1,1348 @@
+\ProvidesPackage{ans_phieucham}[Thinh Tran]
+\RequirePackage{readarray}
+\RequirePackage{xcolor}
+%
+\font\damPHIEU=ugqb8v at 11pt
+\def\mauphieu{black}
+\def\maufoot{black}
+%%Lệnh tô phiếu
+	\def\TOPHIEU{
+	%KHOANH TRÒN
+	\foreach\tt/\ss in {0/A,1/B,2/C,3/D} {\draw (A\sodau) + (\tt*\kccot,-\j*\kcdong)
+		node{\color{gray!20}\scriptsize{\ss}} circle (2mm);
+	}
+	%SỐ TT
+	\draw (A\sodau) + (-2mm,-\j*\kcdong) node[left] {\fontsize{11}{11}\selectfont\sffamily\bfseries\sttcau}; %số 1..8
+	% XUẤT ĐÁP ÁN
+	\ifthenelse{\equal{\arA[\sttcau,1]}{A}}{\draw[fill=blue] (A\sodau) + (0,-\j*\kcdong) 	
+		%node{\color{gray!20}\scriptsize{A}} 
+		circle (2mm);}
+	{\ifthenelse{\equal{\arA[\sttcau,1]}{B}}{\draw[fill=blue] (A\sodau) + (\kccot,-\j*\kcdong) 
+			%node{\color{gray!20}\scriptsize{B}} 
+			circle (2mm);}
+		{\ifthenelse{\equal{\arA[\sttcau,1]}{C}}{\draw[fill=blue] (A\sodau) + (2*\kccot,-\j*\kcdong) 
+				%node{\color{gray!20}\scriptsize{C}} 
+				circle (2mm);}
+			{\ifthenelse{\equal{\arA[\sttcau,1]}{D}}{\draw[fill=blue] (A\sodau) + (3*\kccot,-\j*\kcdong)
+					%node{\color{gray!20}\scriptsize{D}} 
+					circle (2mm);}
+				% Tô đỏ phần thừa
+				{\foreach\t/\ss in {0/A,1/B,2/C,3/D} \draw[fill=white,draw=red,thick] (A\sodau) + (\t*\kccot,-\j*\kcdong) 
+					%node{\color{gray!20}\scriptsize{\ss}} 
+					circle (2mm);}}}}
+}
+%%Lệnh vẽ phiếu
+\def\VEPHIEU{
+	%KHOANH TRÒN
+	\foreach\tt/\ss in {0/A,1/B,2/C,3/D} {\draw (A\sodau) + (\tt*\kccot,-\j*\kcdong)
+		node{\color{gray!20}\scriptsize{\ss}} circle (2mm);
+	}
+	%SỐ TT
+	\draw (A\sodau) + (-2mm,-\j*\kcdong) node[left] {\fontsize{11}{11}\selectfont\sffamily\bfseries\sttcau}; %số 1..8
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Đáp án dưới dạng phiếu chấm TNMaker
+\newcommand{\ansmaker}[2][1.6]{%
+\pagestyle{fancy}
+\fancyhead[L]{\empty}
+\fancyhead[R]{\empty}
+\fancyhead[C]{\empty}
+\fancyfoot[R]{\empty}
+\fancyfoot[L]{\empty}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[C]{\thepage}
+\setcounter{page}{1}
+%\newcounter{checkmade}\setcounter{checkmade}{0}
+\foreach \s in {#2} {
+	\readdef{ans/dapan\s.txt}{\dataA}
+	\readarray\dataA\arA[-,\ncols]
+	\newpage
+\begin{center}
+	%Đánh mã đề đủ 3 chữ số
+	\ifthenelse{\s<10}{\def\madephieu{00\s}}
+	{\ifthenelse{\s<100}{\def\madephieu{0\s}}
+		{\def\madephieu{\s}}}
+	{\bf\color{blue} ĐÁP ÁN PHIẾU CHẤM MÃ ĐỀ \madephieu}\\[5mm]
+	\begin{tikzpicture}[scale=#1,line join=round,line cap=round,font=\scriptsize,every node/.style={scale=#1}]%,transform shape]
+		%				\def\a{#1}
+		\def\a{0.35}
+		\draw[\maufoot] (-1.5*\a,-1.5*\a)rectangle(31.5*\a,42.5*\a);
+		% 6 ô vuông đen to
+		\foreach \i in {0,1}
+		\foreach \j in {0,1,2}
+		\fill[xshift=29*\a*\i cm,yshift=19.9*\a*\j cm] (0,0)rectangle(\a,\a);
+		% 9 ô vuông đen nhỏ
+		\fill (8.33*\a,1.5*\a)rectangle(8.28*\a+2/3*\a,1.5*\a+2/3*\a);
+		\fill[yshift=12.3*\a cm] (8.33*\a,1.5*\a)rectangle(8.28*\a+2/3*\a,1.5*\a+2/3*\a);
+		\fill[xshift=6.3*\a cm] (8.33*\a,1.5*\a)rectangle(8.3*\a+2/3*\a,1.5*\a+2/3*\a);
+		\fill[xshift=12.7*\a cm] (8.33*\a,1.5*\a)rectangle(8.3*\a+2/3*\a,1.5*\a+2/3*\a);
+		\fill[xshift=6.3*\a cm,yshift=12.3*\a cm] (8.33*\a,1.5*\a)rectangle(8.3*\a+2/3*\a,1.5*\a+2/3*\a);
+		\fill[xshift=12.7*\a cm,yshift=12.3*\a cm] (8.33*\a,1.5*\a)rectangle(8.3*\a+2/3*\a,1.5*\a+2/3*\a);
+		\fill[yshift=24.7*\a cm] (8.33*\a,1.5*\a)rectangle(8.28*\a+2/3*\a,1.5*\a+2/3*\a);
+		\fill[xshift=6.3*\a cm,yshift=24.7*\a cm] (8.33*\a,1.5*\a)rectangle(8.3*\a+2/3*\a,1.5*\a+2/3*\a);
+		\fill[xshift=12.7*\a cm,yshift=24.7*\a cm] (8.33*\a,1.5*\a)rectangle(8.3*\a+2/3*\a,1.5*\a+2/3*\a);
+		% Số báo danh
+		\foreach \i in {0,1,...,5}
+		\foreach \j in {0,1,...,9}
+		\draw (2.3*\a+\i*1.06*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a)node{\color{\mauphieu!10}\sffamily\j};
+		%bao quanh
+		\draw[%dash pattern=on 1pt off 1pt on 1pt off 1pt,
+		rounded corners=2*\a mm] (1.76*\a cm-1pt,26.05*\a cm+0.5pt)rectangle(8.14*\a cm+1pt,24.97*\a cm-9*1.13*\a cm-0.5pt);
+		\draw (1.76*\a,26.3*\a)rectangle(8.14*\a,27.42*\a);
+		\foreach \i in {1,2,...,5}
+		\draw[xshift=1.063*\i*\a cm] (1.76*\a,26.3*\a)--(1.76*\a,27.42*\a);
+		\node at (4.95*\a,28.1*\a){\fontsize{9}{11}\selectfont\sffamily\bfseries SỐ BÁO DANH};
+		% Mã đề
+		\foreach \i in {0,1,2}
+		\foreach \j in {0,1,...,9}
+		\draw (9.74*\a+\i*1.07*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a)node{\color{\mauphieu!10}\sffamily\j};
+		\draw[%dash pattern=on 1pt off 1pt on 1pt off 1pt,
+		rounded corners=2*\a mm] (9.2*\a cm-1pt,26.05*\a cm+0.5pt)rectangle(12.42*\a cm+1pt,24.97*\a cm-9*1.13*\a cm-0.5pt);
+		\draw (9.2*\a,26.3*\a)rectangle(12.42*\a,27.42*\a);
+		\foreach \i in {1,2}
+		\draw[xshift=1.073*\i*\a cm] (9.2*\a,26.3*\a)--(9.2*\a,27.42*\a);
+		\node at (10.81*\a,28.1*\a){\fontsize{9}{11}\selectfont\sffamily\bfseries MÃ ĐỀ};
+		\pgfmathtruncatemacro{\mde}{floor(\s/100)};
+		\pgfmathtruncatemacro{\nde}{Mod(\s,100)};
+		\pgfmathtruncatemacro{\mmde}{floor(\nde/10)};
+		\pgfmathtruncatemacro{\mmmde}{Mod(\s,10)};
+		\fill[red] (9.74*\a,25.51*\a-\mde*1.13*\a)circle(0.46*\a) (9.74*\a+1.07*\a,25.51*\a-\mmde*1.13*\a)circle(0.46*\a) (9.74*\a+2*1.07*\a,25.51*\a-\mmmde*1.13*\a)circle(0.46*\a);
+		\node at (9.74*\a,26.86*\a){\sffamily\mde};
+		\node at (9.74*\a+1.07*\a,26.86*\a){\sffamily\mmde};
+		\node at (9.74*\a+2*1.07*\a,26.86*\a){\sffamily\mmmde};
+		% Tô đáp án
+		\foreach \i/\da in {0/A,1/B,2/C,3/D}{
+			\node[xscale=1.2,yscale=1.3] at (16.11*\a+\i*1.08*\a,26.56*\a){\textbf{\sffamily\da}};
+			\node[xscale=1.2,yscale=1.3] at (22.51*\a+\i*1.08*\a,26.56*\a){\textbf{\sffamily\da}};
+			\node[xscale=1.2,yscale=1.3] at (3.33*\a+\i*1.08*\a,14.16*\a){\textbf{\sffamily\da}};
+			\node[xscale=1.2,yscale=1.3] at (9.71*\a+\i*1.08*\a,14.16*\a){\textbf{\sffamily\da}};
+			\node[xscale=1.2,yscale=1.3] at (16.11*\a+\i*1.08*\a,14.16*\a){\textbf{\sffamily\da}};
+			\foreach \j in {0,1,...,9}{
+				\draw (16.11*\a+\i*1.07*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a)node{\color{\mauphieu!10}\sffamily\da};
+				\draw (22.51*\a+\i*1.07*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a)node{\color{\mauphieu!10}\sffamily\da};
+				\draw (3.33*\a+\i*1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a)node{\color{\mauphieu!10}\sffamily\da};
+				\draw (9.71*\a+\i*1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a)node{\color{\mauphieu!10}\sffamily\da};
+				\draw (16.11*\a+\i*1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a)node{\color{\mauphieu!10}\sffamily\da};
+				\pgfmathtruncatemacro{\x}{\j+1}
+				\pgfmathtruncatemacro{\xy}{\j+11}
+				\pgfmathtruncatemacro{\xyz}{\j+21}
+				\pgfmathtruncatemacro{\xyzt}{\j+31}
+				\pgfmathtruncatemacro{\xyztq}{\j+41}
+				\ifthenelse{\equal{\arA[\x,1]}{A}}{\fill[blue] (16.11*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a);}{\ifthenelse{\equal{\arA[\x,1]}{B}}{\fill[blue] (16.11*\a+1.07*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a);}{\ifthenelse{\equal{\arA[\x,1]}{C}}{\fill[blue] (16.11*\a+2*1.07*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a);}{\ifthenelse{\equal{\arA[\x,1]}{D}}{\fill[blue] (16.11*\a+3*1.07*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a);}{\foreach\t in {0,1,2,3}\filldraw[fill=white,draw=red] (16.11*\a+\t*1.07*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a);}}}}
+				\ifthenelse{\equal{\arA[\xy,1]}{A}}{\fill[blue] (22.51*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a);}{\ifthenelse{\equal{\arA[\xy,1]}{B}}{\fill[blue] (22.51*\a+1.07*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a);}{\ifthenelse{\equal{\arA[\xy,1]}{C}}{\fill[blue] (22.51*\a+2*1.07*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a);}{\ifthenelse{\equal{\arA[\xy,1]}{D}}{\fill[blue] (22.51*\a+3*1.07*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a);}{\foreach\t in {0,1,2,3}\filldraw[fill=white,draw=red]  (22.51*\a+\t*1.07*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a);}}}}
+				\ifthenelse{\equal{\arA[\xyz,1]}{A}}{\fill[blue] (3.33*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a);}{\ifthenelse{\equal{\arA[\xyz,1]}{B}}{\fill[blue] (3.33*\a+1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a);}{\ifthenelse{\equal{\arA[\xyz,1]}{C}}{\fill[blue] (3.33*\a+2*1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a);}{\ifthenelse{\equal{\arA[\xyz,1]}{D}}{\fill[blue] (3.33*\a+3*1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a);}{\foreach\t in {0,1,2,3}\filldraw[fill=white,draw=red]  (3.33*\a+\t*1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a);}}}}
+				\ifthenelse{\equal{\arA[\xyzt,1]}{A}}{\fill[blue] (9.71*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a);}{\ifthenelse{\equal{\arA[\xyzt,1]}{B}}{\fill[blue] (9.71*\a+1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a);}{\ifthenelse{\equal{\arA[\xyzt,1]}{C}}{\fill[blue] (9.71*\a+2*1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a);}{\ifthenelse{\equal{\arA[\xyzt,1]}{D}}{\fill[blue] (9.71*\a+3*1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a);}{\foreach\t in {0,1,2,3}\filldraw[fill=white,draw=red]  (9.71*\a+\t*1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a);}}}}
+				\ifthenelse{\equal{\arA[\xyztq,1]}{A}}{\fill[blue] (16.11*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a);}{\ifthenelse{\equal{\arA[\xyztq,1]}{B}}{\fill[blue] (16.11*\a+1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a);}{\ifthenelse{\equal{\arA[\xyztq,1]}{C}}{\fill[blue] (16.11*\a+2*1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a);}{\ifthenelse{\equal{\arA[\xyztq,1]}{D}}{\fill[blue] (16.11*\a+3*1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a);}{\foreach\t in {0,1,2,3}\filldraw[fill=white,draw=red] (16.11*\a+\t*1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a);}}}}
+		}}
+		\foreach \j in {0,1,...,9}{
+			\pgfmathtruncatemacro{\jj}{\j+1}
+			\pgfmathtruncatemacro{\jjj}{\j+11}
+			\pgfmathtruncatemacro{\jjjj}{\j+21}
+			\pgfmathtruncatemacro{\jjjjj}{\j+31}
+			\pgfmathtruncatemacro{\jjjjjj}{\j+41}
+			\draw (15.88*\a,25.51*\a-\j*1.13*\a)node[left,yscale=1.3]{\textbf{\sffamily\jj}};
+			\draw (22.28*\a,25.51*\a-\j*1.13*\a)node[left,yscale=1.3]{\textbf{\sffamily\jjj}};
+			\draw (3.1*\a,13.11*\a-\j*1.13*\a)node[left,yscale=1.3]{\textbf{\sffamily\jjjj}};
+			\draw (9.48*\a,13.11*\a-\j*1.13*\a)node[left,yscale=1.3]{\textbf{\sffamily\jjjjj}};
+			\draw (15.88*\a,13.11*\a-\j*1.13*\a)node[left,yscale=1.3]{\textbf{\sffamily\jjjjjj}};
+		}
+		% Trang trí phiếu
+		%				\node[scale=0.78,line width=1pt,draw=\maufoot,rectangle,rotate=90,dash pattern=on 1pt off 1pt on 1pt off 1pt,rounded corners=3*\a mm] at (13.43*\a,20.43*\a){\sffamily TÔ KÍN SỐ BÁO DANH VÀ MÃ ĐỀ};
+		\draw[dash pattern=on 1pt off 1pt on 1pt off 1pt] (9.3*\a,38.1*\a)coordinate(monthi)--(19.9*\a,38.1*\a)coordinate(ngaythi) (9.3*\a,39.2*\a)coordinate(kythi)--(19.9*\a,39.2*\a);
+		\node at ([xshift=-2.3*\a cm,yshift=0.2*\a cm]kythi){\sffamily Kỳ thi:};
+		\node at ([xshift=-2*\a cm,yshift=0.2*\a cm]monthi){\sffamily Môn thi:};
+		\node at ([xshift=2*\a cm,yshift=0.2*\a cm]ngaythi){\sffamily Ngày thi:};
+		\draw[dash pattern=on 1pt off 1pt on 1pt off 1pt] (24*\a,38.1*\a)--($(24*\a,38.1*\a)+(0:4.5*\a)$);
+		\draw[line width=1pt,draw=\maufoot,dash pattern=on 1pt off 1pt on 1pt off 1pt,rounded corners=3*\a mm] (1.76*\a,29*\a)rectangle(9.7*\a,37*\a) (10*\a,29*\a)rectangle(22.7*\a,37*\a) (23*\a,29*\a)rectangle(28.5*\a,37*\a) (1.76*\a,33*\a)--(9.7*\a,33*\a);
+		\node[scale=0.8] at (5.73*\a,36.5*\a){\sffamily Chữ ký cán bộ coi thi 1};
+		\node[scale=0.8] at (5.73*\a,32.5*\a){\sffamily Chữ ký cán bộ coi thi 2};
+		\node[xscale=0.8,yscale=0.8,text width=15.5*\a cm,align=left] at (16.35*\a,33*\a){\sffamily Hội đồng thi:\dotfill\\ \dotfill\\\dotfill\\  Phòng thi số:\dotfill\\ Họ và tên thí sinh:\dotfill\\ \dotfill\\ Ngày sinh:\dotfill (Nam/Nữ)\\ Chữ ký của thí sinh:\dotfill\\\dotfill};
+		\node[red] at (25.75*\a,36.2*\a){\textbf{\sffamily ĐIỂM SỐ}};
+		\node[scale=1] at (14.65*\a,41*\a){\damPHIEU\color{\maufoot} ĐÁP ÁN TNMAKER60};
+	\end{tikzpicture}
+\end{center}}
+}
+%%%%%%%%%%%%%%%%Phiếu TNMAKER
+\newcommand{\phieutnmaker}[1][1.42]{
+	\begin{center}
+		\begin{tikzpicture}[scale=#1,line join=round,line cap=round,font=\scriptsize,every node/.style={scale=#1}]%,transform shape]
+			
+			%				\def\a{#1}
+			\def\a{0.35}
+			\draw[\maufoot] (-1.5*\a,-1.5*\a)rectangle(31.5*\a,42.5*\a);
+			% 6 ô vuông đen to
+			\foreach \i in {0,1}
+			\foreach \j in {0,1,2}
+			\fill[xshift=29*\a*\i cm,yshift=19.9*\a*\j cm] (0,0)rectangle(\a,\a);
+			% 9 ô vuông đen nhỏ
+			\fill (8.33*\a,1.5*\a)rectangle(8.28*\a+2/3*\a,1.5*\a+2/3*\a);
+			\fill[yshift=12.3*\a cm] (8.33*\a,1.5*\a)rectangle(8.28*\a+2/3*\a,1.5*\a+2/3*\a);
+			\fill[xshift=6.3*\a cm] (8.33*\a,1.5*\a)rectangle(8.3*\a+2/3*\a,1.5*\a+2/3*\a);
+			\fill[xshift=12.7*\a cm] (8.33*\a,1.5*\a)rectangle(8.3*\a+2/3*\a,1.5*\a+2/3*\a);
+			\fill[xshift=6.3*\a cm,yshift=12.3*\a cm] (8.33*\a,1.5*\a)rectangle(8.3*\a+2/3*\a,1.5*\a+2/3*\a);
+			\fill[xshift=12.7*\a cm,yshift=12.3*\a cm] (8.33*\a,1.5*\a)rectangle(8.3*\a+2/3*\a,1.5*\a+2/3*\a);
+			\fill[yshift=24.7*\a cm] (8.33*\a,1.5*\a)rectangle(8.28*\a+2/3*\a,1.5*\a+2/3*\a);
+			\fill[xshift=6.3*\a cm,yshift=24.7*\a cm] (8.33*\a,1.5*\a)rectangle(8.3*\a+2/3*\a,1.5*\a+2/3*\a);
+			\fill[xshift=12.7*\a cm,yshift=24.7*\a cm] (8.33*\a,1.5*\a)rectangle(8.3*\a+2/3*\a,1.5*\a+2/3*\a);
+			% Số báo danh
+			\foreach \i in {0,1,...,5}
+			\foreach \j in {0,1,...,9}
+			\draw (2.3*\a+\i*1.06*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a)node[opacity=1]{\color{\mauphieu!10}\sffamily\j};
+			%bao quanh
+			\draw[%dash pattern=on 1pt off 1pt on 1pt off 1pt,
+			rounded corners=2*\a mm] (1.76*\a cm-1pt,26.05*\a cm+0.5pt)rectangle(8.14*\a cm+1pt,24.97*\a cm-9*1.13*\a cm-0.5pt);
+			\draw (1.76*\a,26.3*\a)rectangle(8.14*\a,27.42*\a);
+			\foreach \i in {1,2,...,5}
+			\draw[xshift=1.063*\i*\a cm] (1.76*\a,26.3*\a)--(1.76*\a,27.42*\a);
+			\node at (4.95*\a,28.1*\a){\fontsize{9}{11}\selectfont\sffamily\bfseries SỐ BÁO DANH};
+			% Mã đề
+			\foreach \i in {0,1,2}
+			\foreach \j in {0,1,...,9}
+			\draw (9.74*\a+\i*1.07*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a)node{\color{\mauphieu!10}\sffamily\j};
+			%bao quanh
+			\draw[%dash pattern=on 1pt off 1pt on 1pt off 1pt,
+			rounded corners=2*\a mm] (9.2*\a cm-1pt,26.05*\a cm+0.5pt)rectangle(12.42*\a cm+1pt,24.97*\a cm-9*1.13*\a cm-0.5pt);
+			\draw (9.2*\a,26.3*\a)rectangle(12.42*\a,27.42*\a);
+			\foreach \i in {1,2}
+			\draw[xshift=1.073*\i*\a cm] (9.2*\a,26.3*\a)--(9.2*\a,27.42*\a);
+			\node at (10.81*\a,28.1*\a){\fontsize{9}{11}\selectfont\sffamily\bfseries MÃ ĐỀ};
+			% Tô đáp án
+			\foreach \i/\da in {0/A,1/B,2/C,3/D}{
+				\node[xscale=1.2,yscale=1.3] at (16.11*\a+\i*1.08*\a,26.56*\a){\textbf{\sffamily\da}};
+				\node[xscale=1.2,yscale=1.3] at (22.51*\a+\i*1.08*\a,26.56*\a){\textbf{\sffamily\da}};
+				\node[xscale=1.2,yscale=1.3] at (3.33*\a+\i*1.08*\a,14.16*\a){\textbf{\sffamily\da}};
+				\node[xscale=1.2,yscale=1.3] at (9.71*\a+\i*1.08*\a,14.16*\a){\textbf{\sffamily\da}};
+				\node[xscale=1.2,yscale=1.3] at (16.11*\a+\i*1.08*\a,14.16*\a){\textbf{\sffamily\da}};
+				\foreach \j in {0,1,...,9}{
+					\draw (16.11*\a+\i*1.07*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a)node{\color{\mauphieu!10}\sffamily\da};
+					\draw (22.51*\a+\i*1.07*\a,25.51*\a-\j*1.13*\a)circle(0.46*\a)node{\color{\mauphieu!10}\sffamily\da};
+					\draw (3.33*\a+\i*1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a)node{\color{\mauphieu!10}\sffamily\da};
+					\draw (9.71*\a+\i*1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a)node{\color{\mauphieu!10}\sffamily\da};
+					\draw (16.11*\a+\i*1.07*\a,13.11*\a-\j*1.13*\a)circle(0.46*\a)node{\color{\mauphieu!10}\sffamily\da};
+					\pgfmathtruncatemacro{\x}{\j+1}
+					\pgfmathtruncatemacro{\xy}{\j+11}
+					\pgfmathtruncatemacro{\xyz}{\j+21}
+					\pgfmathtruncatemacro{\xyzt}{\j+31}
+					\pgfmathtruncatemacro{\xyztq}{\j+41}
+			}}
+			\foreach \j in {0,1,...,9}{
+				\pgfmathtruncatemacro{\jj}{\j+1}
+				\pgfmathtruncatemacro{\jjj}{\j+11}
+				\pgfmathtruncatemacro{\jjjj}{\j+21}
+				\pgfmathtruncatemacro{\jjjjj}{\j+31}
+				\pgfmathtruncatemacro{\jjjjjj}{\j+41}
+				\draw (15.88*\a,25.51*\a-\j*1.13*\a)node[left,yscale=1.3]{\textbf{\sffamily\jj}};
+				\draw (22.28*\a,25.51*\a-\j*1.13*\a)node[left,yscale=1.3]{\textbf{\sffamily\jjj}};
+				\draw (3.1*\a,13.11*\a-\j*1.13*\a)node[left,yscale=1.3]{\textbf{\sffamily\jjjj}};
+				\draw (9.48*\a,13.11*\a-\j*1.13*\a)node[left,yscale=1.3]{\textbf{\sffamily\jjjjj}};
+				\draw (15.88*\a,13.11*\a-\j*1.13*\a)node[left,yscale=1.3]{\textbf{\sffamily\jjjjjj}};
+			}
+			% Trang trí phiếu
+			%			\node[scale=0.78,line width=1pt,draw=\maufoot,rectangle,rotate=90,dash pattern=on 1pt off 1pt on 1pt off 1pt,rounded corners=3*\a mm] at (13.43*\a,20.43*\a){\sffamily TÔ KÍN SỐ BÁO DANH VÀ MÃ ĐỀ};
+			\draw[dash pattern=on 1pt off 1pt on 1pt off 1pt] (9.3*\a,38.1*\a)coordinate(monthi)--(19.9*\a,38.1*\a)coordinate(ngaythi) (9.3*\a,39.2*\a)coordinate(kythi)--(19.9*\a,39.2*\a);
+			\node at ([xshift=-2.3*\a cm,yshift=0.2*\a cm]kythi){\sffamily Kỳ thi:};
+			\node at ([xshift=-2*\a cm,yshift=0.2*\a cm]monthi){\sffamily Môn thi:};
+			\node at ([xshift=2*\a cm,yshift=0.2*\a cm]ngaythi){\sffamily Ngày thi:};
+			\draw[dash pattern=on 1pt off 1pt on 1pt off 1pt] (24*\a,38.1*\a)--($(24*\a,38.1*\a)+(0:4.5*\a)$);
+			\draw[line width=1pt,draw=\maufoot,dash pattern=on 1pt off 1pt on 1pt off 1pt,rounded corners=3*\a mm] (1.76*\a,29*\a)rectangle(9.7*\a,37*\a) (10*\a,29*\a)rectangle(22.7*\a,37*\a) (23*\a,29*\a)rectangle(28.5*\a,37*\a) (1.76*\a,33*\a)--(9.7*\a,33*\a);
+			\node[scale=0.8] at (5.73*\a,36.5*\a){\sffamily Chữ ký cán bộ coi thi 1};
+			\node[scale=0.8] at (5.73*\a,32.5*\a){\sffamily Chữ ký cán bộ coi thi 2};
+			\node[xscale=0.8,yscale=0.8,text width=15.5*\a cm,align=left] at (16.35*\a,33*\a){\sffamily Hội đồng thi:\dotfill\\ \dotfill\\\dotfill\\  Phòng thi số:\dotfill\\ Họ và tên thí sinh:\dotfill\\ \dotfill\\ Ngày sinh:\dotfill (Nam/Nữ)\\ Chữ ký của thí sinh:\dotfill\\\dotfill};
+			\node[red] at (25.75*\a,36.2*\a){\textbf{\sffamily ĐIỂM SỐ}};
+			\node[scale=1] at (14.65*\a,41*\a){\damPHIEU\color{\maufoot} PHIẾU LÀM BÀI TNMAKER60};
+		\end{tikzpicture}
+	\end{center}
+}
+%%%%%%%%%%%%%%%%Kiểu phiếu Zipgrade
+%%%%%%%%%%%%%%%%%%%%%%% 50 câu cá nhân
+%Đáp án dưới dạng phiếu chấm Zipgrade
+\newcommand{\anszipcanhan}[2][1.35]{%
+\pagestyle{fancy}
+\fancyhead[L]{\empty}
+\fancyhead[R]{\empty}
+\fancyhead[C]{\empty}
+\fancyfoot[R]{\empty}
+\fancyfoot[L]{\empty}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[C]{\empty}
+\setcounter{page}{1}
+\newcounter{checkmade}\setcounter{checkmade}{0}
+\foreach \s in {#2} {
+	\readdef{ans/dapan\s.txt}{\dataA}
+	\readarray\dataA\arA[-,\ncols]
+\newpage
+\begin{center}
+	%Đánh mã đề đủ 3 chữ số
+	\ifthenelse{\s<10}{\def\madephieu{00\s}}
+	{\ifthenelse{\s<100}{\def\madephieu{0\s}}
+		{\def\madephieu{\s}}}
+	{\bf\color{blue} ĐÁP ÁN PHIẾU CHẤM MÃ ĐỀ \madephieu}\\[5mm]
+\begin{tikzpicture}[scale=#1, every node/.style={scale=#1}]%,transform shape]
+	\draw[\maufoot,line width=1pt] (-5.95mm,-5.95mm)rectangle(122.3mm,180mm);
+	%		
+	\node[scale=1] at (58.5mm,175mm){\damPHIEU\color{\maufoot} PHIẾU ĐÁP ÁN ZIPGRADE};
+	% Ô vuông màu đen 4 góc
+	\def\rbg{4mm}
+	\def\rd{2.7mm}
+	\draw[fill=black] (-1.95mm,-1.7mm) rectangle +(\rbg,\rbg); %gốc dưới trái
+	\draw[fill=black] (39.45mm,-1.8mm) rectangle  +(\rd,\rd); % dưới 1
+	\draw[fill=black] (74.08mm,-1.8mm) rectangle +(\rd,\rd); % dưới 2
+	\draw[fill=black] (114.3mm,-1.7mm) rectangle +(\rbg,\rbg); %gốc dưới phải
+	%
+	\draw[fill=black] (-1.95mm,78.55mm) rectangle +(\rbg,\rbg); %trái giữa
+	\draw[fill=black] (39.45mm,74.42mm) rectangle +(\rd,\rd); %giữa trái
+	\draw[fill=black] (74.1mm,74.42mm) rectangle +(\rd,\rd); %giữa phải
+	\draw[fill=black] (114.25mm,78.55mm) rectangle +(\rbg,\rbg); % giữa phải
+	%
+	\draw[fill=black] (-1.95mm,158.85mm) rectangle +(\rbg,\rbg); %gốc trên trái
+	\draw[fill=black] (39.45mm,138.38mm) rectangle +(\rd,\rd); %trên giữa 1
+	\draw[fill=black] (74.1mm,138.38mm) rectangle +(\rd,\rd); % trên giữa 2
+	\draw[fill=black] (114.3mm,158.85mm) rectangle +(\rbg,\rbg); %gốc trên phải
+	
+	% mã vạch
+	\draw[fill=black] (-1.95mm,18.45mm) rectangle +(\rbg,\rd); % dưới 1
+	\draw[fill=black] (-1.95mm,22.6mm) rectangle +(\rbg,1mm); %dưới 2
+	\draw[fill=black] (-1.95mm,25mm) rectangle +(\rbg,\rd); %dưới 3
+	\draw[fill=black] (-1.95mm,30.85mm) rectangle +(\rbg,1mm); %dưới4
+	\draw[fill=black] (-1.95mm,33.4mm) rectangle +(\rbg,\rd); % dưới 5
+	\draw[fill=black] (-1.95mm,37.45mm) rectangle +(\rbg,1mm);
+	\draw[fill=black] (-1.95mm,41.65mm) rectangle +(\rbg,1mm);
+	\draw[fill=black] (-1.95mm,45.75mm) rectangle +(\rbg,1mm);
+	\draw[fill=black] (-1.95mm,49.85mm) rectangle +(\rbg,1mm);
+	\draw[fill=black] (-1.95mm,52.35mm) rectangle +(\rbg,1mm);
+	\draw[fill=black] (-1.95mm,56.5mm) rectangle +(\rbg,1mm);
+	\draw[fill=black] (-1.95mm,59mm) rectangle +(\rbg,1mm);
+	\draw[fill=black] (-1.95mm,61.5mm) rectangle +(\rbg,1mm);
+	
+	% họ tên lớp
+	\draw[thick] (6.15mm,155mm) rectangle (54.15mm,162.8mm);
+	\draw[thick] (55.8mm,155mm) rectangle (80mm,162.8mm);
+	\draw (6.05mm,163.5mm) node[inner sep=0pt,anchor=south west] {\fontsize{11}{11}\selectfont\sffamily\bfseries Họ và tên};
+	\draw (55.7mm,163.5mm) node[inner sep=0pt,anchor=south west] {\fontsize{11}{11}\selectfont\sffamily\bfseries Lớp};
+	\draw[thick] (6mm,142.5mm) rectangle (42mm,150mm);
+	\draw[thick] (43.5mm,142.5mm) rectangle (80mm,150mm);
+	\draw (5.9mm,150.5mm) node[inner sep=0pt,anchor=south west] {\fontsize{11}{11}\selectfont\sffamily\bfseries Kỳ thi};
+	\draw (43.2mm,151mm) node[inner sep=0pt,anchor=south west] {\fontsize{11}{11}\selectfont\sffamily\bfseries Môn thi};
+	% Số báo danh
+	\draw (94.5mm,71.5mm) node {\sffamily SỐ BÁO DANH};
+	\draw (79.5mm,62mm) -- (79.5mm,69mm) --(109.5mm,69mm) -- (109.5mm,62mm);
+	\draw (84.5mm,62mm) -- (84.5mm,69mm);
+	\draw (89.5mm,62mm) -- (89.5mm,69mm);
+	\draw (94.5mm,62mm) -- (94.5mm,69mm);
+	\draw (99.5mm,62mm) -- (99.5mm,69mm);
+	\draw (104.5mm,62mm) -- (104.5mm,69mm);
+	\draw (79.5mm,2.2mm) rectangle (109.5mm,62mm);
+	%
+	\foreach \i in {0,...,9}{ %sửa rồi
+		\draw (82mm,59.25mm) + (0,-\i*6mm) node{\scriptsize{\i}} circle (2mm);
+		\draw (87mm,59.25mm) + (0,-\i*6mm) node{\scriptsize{\i}} circle (2mm);
+		\draw (92mm,59.25mm) + (0,-\i*6mm) node{\scriptsize{\i}} circle (2mm);
+		\draw (97mm,59.25mm) + (0,-\i*6mm) node{\scriptsize{\i}} circle (2mm);
+		\draw (102mm,59.25mm) + (0,-\i*6mm) node{\scriptsize{\i}} circle (2mm);
+		\draw (107mm,59.25mm) + (0,-\i*6mm) node{\scriptsize{\i}} circle (2mm);
+	}%
+	%==========
+	% Tô đáp án lên phiếu chấm
+	\def\kccot{5mm}\def\kcdong{6.65mm}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\foreach \j in {0,1,...,7}{
+		\pgfmathtruncatemacro{\x}{\j+1}
+		\pgfmathtruncatemacro{\xy}{\j+19}
+		\pgfmathtruncatemacro{\xyz}{\j+27}
+		\pgfmathtruncatemacro{\xyzt}{\j+35}
+		\pgfmathtruncatemacro{\xyztq}{\j+43}	
+		%========================
+		%%%%%%%%%%%%%%CÂU TỪ 1..8
+		\def\sodau{0}
+		\def\sttcau{\x}
+		\coordinate (A\sodau) at (14.6mm,140.2mm-6.65mm); %điểm gốc
+		\TOPHIEU	
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 19..26
+		\def\sodau{18} %số trc câu đầu
+		\def\sttcau{\xy} %số thứ tự của câu
+		\coordinate (A\sodau) at (40.5mm,140.2mm-6.65mm); %điểm gốc
+		\TOPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 27..34		
+		\def\sodau{26} %số trc câu đầu
+		\def\sttcau{\xyz} %số thứ tự của câu
+		\coordinate (A\sodau) at (40.5mm,76.3mm-6.65mm); %điểm gốc
+		\TOPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 35..42				
+		\def\sodau{34} %số trc câu đầu
+		\def\sttcau{\xyzt} %số thứ tự của câu
+		\coordinate (A\sodau) at (66.4mm,140.2mm-6.65mm); %điểm gốc
+		\TOPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 43..50				
+		\def\sodau{42} %số trc câu đầu
+		\def\sttcau{\xyztq} %số thứ tự của câu
+		\coordinate (A\sodau) at (92.4mm,140.2mm-6.65mm); %điểm gốc
+		\TOPHIEU
+	}
+	%========================
+	%%%%%%%%%%%%CÂU TỪ 9..18
+	\foreach \j in {0,1,...,9}{%9..18
+		\pgfmathtruncatemacro{\k}{\j+9}	
+		\def\sodau{8} %số trc câu đầu
+		\def\sttcau{\k} %số thứ tự của câu
+		\coordinate (A\sodau) at (14.6mm,76.3mm-6.65mm); %điểm gốc
+		\TOPHIEU
+	}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%ABCD
+	\foreach \i/\abcd in {0/A,1/B,2/C,3/D}{
+		%%%ABCD  cột 1
+		\draw (14.6mm+\i*5mm,80.5mm)  node{\fontsize{11}{11}\selectfont\sffamily\bfseries\abcd};
+		%ABCD thứ 2
+		\draw  (40.5mm+\i*5mm,80.5mm)  node{\fontsize{11}{11}\selectfont\sffamily\bfseries\abcd};
+		%ABCD thứ 3	
+		\draw  (66.4mm+\i*5mm,80.5mm)  node{\fontsize{11}{11}\selectfont\sffamily\bfseries\abcd};
+		%ABCD thứ 4
+		\draw  (92.4mm+\i*5mm,80.5mm)  node{\fontsize{11}{11}\selectfont\sffamily\bfseries\abcd};
+	}	
+	%===========================
+	%%%%%%%%%%%%%%%%%MÃ ĐÁP ÁN
+	% Mã đề
+	\draw (63.75mm,16mm) node {\fontsize{11}{11}\selectfont\sffamily\bfseries MÃ ĐỀ THI};
+	\draw (50.5mm,2.2mm) rectangle (76.3mm,9mm);
+	\foreach \i in {0,...,4}{
+		\pgfmathtruncatemacro{\madethi}{\i+1}
+		\draw (53.2mm,5.65mm) + (\i*5mm,0) node{\scriptsize{\madethi}} circle (2mm);
+	}
+	% Tô mã đề
+	\refstepcounter{checkmade}%(tăng đếm )
+	\ifnum\the\value{checkmade}<2 %tô mã đề
+	\draw[fill=red] (53.2mm,5.65mm) node[above=2.5mm]{\color{blue}\footnotesize\bfseries\s} circle (2mm);
+	\else\ifnum\the\value{checkmade}<3
+	\draw[fill=red] (53.2mm,5.65mm) + (5mm,0) node[above=2.5mm]{\color{blue}\footnotesize\bfseries\s} circle (2mm);
+	\else\ifnum\the\value{checkmade}<4
+	\draw[fill=red] (53.2mm,5.65mm) + (2*5mm,0) node[above=2.5mm]{\color{blue}\footnotesize\bfseries\s} circle (2mm);
+	\else\ifnum\the\value{checkmade}<5
+	\draw[fill=red] (53.2mm,5.65mm) + (3*5mm,0) node[above=2.5mm]{\color{blue}\footnotesize\bfseries\s} circle (2mm);
+	\else\ifnum\the\value{checkmade}<6
+	\draw[fill=red] (53.2mm,5.65mm) + (4*5mm,0) node[above=2.5mm]{\color{blue}\footnotesize\bfseries\s} circle (2mm);
+	\else
+	\fi\fi\fi\fi\fi
+\end{tikzpicture}
+\end{center}}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%phiếu Zip
+\newcommand{\phieuzipcanhan}[1][1.2]{
+\begin{center}
+\begin{tikzpicture}[scale=#1, every node/.style={scale=#1}]%,transform shape]%================================
+	%================================
+	\draw[\maufoot,line width=1pt] (-5.95mm,-5.95mm)rectangle(122.3mm,180mm);
+	%		
+	\node[scale=1] at (58.5mm,175mm){\damPHIEU\color{\maufoot} PHIẾU LÀM BÀI ZIPGRADE};
+	% Ô vuông màu đen 4 góc
+	\def\rbg{4mm}
+	\def\rd{2.7mm}
+	\draw[fill=black] (-1.95mm,-1.7mm) rectangle +(\rbg,\rbg); %gốc dưới trái
+	\draw[fill=black] (39.45mm,-1.8mm) rectangle  +(\rd,\rd); % dưới 1
+	\draw[fill=black] (74.08mm,-1.8mm) rectangle +(\rd,\rd); % dưới 2
+	\draw[fill=black] (114.3mm,-1.7mm) rectangle +(\rbg,\rbg); %gốc dưới phải
+	%
+	\draw[fill=black] (-1.95mm,78.55mm) rectangle +(\rbg,\rbg); %trái giữa
+	\draw[fill=black] (39.45mm,74.42mm) rectangle +(\rd,\rd); %giữa trái
+	\draw[fill=black] (74.1mm,74.42mm) rectangle +(\rd,\rd); %giữa phải
+	\draw[fill=black] (114.25mm,78.55mm) rectangle +(\rbg,\rbg); % giữa phải
+	%
+	\draw[fill=black] (-1.95mm,158.85mm) rectangle +(\rbg,\rbg); %gốc trên trái
+	\draw[fill=black] (39.45mm,138.38mm) rectangle +(\rd,\rd); %trên giữa 1
+	\draw[fill=black] (74.1mm,138.38mm) rectangle +(\rd,\rd); % trên giữa 2
+	\draw[fill=black] (114.3mm,158.85mm) rectangle +(\rbg,\rbg); %gốc trên phải
+	
+	% mã vạch
+	\draw[fill=black] (-1.95mm,18.45mm) rectangle +(\rbg,\rd); % dưới 1
+	\draw[fill=black] (-1.95mm,22.6mm) rectangle +(\rbg,1mm); %dưới 2
+	\draw[fill=black] (-1.95mm,25mm) rectangle +(\rbg,\rd); %dưới 3
+	\draw[fill=black] (-1.95mm,30.85mm) rectangle +(\rbg,1mm); %dưới4
+	\draw[fill=black] (-1.95mm,33.4mm) rectangle +(\rbg,\rd); % dưới 5
+	\draw[fill=black] (-1.95mm,37.45mm) rectangle +(\rbg,1mm);
+	\draw[fill=black] (-1.95mm,41.65mm) rectangle +(\rbg,1mm);
+	\draw[fill=black] (-1.95mm,45.75mm) rectangle +(\rbg,1mm);
+	\draw[fill=black] (-1.95mm,49.85mm) rectangle +(\rbg,1mm);
+	\draw[fill=black] (-1.95mm,52.35mm) rectangle +(\rbg,1mm);
+	\draw[fill=black] (-1.95mm,56.5mm) rectangle +(\rbg,1mm);
+	\draw[fill=black] (-1.95mm,59mm) rectangle +(\rbg,1mm);
+	\draw[fill=black] (-1.95mm,61.5mm) rectangle +(\rbg,1mm);
+	
+	% họ tên lớp
+	\draw[thick] (6.15mm,155mm) rectangle (54.15mm,162.8mm);
+	\draw[thick] (55.8mm,155mm) rectangle (80mm,162.8mm);
+	\draw (6.05mm,163.5mm) node[inner sep=0pt,anchor=south west] {\fontsize{11}{11}\selectfont\sffamily\bfseries Họ và tên};
+	\draw (55.7mm,163.5mm) node[inner sep=0pt,anchor=south west] {\fontsize{11}{11}\selectfont\sffamily\bfseries Lớp};
+	\draw[thick] (6mm,142.5mm) rectangle (42mm,150mm);
+	\draw[thick] (43.5mm,142.5mm) rectangle (80mm,150mm);
+	\draw (5.9mm,150.5mm) node[inner sep=0pt,anchor=south west] {\fontsize{11}{11}\selectfont\sffamily\bfseries Kỳ thi};
+	\draw (43.2mm,151mm) node[inner sep=0pt,anchor=south west] {\fontsize{11}{11}\selectfont\sffamily\bfseries Môn thi};
+	% Mã đề
+	\draw (63.75mm,16mm) node {\fontsize{11}{11}\selectfont\sffamily\bfseries MÃ ĐỀ THI};
+	\draw (50.5mm,2.2mm) rectangle (76.3mm,9mm);
+	\foreach \i in {0,...,4}{
+		\draw (53.2mm,5.65mm) + (\i*5mm,0) node{\scriptsize{\i}} circle (2mm);
+	}
+	% Số báo danh
+	\draw (94.5mm,71.5mm) node {\fontsize{11}{11}\selectfont\sffamily SỐ BÁO DANH};
+	\draw (79.5mm,62mm) -- (79.5mm,69mm) --(109.5mm,69mm) -- (109.5mm,62mm);
+	\draw (84.5mm,62mm) -- (84.5mm,69mm);
+	\draw (89.5mm,62mm) -- (89.5mm,69mm);
+	\draw (94.5mm,62mm) -- (94.5mm,69mm);
+	\draw (99.5mm,62mm) -- (99.5mm,69mm);
+	\draw (104.5mm,62mm) -- (104.5mm,69mm);
+	\draw (79.5mm,2.2mm) rectangle (109.5mm,62mm);
+	%tô
+	\foreach \i in {0,...,9}{ %sửa rồi
+		\draw (82mm,59.25mm) + (0,-\i*6mm) node{\scriptsize{\i}} circle (2mm);
+		\draw (87mm,59.25mm) + (0,-\i*6mm) node{\scriptsize{\i}} circle (2mm);
+		\draw (92mm,59.25mm) + (0,-\i*6mm) node{\scriptsize{\i}} circle (2mm);
+		\draw (97mm,59.25mm) + (0,-\i*6mm) node{\scriptsize{\i}} circle (2mm);
+		\draw (102mm,59.25mm) + (0,-\i*6mm) node{\scriptsize{\i}} circle (2mm);
+		\draw (107mm,59.25mm) + (0,-\i*6mm) node{\scriptsize{\i}} circle (2mm);
+	}%
+	% Tô đáp án lên phiếu chấm
+	\def\kccot{5mm}\def\kcdong{6.65mm}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\foreach \j in {0,1,...,7}{
+		\pgfmathtruncatemacro{\x}{\j+1}
+		\pgfmathtruncatemacro{\xy}{\j+19}
+		\pgfmathtruncatemacro{\xyz}{\j+27}
+		\pgfmathtruncatemacro{\xyzt}{\j+35}
+		\pgfmathtruncatemacro{\xyztq}{\j+43}	
+		%========================
+		%%%%%%%%%%%%%%CÂU TỪ 1..8
+		\def\sodau{0}
+		\def\sttcau{\x}
+		\coordinate (A\sodau) at (14.6mm,140.2mm-6.65mm); %điểm gốc
+		\VEPHIEU	
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 19..26
+		\def\sodau{18} %số trc câu đầu
+		\def\sttcau{\xy} %số thứ tự của câu
+		\coordinate (A\sodau) at (40.5mm,140.2mm-6.65mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 27..34		
+		\def\sodau{26} %số trc câu đầu
+		\def\sttcau{\xyz} %số thứ tự của câu
+		\coordinate (A\sodau) at (40.5mm,76.3mm-6.65mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 35..42				
+		\def\sodau{34} %số trc câu đầu
+		\def\sttcau{\xyzt} %số thứ tự của câu
+		\coordinate (A\sodau) at (66.4mm,140.2mm-6.65mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 43..50				
+		\def\sodau{42} %số trc câu đầu
+		\def\sttcau{\xyztq} %số thứ tự của câu
+		\coordinate (A\sodau) at (92.4mm,140.2mm-6.65mm); %điểm gốc
+		\VEPHIEU
+	}
+	%========================
+	%%%%%%%%%%%%CÂU TỪ 9..18
+	\foreach \j in {0,1,...,9}{%9..18
+		\pgfmathtruncatemacro{\k}{\j+9}	
+		\def\sodau{8} %số trc câu đầu
+		\def\sttcau{\k} %số thứ tự của câu
+		\coordinate (A\sodau) at (14.6mm,76.3mm-6.65mm); %điểm gốc
+		\VEPHIEU
+	}	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%ABCD
+	\foreach \i/\abcd in {0/A,1/B,2/C,3/D}{
+		%%%ABCD  cột 1
+		\draw (14.6mm+\i*5mm,80.5mm)  node{\fontsize{11}{11}\selectfont\sffamily\bfseries\abcd};
+		%ABCD thứ 2
+		\draw  (40.5mm+\i*5mm,80.5mm)  node{\fontsize{11}{11}\selectfont\sffamily\bfseries\abcd};
+		%ABCD thứ 3	
+		\draw  (66.4mm+\i*5mm,80.5mm)  node{\fontsize{11}{11}\selectfont\sffamily\bfseries\abcd};
+		%ABCD thứ 4
+		\draw  (92.4mm+\i*5mm,80.5mm)  node{\fontsize{11}{11}\selectfont\sffamily\bfseries\abcd};
+	}	
+	%===========================
+\end{tikzpicture}
+\end{center}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%Tô đáp án zip 50 câu chung
+%Đáp án dưới dạng phiếu chấm Zipgrade
+\newcommand{\anszip}[2][1.4]{%
+\pagestyle{fancy}
+\fancyhead[L]{\empty}
+\fancyhead[R]{\empty}
+\fancyhead[C]{\empty}
+\fancyfoot[R]{\empty}
+\fancyfoot[L]{\empty}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[C]{\thepage}
+\setcounter{page}{1}
+\newcounter{checkmadezip}\setcounter{checkmadezip}{0}
+\foreach \s in {#2} {
+	\readdef{ans/dapan\s.txt}{\dataA}
+	\readarray\dataA\arA[-,\ncols]
+	\newpage
+	\begin{center}
+	%Đánh mã đề đủ 3 chữ số
+	\ifthenelse{\s<10}{\def\madephieu{00\s}}
+	{\ifthenelse{\s<100}{\def\madephieu{0\s}}
+		{\def\madephieu{\s}}}
+	{\bf\color{blue} ĐÁP ÁN PHIẾU CHẤM MÃ ĐỀ \madephieu}\\[5mm]
+	\begin{tikzpicture}[scale=#1, every node/.style={scale=#1}]%,transform shape]
+	\draw[\maufoot,line width=1pt] (0mm-4mm,-2.5mm-4mm)rectangle(118.5mm+4mm,170mm);
+	\node[scale=1,above] at (59.25mm,162mm){\damPHIEU\color{\maufoot} PHIẾU ĐÁP ÁN ZIPGRADE};
+	%================================
+	\draw[fill=black] (114.7mm,154.2mm) rectangle (118.5mm,158mm); %ô vuông trên cùng bên phải
+	\draw[fill=black] (0mm,154.2mm) rectangle (3.8mm,158mm); %ô vuông trên cùng bên trái
+	\draw[fill=black] (0mm,75.8mm) rectangle (3.8mm,79.6mm); %ô vuông ở giữa bên trái
+	\draw[fill=black](114.7mm,75.8mm) rectangle (118.5mm,79.6mm); %ô vuông ở giữa bên phải
+	\draw[fill=black] (0mm,-2.5mm) rectangle (3.8mm,1.9mm);%ô vuông dưới cùng bên trái
+	\draw[fill=black] (114.7mm,-2.5mm) rectangle (118.5mm,1.9mm);%ô vuông dưới cùng bên phải
+	
+	%ô vuông nhỏ
+	\draw[fill=black] (45.65mm,4.3mm) rectangle (48.55mm,7.1mm);% ô nhỏ dưới cùng bên trái
+	\draw[fill=black](77.5mm,4.3mm) rectangle (80.4mm,7.1mm);% ô nhỏ dưới cùng bên phải
+	\draw[fill=black] (45.65mm,68.3mm) rectangle (48.55mm,71.1mm);%Ô nhỏ ở giữa bên trái
+	\draw[fill=black] (77.5mm,68.3mm) rectangle (80.4mm,71.1mm); %Ô nhỏ ở giữa bên phải
+	\draw[fill=black] (45.65mm,133.2mm) rectangle (48.55mm,136mm);%Ô nhỏ ở trên bên trái
+	\draw[fill=black] (77.5mm,133mm) rectangle (80.4mm,135.8mm);%Ô nhỏ ở trên bên phải
+	
+	%Mã vạch
+	\draw[fill=black] (115.7mm, 38.6mm)--(115.7mm, 36.2mm)--(118.4mm, 36.2mm)--(118.4mm, 33.3mm)--(115.7mm,33.3mm)--(115.7mm,30.9mm)--(118.4mm,30.9mm)--(118.4mm,27.9mm)--(115.5mm,27.9mm)--(115.5mm,30.7mm)--(112.8mm,30.7mm)--(112.8mm,33.5mm)--(115.4mm,33.5mm)--(115.4mm,36mm)--(112.8mm,36mm)--(112.8mm,41.5mm)--(118.3mm,41.5mm)--(118.3mm,38.6mm)--cycle;
+	%họ tên lớp
+	\draw[thick] (11mm,157mm) rectangle (107mm,143mm);
+	\draw (45mm,152mm) node {\scriptsize{HỌ VÀ TÊN:\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots}};
+	\draw (90mm,152mm) node {\scriptsize{LỚP: \ldots\ldots\ldots\ldots}};
+	\draw (57mm,146mm) node {\scriptsize{MÔN THI: \ldots\ldots\ldots\ldots\ldots KỲ THI: \ldots\ldots \ldots\ldots \ldots\ldots\ldots\ldots\ldots\ldots ..}};
+	
+	%Mã đề
+	\draw[black](5mm,138mm)node{\tiny\bf Mã};
+	\draw[black](5mm,136mm)node{\tiny\bf Đề};
+	\draw (1mm,139.5mm) rectangle (9mm,97.2mm);
+	\foreach \a/\b/\c in {133.5/130/1,126/122.5/2,118.5/115/3,111/107.5/4,103.5/100/5}{
+		\draw (5mm,\a mm)node{\scriptsize \c};
+		\draw (5mm,\b mm)circle(5.5pt);
+	}
+	%%%%%%%%%%%%TÔ MÃ ĐỀ
+	% Tô mã đề
+	\refstepcounter{checkmadezip}%(tăng đếm )
+	\ifnum\the\value{checkmadezip}<2 %tô mã đề
+	\draw[fill=red] (5mm,130mm) node[left=2.55mm,scale=0.8]{\color{blue}\footnotesize\bfseries\s} circle (2mm);
+	\else\ifnum\the\value{checkmadezip}<3
+	\draw[fill=red] (5mm,122.5mm) node[left=2.55mm,scale=0.8]{\color{blue}\footnotesize\bfseries\s} circle (2mm);
+	\else\ifnum\the\value{checkmadezip}<4
+	\draw[fill=red] (5mm,115mm) node[left=2.55mm,scale=0.8]{\color{blue}\footnotesize\bfseries\s} circle (2mm);
+	\else\ifnum\the\value{checkmadezip}<5
+	\draw[fill=red] (5mm,107.5mm) node[left=2.55mm,scale=0.8]{\color{blue}\footnotesize\bfseries\s} circle (2mm);
+	\else\ifnum\the\value{checkmadezip}<6
+	\draw[fill=red] (5mm,103.5mm) node[left=2.55mm,scale=0.8]{\color{blue}\footnotesize\bfseries\s} circle (2mm);
+	\else
+	\fi\fi\fi\fi\fi
+	%%%%%%%%%%%%KẾT THÚC TÔ MÃ
+	%mã học sinh
+	\draw[black](30mm,141.4mm)node{\scriptsize\bf SỐ BÁO DANH};
+	\draw[gray] (17mm,139mm) rectangle (42.5mm, 72.9mm);
+	\foreach \a in {0,1,2,3,4}
+	{\draw[gray] (17mm + \a*5.1mm, 139mm) rectangle (17mm + \a*5.1mm + 5.1mm ,133mm);
+		
+	}
+	\foreach \i in {1,2,3,4,5,6,7,8,9,0}{
+		\draw[gray] (19.9mm,129.4mm) + (0,-\i*5.9mm) node{\scriptsize{\i}} circle (2mm);
+		\draw[gray] (24.9mm,129.4mm) + (0,-\i*5.9mm) node{\scriptsize{\i}} circle (2mm);
+		\draw[gray] (29.9mm,129.4mm) + (0,-\i*5.9mm) node{\scriptsize{\i}} circle (2mm);
+		\draw[gray] (34.9mm,129.4mm) + (0,-\i*5.9mm) node{\scriptsize{\i}} circle (2mm);
+		\draw[gray] (39.9mm,129.4mm) + (0,-\i*5.9mm) node{\scriptsize{\i}} circle (2mm);
+		\draw (14.6mm, 129.4mm) + (0,-\i*5.9mm) node{\scriptsize{\i}};
+	}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Tô đáp án lên phiếu chấm
+	\def\kccot{5mm}\def\kcdong{6mm}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\foreach \j in {0,1,...,9}{
+		\pgfmathtruncatemacro{\x}{\j+1}
+		\pgfmathtruncatemacro{\xy}{\j+11}
+		\pgfmathtruncatemacro{\xyz}{\j+21}
+		\pgfmathtruncatemacro{\xyzt}{\j+31}
+		\pgfmathtruncatemacro{\xyztq}{\j+41}	
+		%========================
+		%%%%%%%%%%%%%%CÂU TỪ 1..10
+		\def\sodau{0}
+		\def\sttcau{\x}
+		\coordinate (A\sodau) at (20.3 mm,65mm); %điểm gốc
+		\TOPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 11..20
+		\def\sodau{10} %số trc câu đầu
+		\def\sttcau{\xy} %số thứ tự của câu
+		\coordinate (A\sodau) at (52.7mm,129.9mm); %điểm gốc
+		\TOPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 21..30		
+		\def\sodau{20} %số trc câu đầu
+		\def\sttcau{\xyz} %số thứ tự của câu
+		\coordinate (A\sodau) at (52.7 mm,64.1mm); %điểm gốc
+		\TOPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 31..40				
+		\def\sodau{30} %số trc câu đầu
+		\def\sttcau{\xyzt} %số thứ tự của câu
+		\coordinate (A\sodau) at(84.55 mm,130.2mm); %điểm gốc
+		\TOPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 41..50				
+		\def\sodau{40} %số trc câu đầu
+		\def\sttcau{\xyztq} %số thứ tự của câu
+		\coordinate (A\sodau) at (84.55mm,64.1mm); %điểm gốc
+		\TOPHIEU
+	}
+\end{tikzpicture}
+\end{center}}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%Phiếu zip 50 câu chung
+\newcommand{\phieuzip}[1][1.25]{
+\begin{center}
+\begin{tikzpicture}[scale=#1, every node/.style={scale=#1}]%,transform shape]
+		\draw[\maufoot,line width=1pt] (0mm-4mm,-2.5mm-4mm)rectangle(118.5mm+4mm,170mm);
+		\node[scale=1,above] at (59.25mm,162mm){\damPHIEU\color{\maufoot} PHIẾU LÀM BÀI ZIPGRADE};
+	%================================
+	\draw[fill=black] (114.7mm,154.2mm) rectangle (118.5mm,158mm); %ô vuông trên cùng bên phải
+	\draw[fill=black] (0mm,154.2mm) rectangle (3.8mm,158mm); %ô vuông trên cùng bên trái
+	\draw[fill=black] (0mm,75.8mm) rectangle (3.8mm,79.6mm); %ô vuông ở giữa bên trái
+	\draw[fill=black](114.7mm,75.8mm) rectangle (118.5mm,79.6mm); %ô vuông ở giữa bên phải
+	\draw[fill=black] (0mm,-2.5mm) rectangle (3.8mm,1.9mm);%ô vuông dưới cùng bên trái
+	\draw[fill=black] (114.7mm,-2.5mm) rectangle (118.5mm,1.9mm);%ô vuông dưới cùng bên phải	
+	%ô vuông nhỏ
+	\draw[fill=black] (45.65mm,4.3mm) rectangle (48.55mm,7.1mm);% ô nhỏ dưới cùng bên trái
+	\draw[fill=black](77.5mm,4.3mm) rectangle (80.4mm,7.1mm);% ô nhỏ dưới cùng bên phải
+	\draw[fill=black] (45.65mm,68.3mm) rectangle (48.55mm,71.1mm);%Ô nhỏ ở giữa bên trái
+	\draw[fill=black] (77.5mm,68.3mm) rectangle (80.4mm,71.1mm); %Ô nhỏ ở giữa bên phải
+	\draw[fill=black] (45.65mm,133.2mm) rectangle (48.55mm,136mm);%Ô nhỏ ở trên bên trái
+	\draw[fill=black] (77.5mm,133mm) rectangle (80.4mm,135.8mm);%Ô nhỏ ở trên bên phải	
+	%Mã vạch
+	\draw[fill=black] (115.7mm, 38.6mm)--(115.7mm, 36.2mm)--(118.4mm, 36.2mm)--(118.4mm, 33.3mm)--(115.7mm,33.3mm)--(115.7mm,30.9mm)--(118.4mm,30.9mm)--(118.4mm,27.9mm)--(115.5mm,27.9mm)--(115.5mm,30.7mm)--(112.8mm,30.7mm)--(112.8mm,33.5mm)--(115.4mm,33.5mm)--(115.4mm,36mm)--(112.8mm,36mm)--(112.8mm,41.5mm)--(118.3mm,41.5mm)--(118.3mm,38.6mm)--cycle;
+	%họ tên lớp
+	\draw[thick] (11mm,157mm) rectangle (107mm,143mm);
+	\draw (45mm,152mm) node {\scriptsize{HỌ VÀ TÊN:\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots}};
+	\draw (90mm,152mm) node {\scriptsize{LỚP: \ldots\ldots\ldots\ldots}};
+	\draw (57mm,146mm) node {\scriptsize{MÔN THI: \ldots\ldots\ldots\ldots\ldots KỲ THI: \ldots\ldots \ldots\ldots \ldots\ldots\ldots\ldots\ldots\ldots ..}};	
+	%Mã đề
+	\draw[black](5mm,138mm)node{\tiny\bf Mã};
+	\draw[black](5mm,136mm)node{\tiny\bf Đề};
+	\draw (1mm,139.5mm) rectangle (9mm,97.2mm);
+	\foreach \a/\b/\c in {133.5/130/1,126/122.5/2,118.5/115/3,111/107.5/4,103.5/100/5}{
+		\draw (5mm,\a mm)node{\scriptsize \c};
+		\draw (5mm,\b mm)circle(5.5pt);
+	}
+	%mã học sinh
+	\draw[black](30mm,141.4mm)node{\scriptsize\bf SỐ BÁO DANH};
+	\draw[gray] (17mm,139mm) rectangle (42.5mm, 72.9mm);
+	\foreach \a in {0,1,2,3,4}
+	{\draw[gray] (17mm + \a*5.1mm, 139mm) rectangle (17mm + \a*5.1mm + 5.1mm ,133mm);
+		
+	}
+	\foreach \i in {1,2,3,4,5,6,7,8,9,0}{
+		\draw[gray] (19.9mm,129.4mm) + (0,-\i*5.9mm) node{\scriptsize{\i}} circle (2mm);
+		\draw[gray] (24.9mm,129.4mm) + (0,-\i*5.9mm) node{\scriptsize{\i}} circle (2mm);
+		\draw[gray] (29.9mm,129.4mm) + (0,-\i*5.9mm) node{\scriptsize{\i}} circle (2mm);
+		\draw[gray] (34.9mm,129.4mm) + (0,-\i*5.9mm) node{\scriptsize{\i}} circle (2mm);
+		\draw[gray] (39.9mm,129.4mm) + (0,-\i*5.9mm) node{\scriptsize{\i}} circle (2mm);
+		\draw (14.6mm, 129.4mm) + (0,-\i*5.9mm) node{\scriptsize{\i}};
+	}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Tô đáp án lên phiếu chấm
+	\def\kccot{5mm}\def\kcdong{6mm}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\foreach \j in {0,1,...,9}{
+		\pgfmathtruncatemacro{\x}{\j+1}
+		\pgfmathtruncatemacro{\xy}{\j+11}
+		\pgfmathtruncatemacro{\xyz}{\j+21}
+		\pgfmathtruncatemacro{\xyzt}{\j+31}
+		\pgfmathtruncatemacro{\xyztq}{\j+41}	
+		%========================
+		%%%%%%%%%%%%%%CÂU TỪ 1..10
+		\def\sodau{0}
+		\def\sttcau{\x}
+		\coordinate (A\sodau) at (20.3 mm,64mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 11..20
+		\def\sodau{10} %số trc câu đầu
+		\def\sttcau{\xy} %số thứ tự của câu
+		\coordinate (A\sodau) at (52.7mm,129.9mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 21..30		
+		\def\sodau{20} %số trc câu đầu
+		\def\sttcau{\xyz} %số thứ tự của câu
+		\coordinate (A\sodau) at (52.7 mm,64.1mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 31..40				
+		\def\sodau{30} %số trc câu đầu
+		\def\sttcau{\xyzt} %số thứ tự của câu
+		\coordinate (A\sodau) at(84.55 mm,130.2mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 41..50				
+		\def\sodau{40} %số trc câu đầu
+		\def\sttcau{\xyztq} %số thứ tự của câu
+		\coordinate (A\sodau) at (84.55mm,64.1mm); %điểm gốc
+		\VEPHIEU
+	}
+\end{tikzpicture}
+	\end{center}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%Đáp án dưới dạng phiếu chấm Zipgrade
+%\newcounter{checkmadezip}\setcounter{checkmadezip}{0}
+\newcommand{\ansmakerBGD}[2][0.9]{%
+\pagestyle{fancy}
+\fancyhead[L]{\empty}
+\fancyhead[R]{\empty}
+\fancyhead[C]{\empty}
+\fancyfoot[R]{\empty}
+\fancyfoot[L]{\empty}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[C]{\thepage}
+\setcounter{page}{1}
+\foreach \s in {#2} {
+	%\readarraysepchar{ }
+	\readdef{ans/dapan\s.txt}{\dataA}
+	\readarray\dataA\arA[-,\ncols]
+	\newpage
+	\begin{center}
+		%Đánh mã đề đủ 3 chữ số
+		\ifthenelse{\s<10}{\def\madephieu{00\s}}
+		{\ifthenelse{\s<100}{\def\madephieu{0\s}}
+			{\def\madephieu{\s}}}
+		{\bf\color{blue} ĐÁP ÁN PHIẾU CHẤM MÃ ĐỀ \madephieu}\\[5mm]
+	\begin{tikzpicture}[scale=#1,line join=round,line cap=round,font=\scriptsize,every node/.style={scale=#1}]%,transform shape]
+		\draw[\maufoot,line width=1pt] (14.8mm-5mm,282.1mm+8mm) rectangle (198.3mm+5mm,13.4mm-5mm);
+		\node[scale=1.6,above] at (8.2cm,27.5cm){\damPHIEU\color{\mauphieu} PHIẾU ĐÁP ÁN TNMAKER50};
+		%===========Ô vuông định vị
+		\def\canh{5.2mm}
+		\def\canhnho{2.6mm}
+		\fill[\mauphieu] (14.8mm,282.1mm) rectangle +(\canh,-\canh); %trên trái
+		\fill[\mauphieu] (14.8mm,204mm) rectangle +(\canh,-\canh); %giữa trái
+		\fill[\mauphieu] (14.8mm,18.6mm) rectangle +(\canh,-\canh); %dưới trái
+		%%%
+		\fill[\mauphieu] (14.8mm+178.3mm,282.1mm) rectangle +(\canh,-\canh); %trên phải
+		\fill[\mauphieu] (14.8mm+132.2mm,282.1mm) rectangle +(\canh,-\canh); %trên giữa
+		\fill[\mauphieu] (14.8mm+178.3mm,204mm) rectangle +(\canh,-\canh); %giữa phải
+		\fill[\mauphieu] (14.8mm+132.2mm,204mm) rectangle +(\canh,-\canh); %giữa giữa
+		\fill[\mauphieu] (14.8mm+178.3mm,18.6mm) rectangle +(\canh,-\canh); %dưới phải
+		%%% ô nhỏ giữa SBD và MĐ
+		\fill[\mauphieu] (14.8mm+162.25mm,263.95mm) rectangle +(\canhnho,-\canhnho); %trên
+		\fill[\mauphieu] (14.8mm+162.25mm,263.95mm-27.975mm) rectangle +(\canhnho,-\canhnho); %giữa
+		\fill[\mauphieu] (14.8mm+162.25mm,263.95mm-2*27.975mm) rectangle +(\canhnho,-\canhnho); %dưới
+		%-----------Khung cán bộ coi thi
+		\draw[\mauphieu,line width=0.6pt] (23mm,272mm) rectangle +(40.5mm,-51mm) coordinate(TTT);
+		\draw[\mauphieu,line width=0.6pt] (23mm,272mm-0.5*51mm) --++(40.5mm,0mm);
+		%chữ
+		\node[\mauphieu,text width=35mm,anchor=north,align=center] at (23mm+0.5*40.5mm,272mm){\fontsize{10}{11}\selectfont Họ tên, chữ ký\\ của cán bộ coi thi 1};
+		\node[\mauphieu,text width=35mm,anchor=north,align=center] at (23mm+0.5*40.5mm,272mm-0.5*51mm){\fontsize{10}{11}\selectfont Họ tên, chữ ký\\ của cán bộ coi thi 2};
+		%----------Khung hội đồng thi
+		\draw[\mauphieu,line width=0.6pt] ([xshift=1.5mm]TTT) rectangle +(81mm,51mm);
+		%chữ
+		\node[scale=1,text width=75mm,align=left,anchor=north,text=\mauphieu] at ([xshift=1.5mm+0.5*81mm,yshift=51mm]TTT){\fontsize{10}{12.5}\selectfont 
+			1. Tên trường:\dotfill\\
+			\phantom{1.} Kí hiệu trường (bằng chữ):\dotfill\\
+			2. Điểm thi:\dotfill\\ 
+			3. Phòng thi:\dotfill\\ 
+			4. Họ và tên thí sinh:\dotfill\\ \dotfill\\ 
+			5. Ngày sinh:\dotfill (Nam/Nữ)\\ 
+			6. Chữ ký của thí sinh:\dotfill\\
+			7. Môn thi:\dotfill\\ 
+			8. Ngày thi:\dotfill\\ 
+		};
+		%===========Thí sinh lưu ý
+		\node[\mauphieu,align=left,anchor=north west,inner sep=0pt,xscale=0.75] (TSLY) at (23mm,272mm-51mm-1mm){\fontsize{9}{9}\selectfont\bfseries
+			THÍ SINH LƯU Ý:};
+		\node[\mauphieu,scale=1,text width=90mm,align=left,anchor=north west,inner sep=0pt] at ([xshift=2mm,yshift=-0.3mm]TSLY.north east){\fontsize{8.5}{9}\selectfont 
+			-- Giữ cho phần phiếu phẳng, không bị bôi bẩn làm rách\\
+			-- Phải ghi đầy đủ các mục theo hướng dẫn\\
+			-- Dùng bút chì đen tô kín các ô trong mục: \\
+			\phantom{--} {\bf Số báo danh, Mã đề thi} trước khi làm bài.
+		};
+		%%%
+		\node[\mauphieu,align=left,anchor=north west,inner sep=0pt,xscale=0.75] (PTL) at (23mm,272mm-51mm-1.5mm-14.5mm){\fontsize{9}{9}\selectfont\bfseries
+			PHẦN TRẢ LỜI:};
+		\node[\mauphieu,scale=1,text width=90mm,align=left,anchor=north west,inner sep=0pt] at ([xshift=3.5mm,yshift=-0.5mm]PTL.north east){\fontsize{9}{10.5}\selectfont 
+			Số thứ tự câu trả lời dưới đây ứng với số thứ tự câu hỏi trắc nghiệm trong đề thi. Đối với mỗi câu trắc nghiệm, thí sinh chọn và {\bf tô kín một ô tròn} tương ứng với phương án trả lời.
+		};
+		%===========Đường kẻ ngang trên dưới
+		\draw[\mauphieu,line width=1pt] (25mm,272mm-51mm-1.5mm-15mm-12.5mm)--++(164mm,0);
+		\draw[\mauphieu,line width=1pt] (25mm,15.6mm)--++(164mm,0);
+		%===========Số báo danh
+		\def\xsbd{3.87}\def\ysbd{5.595} 
+		%tròn
+		\foreach \i in {0,1,...,5}
+		{\foreach \j in {0,1,...,9}
+			{
+				\draw[\mauphieu] (154.05mm,259.8mm)+(\i*\xsbd mm,-\j*\ysbd mm) circle (1.6mm);
+		}}
+		%số trái
+		\foreach \j in {0,...,9}
+		{
+			\draw[\mauphieu] (154.05mm,259.8mm)+(-\xsbd mm-1mm,-\j*\ysbd mm) circle (1.8mm) node{\fontsize{9}{11}\selectfont\bfseries \j};
+		}
+		%grid
+		\foreach \i in {0,1,...,6}
+		\foreach \j in {0,1,...,10}
+		{
+			\draw[\mauphieu] ($(154.05mm,259.8mm)+(-0.5*\xsbd mm,0.5*\ysbd mm-\j*\ysbd mm)$)--++(6*\xsbd mm,0); %ngang
+			\draw[\mauphieu] ($(154.05mm,259.8mm)+(-0.5*\xsbd mm+\i*\xsbd mm,0.5*\ysbd mm)$)--++(0,-10*\ysbd mm); %
+			%
+			\draw[\mauphieu] ($(154.05mm-0.5*\xsbd mm,269.5mm)+(\i*\xsbd mm,0)$)--++(0,-\ysbd mm); %đứng ô vuông trên
+		}
+		%hcn trên
+		\draw[thin,\mauphieu] (154.05mm-0.5*\xsbd mm,269.5mm) rectangle +(6*\xsbd mm,-\ysbd mm)
+		node[midway,above=2mm,xscale=0.65, yscale=1.5]{\fontsize{11}{11}\selectfont\sffamily\bfseries 9. SỐ BÁO DANH}
+		;
+		%=============Mã đề thi
+		%tròn
+		\foreach \i in {0,...,2}
+		\foreach \j in {0,...,9}
+		{
+			\draw[\mauphieu] (183.05mm,259.8mm)+(\i*\xsbd mm,-\j*\ysbd mm) circle (1.6mm);
+		}
+		%grid
+		\foreach \i in {0,...,3}
+		\foreach \j in {0,...,10}
+		{
+			\draw[\mauphieu] ($(183.05mm,259.8mm)+(-0.5*\xsbd mm,0.5*\ysbd mm-\j*\ysbd mm)$)--++(3*\xsbd mm,0); %ngang
+			\draw[\mauphieu] ($(183.05mm,259.8mm)+(-0.5*\xsbd mm+\i*\xsbd mm,0.5*\ysbd mm)$)--++(0,-10*\ysbd mm); %
+			%
+			\draw[\mauphieu] ($(183.05mm-0.5*\xsbd mm,269.5mm)+(\i*\xsbd mm,0)$)--++(0,-\ysbd mm); %đứng ô vuông trên
+		}
+		%hcn trên
+		\draw[thin,\mauphieu] (183.05mm-0.5*\xsbd mm,269.5mm) rectangle +(3*\xsbd mm,-\ysbd mm)
+		node[midway,above=2mm,xscale=0.65, yscale=1.5]{\fontsize{11}{11}\selectfont\sffamily\bfseries 10. MÃ ĐỀ THI}
+		;
+		%TÔ MÃ ĐỀ THI
+		\def\a{0.5}%\def\s{1}
+		\pgfmathtruncatemacro{\mde}{floor(\s/100)};
+		\pgfmathtruncatemacro{\nde}{Mod(\s,100)};
+		\pgfmathtruncatemacro{\mmde}{floor(\nde/10)};
+		\pgfmathtruncatemacro{\mmmde}{Mod(\s,10)};
+		\fill[red] (183.05mm,259.8mm-\mde*\ysbd mm)circle(1.6mm)
+		(183.05mm+\xsbd mm,259.8mm-\mmde*\ysbd mm)circle(1.6mm)
+		(183.05mm+2*\xsbd mm,259.8mm-\mmmde*\ysbd mm)circle(1.6mm)
+		;
+		%phần số mã đề
+		\path (183.05mm,269.5mm-0.5*\ysbd mm) node[blue,scale=1]{\fontsize{11}{11}\selectfont\sffamily\bfseries\mde};
+		\path (183.05mm,269.5mm-0.5*\ysbd mm)+(\xsbd mm,0) node[blue,scale=1]{\fontsize{11}{11}\selectfont\sffamily\bfseries\mmde};
+		\path (183.05mm,269.5mm-0.5*\ysbd mm)+(2*\xsbd mm,0) node[blue,scale=1]{\fontsize{11}{11}\selectfont\sffamily\bfseries\mmmde};
+		%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		%============PHẦN PHIẾU TÔ TRÒN
+		\def\kccot{13mm}\def\kcdong{6.22mm}
+		%lệnh vẽ
+		\def\TOPHIEU{
+			%KHOANH TRÒN
+			\foreach\tt/\ss in {0/A,1/B,2/C,3/D} {\draw[\mauphieu] (A\sodau) + (\tt*\kccot,-\j*\kcdong)node{\color{\mauphieu!10}\scriptsize{\ss}} circle (2.05mm);
+			}
+			%SỐ TT
+			\draw (A\sodau) + (-5.5mm,-\j*\kcdong) node[\mauphieu,left,scale=1] {\fontsize{11}{11}\selectfont\sffamily\bfseries\sttcau}; %số
+			%XUẤT ĐÁP ÁN
+			\ifthenelse{\equal{\arA[\sttcau,1]}{A}}{\draw[fill=blue] (A\sodau) + (0,-\j*\kcdong) 	
+				%node{\color{gray!20}\scriptsize{A}} 
+				circle (2mm);}
+			{\ifthenelse{\equal{\arA[\sttcau,1]}{B}}{\draw[fill=blue] (A\sodau) + (\kccot,-\j*\kcdong) 
+%					node{\color{gray!20}\scriptsize{B}} 
+					circle (2mm);}
+				{\ifthenelse{\equal{\arA[\sttcau,1]}{C}}{\draw[fill=blue] (A\sodau) + (2*\kccot,-\j*\kcdong) 
+%						node{\color{gray!20}\scriptsize{C}}
+						circle (2mm);}
+					{\ifthenelse{\equal{\arA[\sttcau,1]}{D}}{\draw[fill=blue] (A\sodau) + (3*\kccot,-\j*\kcdong)
+%							node{\color{gray!20}\scriptsize{D}} 
+							circle (2mm);}
+						% Tô đỏ phần thừa
+						{\foreach\t/\ss in {0/A,1/B,2/C,3/D} \draw[fill=white,draw=red,thick] (A\sodau) + (\t*\kccot,-\j*\kcdong) 
+%							node{\color{gray!20}\scriptsize{\ss}} 
+							circle (2mm);}}}}
+		}
+		%%Tròn bên trái
+		\foreach \j in {0,1,...,4}{
+			\pgfmathtruncatemacro{\aaa}{\j+1}
+			\pgfmathtruncatemacro{\bbb}{\j+6}
+			\pgfmathtruncatemacro{\ccc}{\j+11}	
+			\pgfmathtruncatemacro{\ddd}{\j+16}
+			\pgfmathtruncatemacro{\eee}{\j+21}
+			\pgfmathtruncatemacro{\fff}{\j+26}
+			\pgfmathtruncatemacro{\ggg}{\j+31}	
+			\pgfmathtruncatemacro{\hhh}{\j+36}
+			\pgfmathtruncatemacro{\iii}{\j+41}
+			\pgfmathtruncatemacro{\jjj}{\j+46}
+			%========================
+			%%%%%%%%%%%%%%CÂU TỪ 1..5
+			\def\sodau{0}
+			\def\sttcau{\aaa}
+			\coordinate (A\sodau) at (52.65mm,178.45mm); %điểm gốc
+			\TOPHIEU
+			%========================
+			%%%%%%%%%%%%CÂU TỪ 6..10
+			\def\sodau{5} %số trc câu đầu
+			\def\sttcau{\bbb} %số thứ tự của câu
+			\coordinate (A\sodau) at (52.65mm,178.45mm-5*\kcdong-0.2mm); %điểm gốc
+			\TOPHIEU
+			%========================
+			%%%%%%%%%%%%CÂU TỪ 1..15
+			\def\sodau{10} %số trc câu đầu
+			\def\sttcau{\ccc} %số thứ tự của câu
+			\coordinate (A\sodau) at (52.65mm,178.45mm-10*\kcdong-0.55mm); %điểm gốc
+			\TOPHIEU
+			%========================
+			%%%%%%%%%%%%CÂU TỪ 16..20
+			\def\sodau{15} %số trc câu đầu
+			\def\sttcau{\ddd} %số thứ tự của câu
+			\coordinate (A\sodau) at (52.65mm,178.45mm-15*\kcdong-0.9mm); %điểm gốc
+			\TOPHIEU
+			%========================
+			%%%%%%%%%%%%CÂU TỪ 21..25
+			\def\sodau{20} %số trc câu đầu
+			\def\sttcau{\eee} %số thứ tự của câu
+			\coordinate (A\sodau) at (52.65mm,178.45mm-20*\kcdong-1.1mm); %điểm gốc
+			\TOPHIEU
+			%========================
+			%========================
+			%%%%%%%%%%%%CÂU TỪ 26..30
+			\def\sodau{25} %số trc câu đầu
+			\def\sttcau{\fff} %số thứ tự của câu
+			\coordinate (A\sodau) at (52.65mm+81.8mm,178.45mm); %điểm gốc
+			\TOPHIEU
+			%========================
+			%%%%%%%%%%%%CÂU TỪ 31..35
+			\def\sodau{30} %số trc câu đầu
+			\def\sttcau{\ggg} %số thứ tự của câu
+			\coordinate (A\sodau) at (52.65mm+81.8mm,178.45mm-5*\kcdong-0.2mm); %điểm gốc
+			\TOPHIEU
+			%========================
+			%%%%%%%%%%%%CÂU TỪ 36..40
+			\def\sodau{35} %số trc câu đầu
+			\def\sttcau{\hhh} %số thứ tự của câu
+			\coordinate (A\sodau) at (52.65mm+81.8mm,178.45mm-10*\kcdong-0.55mm); %điểm gốc
+			\TOPHIEU
+			%========================
+			%%%%%%%%%%%%CÂU TỪ 41..45
+			\def\sodau{40} %số trc câu đầu
+			\def\sttcau{\iii} %số thứ tự của câu
+			\coordinate (A\sodau) at (52.65mm+81.8mm,178.45mm-15*\kcdong-0.9mm); %điểm gốc
+			\TOPHIEU
+			%========================
+			%%%%%%%%%%%%CÂU TỪ 46..50
+			\def\sodau{45} %số trc câu đầu
+			\def\sttcau{\jjj} %số thứ tự của câu
+			\coordinate (A\sodau) at (52.65mm+81.8mm,178.45mm-20*\kcdong-1.1mm); %điểm gốc
+			\TOPHIEU
+		}
+		%=========== ABCD trên khung
+		\foreach \tt/\nhan in {0/A,1/B,2/C,3/D}
+		{
+			\draw[\mauphieu,line width=1pt] ($(52.65mm,178.45mm)+(\tt*\kccot,1.3*\kcdong)$) circle (2.6mm) node{\bfseries\fontsize{13}{1}\selectfont \nhan};
+			\draw[\mauphieu,line width=1pt] ($(52.65mm+81.8mm,178.45mm)+(\tt*\kccot,1.3*\kcdong)$) circle (2.6mm) node{\bfseries\fontsize{13}{1}\selectfont \nhan};
+		}
+		%=========== Ô vuông và khung vùng chấm
+		%khung trái
+		\draw[\mauphieu,line width=1pt] (35.5mm,181.5mm) rectangle (95.65mm,25mm);
+		\draw[\mauphieu,line width=1pt] (35.5mm,150.3mm) --++(60.15mm,0);
+		\draw[\mauphieu,line width=1pt] (35.5mm,119.1mm) --++(60.15mm,0);
+		\draw[\mauphieu,line width=1pt] (35.5mm,87.75mm) --++(60.15mm,0);
+		\draw[\mauphieu,line width=1pt] (35.5mm,56.35mm) --++(60.15mm,0);
+		%khung phải
+		\draw[\mauphieu,line width=1pt] (117.35mm,181.5mm) rectangle (177.5mm,25mm);
+		\draw[\mauphieu,line width=1pt] (117.35mm,150.3mm) --++(60.15mm,0);
+		\draw[\mauphieu,line width=1pt] (117.35mm,119.1mm) --++(60.15mm,0);
+		\draw[\mauphieu,line width=1pt] (117.35mm,87.75mm) --++(60.15mm,0);
+		\draw[\mauphieu,line width=1pt] (117.35mm,56.35mm) --++(60.15mm,0);
+		%ô vuông
+		\fill[\mauphieu] (28.2mm,183.6mm) rectangle +(3.85mm,-3.85mm); %trái
+		\fill[\mauphieu] (181mm,183.6mm) rectangle +(3.85mm,-3.85mm); %phải
+		%
+		\fill[\mauphieu] (99.2mm,183.65mm) rectangle +(3.9mm,-3.9mm);
+		\fill[\mauphieu] ($(99.2mm,183.7mm)+(-0.15mm,-31.1mm)$) rectangle +(4.2mm,-4.2mm);
+		\fill[\mauphieu] ($(99.2mm,183.7mm)+(-0.15mm,-2*31.1mm-0.2mm)$) rectangle +(4.2mm,-4.2mm);
+		\fill[\mauphieu] ($(99.2mm,183.7mm)+(-0.15mm,-3*31.1mm-0.4mm)$) rectangle +(4.2mm,-4.2mm);
+		\fill[\mauphieu] ($(99.2mm,183.7mm)+(-0.15mm,-4*31.1mm-0.95mm)$) rectangle +(4.2mm,-4.2mm);
+		\fill[\mauphieu] ($(99.2mm,183.7mm)+(-0.15mm,-5*31.1mm-1.2mm)$) rectangle +(4.2mm,-4.2mm);
+		%
+		\fill[\mauphieu] (99.2mm+10.85mm,183.65mm) rectangle +(3.9mm,-3.9mm);
+		\fill[\mauphieu] ($(99.2mm+10.85mm,183.7mm)+(-0.15mm,-31.1mm)$) rectangle +(4.2mm,-4.2mm);
+		\fill[\mauphieu] ($(99.2mm+10.85mm,183.7mm)+(-0.15mm,-2*31.1mm-0.2mm)$) rectangle +(4.2mm,-4.2mm);
+		\fill[\mauphieu] ($(99.2mm+10.85mm,183.7mm)+(-0.15mm,-3*31.1mm-0.4mm)$) rectangle +(4.2mm,-4.2mm);
+		\fill[\mauphieu] ($(99.2mm+10.85mm,183.7mm)+(-0.15mm,-4*31.1mm-0.95mm)$) rectangle +(4.2mm,-4.2mm);
+		\fill[\mauphieu] ($(99.2mm+10.85mm,183.7mm)+(-0.15mm,-5*31.1mm-1.2mm)$) rectangle +(4.2mm,-4.2mm);
+	\end{tikzpicture}
+	\end{center}}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Phiếu BGD 50
+\newcommand{\phieutnmakerBGD}[1][0.78]{
+\begin{center}
+\begin{tikzpicture}[scale=#1,line join=round,line cap=round,font=\scriptsize,every node/.style={scale=#1}]%,transform shape]
+	\draw[\maufoot,line width=1pt] (14.8mm-5mm,282.1mm+8mm) rectangle (198.3mm+5mm,13.4mm-5mm);
+	\node[scale=1.2,above] at (8.2cm,27.5cm){\damPHIEU\color{\mauphieu} PHIẾU LÀM BÀI TRẮC NGHIỆM TNMAKER50};
+	%===========Ô vuông định vị
+	\def\canh{5.2mm}
+	\def\canhnho{2.6mm}
+	\fill[\mauphieu] (14.8mm,282.1mm) rectangle +(\canh,-\canh); %trên trái
+	\fill[\mauphieu] (14.8mm,204mm) rectangle +(\canh,-\canh); %giữa trái
+	\fill[\mauphieu] (14.8mm,18.6mm) rectangle +(\canh,-\canh); %dưới trái
+	%%%
+	\fill[\mauphieu] (14.8mm+178.3mm,282.1mm) rectangle +(\canh,-\canh); %trên phải
+	\fill[\mauphieu] (14.8mm+132.2mm,282.1mm) rectangle +(\canh,-\canh); %trên giữa
+	\fill[\mauphieu] (14.8mm+178.3mm,204mm) rectangle +(\canh,-\canh); %giữa phải
+	\fill[\mauphieu] (14.8mm+132.2mm,204mm) rectangle +(\canh,-\canh); %giữa giữa
+	\fill[\mauphieu] (14.8mm+178.3mm,18.6mm) rectangle +(\canh,-\canh); %dưới phải
+	%%% ô nhỏ giữa SBD và MĐ
+	\fill[\mauphieu] (14.8mm+162.25mm,263.95mm) rectangle +(\canhnho,-\canhnho); %trên
+	\fill[\mauphieu] (14.8mm+162.25mm,263.95mm-27.975mm) rectangle +(\canhnho,-\canhnho); %giữa
+	\fill[\mauphieu] (14.8mm+162.25mm,263.95mm-2*27.975mm) rectangle +(\canhnho,-\canhnho); %dưới
+	%-----------Khung cán bộ coi thi
+	\draw[\mauphieu,line width=0.6pt] (23mm,272mm) rectangle +(40.5mm,-51mm) coordinate(TTT);
+	\draw[\mauphieu,line width=0.6pt] (23mm,272mm-0.5*51mm) --++(40.5mm,0mm);
+	%chữ
+	\node[\mauphieu,text width=35mm,anchor=north,align=center] at (23mm+0.5*40.5mm,272mm){\fontsize{10}{11}\selectfont Họ tên, chữ ký\\ của cán bộ coi thi 1};
+	\node[\mauphieu,text width=35mm,anchor=north,align=center] at (23mm+0.5*40.5mm,272mm-0.5*51mm){\fontsize{10}{11}\selectfont Họ tên, chữ ký\\ của cán bộ coi thi 2};
+	%----------Khung hội đồng thi
+	\draw[\mauphieu,line width=0.6pt] ([xshift=1.5mm]TTT) rectangle +(81mm,51mm);
+	%chữ
+	\node[scale=1,text width=75mm,align=left,anchor=north,text=\mauphieu] at ([xshift=1.5mm+0.5*81mm,yshift=51mm]TTT){\fontsize{10}{12.5}\selectfont 
+		1. Tên trường:\dotfill\\
+		\phantom{1.} Kí hiệu trường (bằng chữ):\dotfill\\
+		2. Điểm thi:\dotfill\\ 
+		3. Phòng thi:\dotfill\\ 
+		4. Họ và tên thí sinh:\dotfill\\ \dotfill\\ 
+		5. Ngày sinh:\dotfill (Nam/Nữ)\\ 
+		6. Chữ ký của thí sinh:\dotfill\\
+		7. Môn thi:\dotfill\\ 
+		8. Ngày thi:\dotfill\\ 
+	};
+	%===========Thí sinh lưu ý
+	\node[\mauphieu,align=left,anchor=north west,inner sep=0pt,xscale=0.75] (TSLY) at (23mm,272mm-51mm-1mm){\fontsize{9}{9}\selectfont\bfseries
+		THÍ SINH LƯU Ý:};
+	\node[\mauphieu,scale=1,text width=90mm,align=left,anchor=north west,inner sep=0pt] at ([xshift=2mm,yshift=-0.3mm]TSLY.north east){\fontsize{8.5}{9}\selectfont 
+		-- Giữ cho phần phiếu phẳng, không bị bôi bẩn làm rách\\
+		-- Phải ghi đầy đủ các mục theo hướng dẫn\\
+		-- Dùng bút chì đen tô kín các ô trong mục: \\
+		\phantom{--} {\bf Số báo danh, Mã đề thi} trước khi làm bài.
+	};
+	%%%
+	\node[\mauphieu,align=left,anchor=north west,inner sep=0pt,xscale=0.75] (PTL) at (23mm,272mm-51mm-1.5mm-14.5mm){\fontsize{9}{9}\selectfont\bfseries
+		PHẦN TRẢ LỜI:};
+	\node[\mauphieu,scale=1,text width=90mm,align=left,anchor=north west,inner sep=0pt] at ([xshift=3.5mm,yshift=-0.5mm]PTL.north east){\fontsize{9}{10.5}\selectfont 
+		Số thứ tự câu trả lời dưới đây ứng với số thứ tự câu hỏi trắc nghiệm trong đề thi. Đối với mỗi câu trắc nghiệm, thí sinh chọn và {\bf tô kín một ô tròn} tương ứng với phương án trả lời.
+	};
+	%===========Đường kẻ ngang trên dưới
+	\draw[\mauphieu,line width=1pt] (25mm,272mm-51mm-1.5mm-15mm-12.5mm)--++(164mm,0);
+	\draw[\mauphieu,line width=1pt] (25mm,15.6mm)--++(164mm,0);
+	%===========Số báo danh
+	\def\xsbd{3.87}\def\ysbd{5.595} 
+	%tròn
+	\foreach \i in {0,1,...,5}
+	{\foreach \j in {0,1,...,9}
+		{
+			\draw[\mauphieu] (154.05mm,259.8mm)+(\i*\xsbd mm,-\j*\ysbd mm) circle (1.6mm);
+	}}
+	%số trái
+	\foreach \j in {0,...,9}
+	{
+		\draw[\mauphieu] (154.05mm,259.8mm)+(-\xsbd mm-1mm,-\j*\ysbd mm) circle (1.8mm) node{\fontsize{9}{11}\selectfont\bfseries \j};
+	}
+	%grid
+	\foreach \i in {0,1,...,6}
+	\foreach \j in {0,1,...,10}
+	{
+		\draw[\mauphieu] ($(154.05mm,259.8mm)+(-0.5*\xsbd mm,0.5*\ysbd mm-\j*\ysbd mm)$)--++(6*\xsbd mm,0); %ngang
+		\draw[\mauphieu] ($(154.05mm,259.8mm)+(-0.5*\xsbd mm+\i*\xsbd mm,0.5*\ysbd mm)$)--++(0,-10*\ysbd mm); %
+		%
+		\draw[\mauphieu] ($(154.05mm-0.5*\xsbd mm,269.5mm)+(\i*\xsbd mm,0)$)--++(0,-\ysbd mm); %đứng ô vuông trên
+	}
+	%hcn trên
+	\draw[thin,\mauphieu] (154.05mm-0.5*\xsbd mm,269.5mm) rectangle +(6*\xsbd mm,-\ysbd mm)
+	node[midway,above=2mm,xscale=0.65, yscale=1.5]{\fontsize{11}{11}\selectfont\sffamily\bfseries 9. SỐ BÁO DANH}
+	;
+	%=============Mã đề thi
+	%tròn
+	\foreach \i in {0,...,2}
+	\foreach \j in {0,...,9}
+	{
+		\draw[\mauphieu] (183.05mm,259.8mm)+(\i*\xsbd mm,-\j*\ysbd mm) circle (1.6mm);
+	}
+	%grid
+	\foreach \i in {0,...,3}
+	\foreach \j in {0,...,10}
+	{
+		\draw[\mauphieu] ($(183.05mm,259.8mm)+(-0.5*\xsbd mm,0.5*\ysbd mm-\j*\ysbd mm)$)--++(3*\xsbd mm,0); %ngang
+		\draw[\mauphieu] ($(183.05mm,259.8mm)+(-0.5*\xsbd mm+\i*\xsbd mm,0.5*\ysbd mm)$)--++(0,-10*\ysbd mm); %
+		%
+		\draw[\mauphieu] ($(183.05mm-0.5*\xsbd mm,269.5mm)+(\i*\xsbd mm,0)$)--++(0,-\ysbd mm); %đứng ô vuông trên
+	}
+	%hcn trên
+	\draw[thin,\mauphieu] (183.05mm-0.5*\xsbd mm,269.5mm) rectangle +(3*\xsbd mm,-\ysbd mm)
+	node[midway,above=2mm,xscale=0.65, yscale=1.5]{\fontsize{11}{11}\selectfont\sffamily\bfseries 10. MÃ ĐỀ THI}
+	;
+	%============PHẦN PHIẾU TÔ TRÒN
+	\def\kccot{13mm}\def\kcdong{6.22mm}
+	%lệnh vẽ
+	\def\VEPHIEU{
+		%KHOANH TRÒN
+		\foreach\tt/\ss in {0/A,1/B,2/C,3/D} {\draw[\mauphieu] (A\sodau) + (\tt*\kccot,-\j*\kcdong)node{\color{\mauphieu!10}\scriptsize{\ss}} circle (2.05mm);
+		}
+		%SỐ TT
+		\draw (A\sodau) + (-5.5mm,-\j*\kcdong) node[\mauphieu,left,scale=1] {\fontsize{11}{11}\selectfont\sffamily\bfseries\sttcau}; %số 1..8
+	}
+	%%Tròn bên trái
+	\foreach \j in {0,1,...,4}{
+		\pgfmathtruncatemacro{\aaa}{\j+1}
+		\pgfmathtruncatemacro{\bbb}{\j+6}
+		\pgfmathtruncatemacro{\ccc}{\j+11}	
+		\pgfmathtruncatemacro{\ddd}{\j+16}
+		\pgfmathtruncatemacro{\eee}{\j+21}
+		\pgfmathtruncatemacro{\fff}{\j+26}
+		\pgfmathtruncatemacro{\ggg}{\j+31}	
+		\pgfmathtruncatemacro{\hhh}{\j+36}
+		\pgfmathtruncatemacro{\iii}{\j+41}
+		\pgfmathtruncatemacro{\jjj}{\j+46}
+		%========================
+		%%%%%%%%%%%%%%CÂU TỪ 1..5
+		\def\sodau{0}
+		\def\sttcau{\aaa}
+		\coordinate (A\sodau) at (52.65mm,178.45mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 6..10
+		\def\sodau{5} %số trc câu đầu
+		\def\sttcau{\bbb} %số thứ tự của câu
+		\coordinate (A\sodau) at (52.65mm,178.45mm-5*\kcdong-0.2mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 1..15
+		\def\sodau{10} %số trc câu đầu
+		\def\sttcau{\ccc} %số thứ tự của câu
+		\coordinate (A\sodau) at (52.65mm,178.45mm-10*\kcdong-0.55mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 16..20
+		\def\sodau{15} %số trc câu đầu
+		\def\sttcau{\ddd} %số thứ tự của câu
+		\coordinate (A\sodau) at (52.65mm,178.45mm-15*\kcdong-0.9mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 21..25
+		\def\sodau{20} %số trc câu đầu
+		\def\sttcau{\eee} %số thứ tự của câu
+		\coordinate (A\sodau) at (52.65mm,178.45mm-20*\kcdong-1.1mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 26..30
+		\def\sodau{25} %số trc câu đầu
+		\def\sttcau{\fff} %số thứ tự của câu
+		\coordinate (A\sodau) at (52.65mm+81.8mm,178.45mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 31..35
+		\def\sodau{30} %số trc câu đầu
+		\def\sttcau{\ggg} %số thứ tự của câu
+		\coordinate (A\sodau) at (52.65mm+81.8mm,178.45mm-5*\kcdong-0.2mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 36..40
+		\def\sodau{35} %số trc câu đầu
+		\def\sttcau{\hhh} %số thứ tự của câu
+		\coordinate (A\sodau) at (52.65mm+81.8mm,178.45mm-10*\kcdong-0.55mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 41..45
+		\def\sodau{40} %số trc câu đầu
+		\def\sttcau{\iii} %số thứ tự của câu
+		\coordinate (A\sodau) at (52.65mm+81.8mm,178.45mm-15*\kcdong-0.9mm); %điểm gốc
+		\VEPHIEU
+		%========================
+		%%%%%%%%%%%%CÂU TỪ 46..50
+		\def\sodau{45} %số trc câu đầu
+		\def\sttcau{\jjj} %số thứ tự của câu
+		\coordinate (A\sodau) at (52.65mm+81.8mm,178.45mm-20*\kcdong-1.1mm); %điểm gốc
+		\VEPHIEU
+	}
+	%=========== ABCD trên khung
+	\foreach \tt/\nhan in {0/A,1/B,2/C,3/D}
+	{
+		\draw[\mauphieu,line width=1pt] ($(52.65mm,178.45mm)+(\tt*\kccot,1.3*\kcdong)$) circle (2.6mm) node{\fontsize{11}{11}\selectfont\bfseries\fontsize{13}{1}\selectfont \nhan};
+		\draw[\mauphieu,line width=1pt] ($(52.65mm+81.8mm,178.45mm)+(\tt*\kccot,1.3*\kcdong)$) circle (2.6mm) node{\fontsize{11}{11}\selectfont\bfseries\fontsize{13}{1}\selectfont \nhan};
+	}
+	%=========== Ô vuông và khung vùng chấm
+	%khung trái
+	\draw[\mauphieu,line width=1pt] (35.5mm,181.5mm) rectangle (95.65mm,25mm);
+	\draw[\mauphieu,line width=1pt] (35.5mm,150.3mm) --++(60.15mm,0);
+	\draw[\mauphieu,line width=1pt] (35.5mm,119.1mm) --++(60.15mm,0);
+	\draw[\mauphieu,line width=1pt] (35.5mm,87.75mm) --++(60.15mm,0);
+	\draw[\mauphieu,line width=1pt] (35.5mm,56.35mm) --++(60.15mm,0);
+	%khung phải
+	\draw[\mauphieu,line width=1pt] (117.35mm,181.5mm) rectangle (177.5mm,25mm);
+	\draw[\mauphieu,line width=1pt] (117.35mm,150.3mm) --++(60.15mm,0);
+	\draw[\mauphieu,line width=1pt] (117.35mm,119.1mm) --++(60.15mm,0);
+	\draw[\mauphieu,line width=1pt] (117.35mm,87.75mm) --++(60.15mm,0);
+	\draw[\mauphieu,line width=1pt] (117.35mm,56.35mm) --++(60.15mm,0);
+	%ô vuông
+	\fill[\mauphieu] (28.2mm,183.6mm) rectangle +(3.85mm,-3.85mm); %trái
+	\fill[\mauphieu] (181mm,183.6mm) rectangle +(3.85mm,-3.85mm); %phải
+	%
+	\fill[\mauphieu] (99.2mm,183.65mm) rectangle +(3.9mm,-3.9mm);
+	\fill[\mauphieu] ($(99.2mm,183.7mm)+(-0.15mm,-31.1mm)$) rectangle +(4.2mm,-4.2mm);
+	\fill[\mauphieu] ($(99.2mm,183.7mm)+(-0.15mm,-2*31.1mm-0.2mm)$) rectangle +(4.2mm,-4.2mm);
+	\fill[\mauphieu] ($(99.2mm,183.7mm)+(-0.15mm,-3*31.1mm-0.4mm)$) rectangle +(4.2mm,-4.2mm);
+	\fill[\mauphieu] ($(99.2mm,183.7mm)+(-0.15mm,-4*31.1mm-0.95mm)$) rectangle +(4.2mm,-4.2mm);
+	\fill[\mauphieu] ($(99.2mm,183.7mm)+(-0.15mm,-5*31.1mm-1.2mm)$) rectangle +(4.2mm,-4.2mm);
+	%
+	\fill[\mauphieu] (99.2mm+10.85mm,183.65mm) rectangle +(3.9mm,-3.9mm);
+	\fill[\mauphieu] ($(99.2mm+10.85mm,183.7mm)+(-0.15mm,-31.1mm)$) rectangle +(4.2mm,-4.2mm);
+	\fill[\mauphieu] ($(99.2mm+10.85mm,183.7mm)+(-0.15mm,-2*31.1mm-0.2mm)$) rectangle +(4.2mm,-4.2mm);
+	\fill[\mauphieu] ($(99.2mm+10.85mm,183.7mm)+(-0.15mm,-3*31.1mm-0.4mm)$) rectangle +(4.2mm,-4.2mm);
+	\fill[\mauphieu] ($(99.2mm+10.85mm,183.7mm)+(-0.15mm,-4*31.1mm-0.95mm)$) rectangle +(4.2mm,-4.2mm);
+	\fill[\mauphieu] ($(99.2mm+10.85mm,183.7mm)+(-0.15mm,-5*31.1mm-1.2mm)$) rectangle +(4.2mm,-4.2mm);
+\end{tikzpicture}
+\end{center}
+
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%% Phần chỉnh sửa MainDeThi
+\ifthenelse{\mauphieuso=1}{ %phiếu tnmaker60 mẫu chung
+	\def\phieuto{\phieuzip}
+	\def\phieuDA{\anszip}
+	\def\ngatdong{\newpage} %ngắt DA ra trang riêng
+}
+{
+	\ifthenelse{\mauphieuso=2}{ %Phiếu zip50 mẫu chung
+		\def\phieuto{\phieutnmaker}
+		\def\phieuDA{\ansmaker}
+		\def\ngatdong{\newpage}
+	}
+	{
+		\ifthenelse{\mauphieuso=3}{ %Phiếu TNMAKER50 ~ BGD
+			\def\phieuto{\phieutnmakerBGD}
+			\def\phieuDA{\ansmakerBGD}
+			\def\ngatdong{\newpage}
+		}
+		{
+			\ifthenelse{\mauphieuso=4}{ %Phiếu zip50 cá nhân
+				\def\phieuto{\phieuzipcanhan}
+				\def\phieuDA{\anszipcanhan}
+				\def\ngatdong{\newpage}
+			}
+			{
+				\def\phieuto{}
+				\def\phieuDA{}
+				\def\ngatdong{}
+				\def\madephieu{}
+			}
+		}
+	}
+}

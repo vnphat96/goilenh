@@ -1,0 +1,864 @@
+%Tác giả: Nguyễn Hoàng Hải, nghai.math@gmail.com, https://www.facebook.com/nhhai.math
+%Phiên bản: 1.0
+\ProvidesPackage{ex_forms}[31/03/2020, Nguyen Hoang Hai]
+\RequirePackage{tikz,etoolbox}
+\RequirePackage{environ,miama,pifont,marvosym}
+\usepackage[fixed]{fontawesome5}
+\usepackage{answers,fontawesome}
+
+\Newassociation{dapanEX}{dapanTNex}{ans}
+\Newassociation{loigiaiexEX}{lloigiaiEX}{anslg}
+%%%%
+\definecolor{mauchu}{RGB}{0,0,0}
+\def\AnHienLoigiai#1{
+	\def\first{#1}
+	\def\second{An}
+	\ifx\first\second
+	\def\Anloigiai{}
+	\renewcommand{\nloigiai}[2]{}
+	\fi
+}
+
+
+\def\AnHienSTTex#1{
+	\def\first{#1}
+	\def\second{An}
+	\ifx\first\second
+	\def\cauex{}
+	\def\cauexlg{}
+	\else
+	\def\cauex{
+		\path ([yshift=1mm]vd.north west) node[above right,fill=yellow,draw=blue,rounded corners=1mm]
+		{\bf\color{blue}\fontfamily{qbk}\selectfont Câu \theex};
+	}
+	\def\cauexlg{
+		\path ([yshift=1mm]lg.north west) node[above right,draw=blue,rounded corners=1mm,fill=green!30]{\color{red}\fontfamily{qbk}\selectfont Lời giải câu\khoanh(\theex)};
+	}
+	\fi
+}
+
+\def\TuyChonDongKeBang[#1]#2{
+	\def\first{#2}
+	\def\second{An}
+	\ifx\first\second
+		\def\dongkebang{}
+	\else
+		\def\dongkebang{
+			\draw[#1] (AAex) grid (BBex);
+		}
+	\fi
+}
+
+%%%%%%%%%%%%%
+\newcommand{\TuyChonLoigiai}[2][]{
+	\def\moitruong{#1}
+	\def\tuychon{#2}
+	\def\anlg{An}
+	\def\hienlg{Hien}
+	\def\trang{Trang}
+	\ifx\tuychon\anlg
+	\AnHienLoigiai{An}
+	\else\ifx\tuychon\hienlg
+	\AnHienLoigiai{Hien}
+	\else\ifx\tuychon\trang
+	\def\Anloigiai{
+		\foreach \i in {1}{
+			\begin{exform}
+				\tikz[baseline=(X.base)]\path node[fill=yellow,draw=blue,rounded corners=1mm] (X) {\bf\color{blue}\fontfamily{qbk}\selectfont Câu \theex};
+			\end{exform}
+		}
+	}
+	\else
+	\def\Anloigiai{
+		\foreach \i in {1,...,#2}{
+			\begin{exform}
+				\tikz[baseline=(X.base)]\path node[fill=yellow,draw=blue,rounded corners=1mm] (X) {\bf\color{blue}\fontfamily{qbk}\selectfont Câu \theex};
+				\hiendeloigiai
+			\end{exform}
+		}
+	}
+	\fi
+	\fi
+	\fi
+}
+%%
+\def\TuyChonExForms[#1]#2{
+	\def\tuychona{#1}
+	\def\tuychonade{de}
+	\def\tuychon{#2}
+	\def\image{image}
+	\def\beamer{beamer}
+	\ifx\tuychon\image
+	\def\loigiaiEX{}
+	\else
+	\def\loigiaiEXimg{}
+	\fi
+	\ifx\tuychona\tuychonade
+		\def\hiendeloigiai{\xuatde}
+	\else
+		\def\hiendeloigiai{}
+	\fi
+}
+%%
+\newenvironment{indapan}[2]{}{}
+\usepackage{esvect}
+\def\vec{\vv}
+\def\overrightarrow{\vv}
+\newcommand{\hoac}[1]{\left[\begin{aligned}#1\end{aligned}\right.}
+\newcommand{\heva}[1]{\left\{\begin{aligned}#1\end{aligned}\right.}
+%%%%%%%%%%%%%%%
+\newtheorem{dn}{\color{yellow}Định nghĩa}
+\newtheorem{dl}{\color{yellow}Định lý}
+\newtheorem{hq}{\color{yellow}Hệ quả}
+\newtheorem{chuy}{\color{yellow}Chú ý}
+
+\def\khoanh(#1){
+	\addtocounter{dapan}{1}
+	\tikz[baseline=(x.base)]\path node[draw=red,fill=yellow!30,circle,inner sep=2pt] (x)
+	{\bf\color{blue} #1};~%\fontfamily{lmtt}\selectfont
+}
+
+\usepackage{titlesec}
+\def\namesection{BÀI}
+\titlespacing{\section}{5cm}{-0.5cm}{0.2cm}
+\titleformat{\section}{\fontfamily{qag}\selectfont\color{yellow}\centering\scshape\Large\bfseries}{{\fontsize{10 pt}{1pt}\selectfont\color{red} \namesection}~\fontsize{40 pt}{1pt}\selectfont\hspace*{-0.8cm}\khoanh(\Large\thesection)}{-0.3cm}{
+	\vspace*{-2mm}\MakeUppercase
+}
+
+\newcommand{\circlednumber}[1]{%
+	\begin{tikzpicture}[baseline=(A.base),scale=1.2]%
+	\node[circle,draw=none,fill=violet,inner sep=1pt,outer sep=5pt] (A) {#1};
+	\end{tikzpicture}%
+}
+\titleformat{\subsection}{\large\bfseries\fontfamily{qag}\selectfont\color{violet}}{
+	\hspace*{-0.7ex}\circlednumber{\color{mauchu}\fontfamily{qag}\large\selectfont\thesubsection}
+}{0em}{\bfseries\fontfamily{qag}\selectfont\color{yellow!60}
+}
+
+\newcommand{\diamondEX}[1]{%
+	\begin{tikzpicture}[baseline=(A.base),scale=1.2]%
+	\node[rounded corners=1mm,draw=none,fill=magenta!80,inner sep=2pt,outer sep=2pt] (A) {#1};
+	\end{tikzpicture}%
+}
+\titleformat{\subsubsection}{\bfseries\color{violet}}{\diamondEX{\color{mauchu}\fontfamily{qhv}\selectfont\thesubsubsection} }{0em}{\fontfamily{qhv}\selectfont\color{yellow!30}
+}
+
+\renewcommand{\labelenumi}{\tikz[baseline=(exenum.base)]\path node[circle,draw=mauchu,inner sep=1pt](exenum){\color{mauchu}{\small\fontfamily{lmss}\bfseries\selectfont\theenumi}};}
+\renewcommand\labelitemi{\color{mauchu}\faIcon[regular]{paper-plane}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareOption{image}{
+%%%%%%%%%%%%%
+\def\LoaiBang#1{}
+\def\ChieuNgangEXForms{12cm}
+\def\tkzTabDefaultBackgroundColor{green!20}
+%Khai báo tiêu đề
+\newcommand{\nloigiai}[3][]{}
+\renewcommand{\TuyChonLoigiai}[2][]{
+	\def\moitruong{#1}
+	\def\tuychon{#2}
+	\def\anlg{An}
+	\def\hienlg{Hien}
+	\def\trang{Trang}
+	\ifx\tuychon\anlg
+	%\AnHienLoigiai{An}
+	\def\Anloigiai##1{}
+	\else
+	\AnHienLoigiai{Hien}
+	\fi
+}
+
+\NewEnviron{exform}[1][\textwidth]{
+	\begin{tikzpicture}
+	\global\let\xuatde\BODY
+	\begin{scope}
+	\clip (0,0);
+	\path node (dX) {
+		\begin{minipage}{\ChieuNgangEXForms}
+		\xuatde
+		\end{minipage}
+	};
+	\path (dX.north) coordinate (dA) (dX.south) coordinate (dB);
+	\end{scope}
+	\tkzCalcLength[cm](dA,dB)\tkzGetLength{dAB}
+	\path (0,0)node[fill=green!20,draw=violet] (vd)
+	\bgroup
+	\begin{minipage}{\ChieuNgangEXForms}
+	\xuatde
+	\end{minipage}
+	\egroup;
+	\end{tikzpicture}
+}
+
+\NewEnviron{bt}[1][\textwidth]{
+	\begin{tikzpicture}
+	\setcounter{dapan}{0}
+	\addtocounter{ex}{1}
+	\global\let\xuatde\BODY
+	\begin{scope}
+	\clip (0,0);
+	\path node (dX) {
+		\begin{minipage}{\ChieuNgangEXForms}
+		\xuatde
+		\end{minipage}
+	};
+	\path (dX.north) coordinate (dA) (dX.south) coordinate (dB);
+	\end{scope}
+	\tkzCalcLength[cm](dA,dB)\tkzGetLength{dAB}
+	\path (0,0)node[fill=green!20,draw=violet] (vd)
+	\bgroup
+	\begin{minipage}{\ChieuNgangEXForms}
+	\xuatde
+	\end{minipage}
+	\egroup;
+	\cauex
+	\end{tikzpicture}
+	\Anloigiai{}
+}
+
+\newcounter{ex}\newcounter{bt}
+\NewEnviron{ex}[1][\textwidth]{
+	\setcounter{dapan}{0}
+	\setcounter{sttlg}{0}
+	\addtocounter{ex}{1}
+	\global\let\xuatde\BODY
+	\begin{tikzpicture}
+	\begin{scope}
+	\clip (0,0);
+	\path node (dX) {
+		\begin{minipage}{\ChieuNgangEXForms}
+		\xuatde
+		\end{minipage}
+	};
+	\path (dX.north) coordinate (dA) (dX.south) coordinate (dB);
+	\end{scope}
+	\tkzCalcLength[cm](dA,dB)\tkzGetLength{dAB}
+	\path (0,0)node[fill=green!20,draw=violet] (vd)
+		\bgroup
+		\begin{minipage}{\ChieuNgangEXForms}
+		\xuatde
+		\end{minipage}
+		\egroup;
+	\cauex
+	\end{tikzpicture}
+	\Anloigiai{}
+}
+
+\newcounter{sttlg}
+\newcommand{\loigiai}[1]{
+	% \stepcounter{sttlg}
+	\gdef\xuatloigiai{#1}
+	% \ifnum \thesttlg=1
+	% \scantokens{
+	% 	\begin{loigiaiexEX}
+	% 		\par\noindent
+	% 		#1
+	% \end{loigiaiexEX}}
+	% \fi
+}
+
+\def\Anloigiai#1{
+	\def\tkzTabDefaultBackgroundColor{yellow!30}
+	\begin{tikzpicture}
+	\path node[draw,fill=yellow!30] (lg) {
+		\begin{minipage}{\ChieuNgangEXForms}
+		#1\xuatloigiai
+		\end{minipage}
+	};
+	\cauexlg
+	\end{tikzpicture}
+}
+
+\def\NhapDuLieu#1{\input{#1}}
+\newcommand{\immini}[2]{#1\begin{center}#2\end{center}}
+
+
+%%%Khai báo tiêu đề môi trường \begin{name}
+\def\tieude#1{
+	\begin{exform}
+		\begin{minipage}{0.4\textwidth}
+			\begin{center}
+				\fontfamily{qag}\selectfont\textcolor{black}{
+					\TenToChuc \\
+					\textcolor{blue}{\bfseries\TenDiaPhuong} \\
+					\TenTruong
+				} \\
+				\tikz\draw[blue,thick] (0,0)--(4,0) node[midway,below]{\bf\fontfamily{qag}\selectfont \TenGiaoVien};
+			\end{center}
+		\end{minipage}
+		\begin{minipage}{0.6\textwidth}
+			\begin{center}
+				{\color{blue}\fontfamily{qag}\selectfont
+					{\bfseries\TenKyThi} \\\color{black}
+					 \NamHoc
+				}\\
+				\textbf{\fontfamily{anttlc}\selectfont Môn:\,\color{blue} \TenMon}\\[1mm]
+				\tikz\draw[black,thick] (0,0)--(4,0) node[midway,below]{\fontfamily{qag}\selectfont \ThoiGian};
+			\end{center}
+		\end{minipage}
+	\end{exform}
+}
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareOption{beamer}{
+	%Chỉnh màu mặt định tkz-tab
+	\def\tkzTabDefaultWritingColor{mauchu}
+	\def\tkzTabDefaultBackgroundColor{maubang}
+	%Chỉnh màu mặt định tkz-euclide
+	\tikzset{line style/.style={%
+			line width = \tkz@euc@linewidth,
+			color      = mauchu,
+			style      = \tkz@euc@linestyle,
+			add        = {\tkz@euc@lineleft} and {\tkz@euc@lineright}}}
+	%%%
+	\def\ChieuNgangEXForms{16cm}
+	\def\ChieuDocEXForms{9cm}
+
+	\NewEnviron{exform}[1][]{
+		\begin{tikzpicture}
+		\global\let\xuat\BODY
+		\begin{scope}
+		\clip (0,0);
+		\path node (dX) {
+			\begin{minipage}{\ChieuNgangEXForms}
+%			\tikz[baseline=(X.base)]\path node[fill=yellow,draw=blue,rounded corners=1mm] (X) {\bf\color{blue}\fontfamily{qbk}\selectfont Câu \theex};
+            \ifthenelse{\equal{#1}{}}{\tikz[baseline=(X.base)]\path node[fill=yellow,draw=vienbangb,rounded corners=1mm] (X) {\color{blue}\fontfamily{qbk}\selectfont Câu \theex.};\unskip}{\tikz[baseline=(X.base)]\path node[fill=yellow,draw=vienbangb,rounded corners=1mm] (X) {\color{blue}\fontfamily{qbk}\selectfont Câu \theex\, (\textit{#1}).};\par}
+			\xuat
+			\addtocounter{section}{-1}
+			\end{minipage}
+		};
+		\path (dX.north) coordinate (dA) (dX.south) coordinate (dB);
+		\end{scope}
+		\tkzCalcLength[cm](dA,dB)\tkzGetLength{dAB}
+		\pgfmathsetmacro{\adAB}{\dAB/2}
+		\pgfmathsetmacro{\kt}{int(\dAB)}
+		\ifnum\kt<\ChieuDocEXForms
+		\fill[maubang] (0,0) coordinate(AAex) rectangle (\ChieuNgangEXForms+0.5cm,-\ChieuDocEXForms) coordinate (BBex);
+		\dongkebang
+		\begin{scope}[yshift=-\adAB cm]
+		\path (\ChieuNgangEXForms/2+4,-0.2) node[mauchu] (vd)
+		\bgroup
+		\begin{minipage}{\ChieuNgangEXForms}
+		\xuat
+		\end{minipage}
+		\egroup;
+		\end{scope}
+		\draw[vienbanga,line width=7pt,rounded corners=1mm] ($(AAex)+(-0.1,0.1)$) rectangle ($(BBex)+(0.1,-0.1)$);
+		\draw[vienbangb,line width=2pt,rounded corners=1mm] ($(AAex)+(-0.1,0.1)$) rectangle ($(BBex)+(0.1,-0.1)$) coordinate(rfoot);
+		\else
+		\fill[maubang] (0,0) coordinate(AAex) rectangle (\ChieuNgangEXForms+0.5cm,-\dAB-0.5) coordinate (BBex);
+		\dongkebang
+		\begin{scope}[yshift=-\adAB cm]
+		\path (\ChieuNgangEXForms/2+4,-0.2) node[mauchu] (vd)
+		\bgroup
+		\begin{minipage}{\ChieuNgangEXForms}
+		\xuat
+		\end{minipage}
+		\egroup;
+		\end{scope}
+		\draw[vienbanga,line width=7pt,rounded corners=1mm] ($(AAex)+(-0.1,0.1)$) rectangle ($(BBex)+(0.1,-0.1)$);
+		\draw[vienbangb,line width=2pt,rounded corners=1mm] ($(AAex)+(-0.1,0.1)$) rectangle ($(BBex)+(0.1,-0.1)$) coordinate(rfoot);
+		\fi
+		\path
+		($(AAex)$) coordinate(lhead)
+		($(AAex)+(\ChieuNgangEXForms+0.5cm,0)$) coordinate(rhead)
+		($(BBex)$) coordinate(rfoot)
+		($(BBex)-(\ChieuNgangEXForms+0.5cm,0)$) coordinate(lfoot)
+		($(rhead)!0.5!(lhead)$) coordinate(chead)
+		($(rfoot)!0.5!(lfoot)$) coordinate(cfoot);
+		\TrangTriExForms
+		\end{tikzpicture}
+	}
+
+	\newcounter{sttlg}
+	\NewEnviron{xlg}[1][\textwidth]{\global\let\xuatloigiai\BODY}
+	\def\loigiaiEX{\textbf{\color{maucau}\reflectbox{\Large\WritingHand}\, {\LARGE\fmmfamily Lời giải.}}}
+	\def\loigiaiEXimg{\textbf{\color{maucau}\reflectbox{\Large\WritingHand}\, {\LARGE\fmmfamily Lời giải.}}}
+	\newcommand{\loigiai}[1]{
+		\par\loigiaiEX\par
+		\begin{xlg}
+			#1
+		\end{xlg}
+%		\stepcounter{sttlg}
+%		\ifnum \thesttlg=1
+%		% \scantokens{
+%		% 	\begin{loigiaiexEX}
+%		% 		\par\noindent
+%		% 		#1
+%		% \end{loigiaiexEX}}
+%		\fi
+	}
+
+	\def\Anloigiai{
+		\begin{exform}
+			\tikz[baseline=(X.base)]\path node[draw=maucau,rounded corners=1mm] (X) {\color{maucau}\fontfamily{qbk}\selectfont Câu \theex.}; 
+			\hiendeloigiai\par
+            \loigiaiEXimg\par\xuatloigiai
+		\end{exform}
+	}
+
+	\newcounter{ex}
+	\NewEnviron{ex}[1][]{
+		% \setcounter{sttlg}{0}
+		% \begin{tikzpicture}
+		\xdef\listexlg{}\xdef\listexlgd{}
+		\global\let\xuatde\BODY
+		% \begin{scope}
+		% \clip (0,0);
+		% \path node (dX) {
+			% \begin{minipage}[b]{\ChieuNgangEXForms}
+			% \tikz[baseline=(X.base)]\path node[fill=yellow,draw=blue,rounded corners=1mm] (X) {\bf\color{blue}\fontfamily{qbk}\selectfont Câu \theex};
+			% \xuatde
+			% \end{minipage}
+		% };
+		% \path (dX.north) coordinate (dA) (dX.south) coordinate (dB);
+		% \end{scope}
+		% \tkzCalcLength[cm](dA,dB)\tkzGetLength{dAB}
+		% \pgfmathsetmacro{\adAB}{\dAB/2}
+			% % \setcounter{dapan}{0}
+		\addtocounter{ex}{1}
+		% \pgfmathsetmacro{\kt}{int(\dAB)}
+		% \ifnum\kt<\ChieuDocEXForms
+		% \fill[maubang] (0,0) coordinate(AAex) rectangle (\ChieuNgangEXForms+0.5cm,-\ChieuDocEXForms) coordinate (BBex);
+		% \dongkebang
+		% \begin{scope}[yshift=-\adAB cm]
+		% \path (\ChieuNgangEXForms/2+4,-0.2) node[mauchu] (vd)
+		% \bgroup
+		% \begin{minipage}{\ChieuNgangEXForms}
+		% \tikz[baseline=(X.base)]\path node[fill=yellow,draw=blue,rounded corners=1mm] (X) {\bf\color{blue}\fontfamily{qbk}\selectfont Câu \theex};
+		% \xuatde
+		% \end{minipage}
+		% \egroup;
+		% \end{scope}
+		% \draw[vienbanga,line width=7pt,rounded corners=1mm] ($(AAex)+(-0.1,0.1)$) rectangle ($(BBex)+(0.1,-0.1)$);
+		% \draw[vienbangb,line width=2pt,rounded corners=1mm] ($(AAex)+(-0.1,0.1)$) rectangle ($(BBex)+(0.1,-0.1)$) coordinate(rfoot);
+		% \else
+		% \fill[maubang] (0,0) coordinate(AAex) rectangle (\ChieuNgangEXForms+0.5cm,-\dAB-0.5) coordinate (BBex);
+		% \dongkebang
+		% \begin{scope}[yshift=-1 cm]
+		% \path (\ChieuNgangEXForms/2+4,-1) node[mauchu] (vd)
+		% \bgroup
+		% \begin{minipage}{\ChieuNgangEXForms}
+		% \tikz[baseline=(X.base)]\path node[fill=yellow,draw=blue,rounded corners=1mm] (X) {\bf\color{blue}\fontfamily{qbk}\selectfont Câu \theex};
+		% \xuatde
+		% \end{minipage}
+		% \egroup;
+		% \end{scope}
+		% \draw[vienbanga,line width=7pt,rounded corners=1mm] ($(AAex)+(-0.1,0.1)$) rectangle ($(BBex)+(0.1,-0.1)$);
+		% \draw[vienbangb,line width=2pt,rounded corners=1mm] ($(AAex)+(-0.1,0.1)$) rectangle ($(BBex)+(0.1,-0.1)$) coordinate(rfoot);
+		% \fi
+		% \path
+		% ($(AAex)$) coordinate(lhead)
+		% ($(AAex)+(\ChieuNgangEXForms+0.5cm,0)$) coordinate(rhead)
+		% ($(BBex)$) coordinate(rfoot)
+		% ($(BBex)-(\ChieuNgangEXForms+0.5cm,0)$) coordinate(lfoot)
+		% ($(rhead)!0.5!(lhead)$) coordinate(chead)
+		% ($(rfoot)!0.5!(lfoot)$) coordinate(cfoot);
+		% \TrangTriExForms
+		% \end{tikzpicture}
+		\begin{exform}
+		\ifthenelse{\equal{#1}{}}{\tikz[baseline=(X.base)]\path node[draw=maucau,rounded corners=1mm] (X) {\color{maucau}\fontfamily{qbk}\selectfont Câu \theex.};\unskip}{\tikz[baseline=(X.base)]\path node[draw=maucau,rounded corners=1mm] (X) {\color{maucau}\fontfamily{qbk}\selectfont Câu \theex\, (\textit{#1}).};\par}
+				\hiendeloigiai
+			\end{exform}
+		 \Anloigiai
+	}
+
+	\newcounter{bt}
+	\NewEnviron{bt}[1][\textwidth]{
+		\begin{tikzpicture}
+		\xdef\listexlg{}\xdef\listexlgd{}
+		\global\let\xuatde\BODY
+		\begin{scope}
+		\clip (0,0);
+		\path node (dX) {
+			\begin{minipage}{\ChieuNgangEXForms}
+			\tikz[baseline=(X.base)]\path node[fill=yellow,draw=blue,rounded corners=1mm] (X) {\bf\color{blue}\fontfamily{qbk}\selectfont Câu \theex};
+			\xuatde
+			\end{minipage}
+		};
+		\path (dX.north) coordinate (dA) (dX.south) coordinate (dB);
+		\end{scope}
+		\tkzCalcLength[cm](dA,dB)\tkzGetLength{dAB}
+		\pgfmathsetmacro{\adAB}{\dAB/2}
+		%	\setcounter{dapan}{0}
+		\addtocounter{ex}{1}
+		\pgfmathsetmacro{\kt}{int(\dAB)}
+		\ifnum\kt<\ChieuDocEXForms
+		\fill[maubang] (0,0) coordinate(AAex) rectangle (\ChieuNgangEXForms+0.5cm,-\ChieuDocEXForms) coordinate (BBex);
+		\dongkebang
+		\begin{scope}[yshift=-\adAB cm]
+		\path (\ChieuNgangEXForms/2+4,-0.2) node[mauchu] (vd)
+		\bgroup
+		\begin{minipage}{\ChieuNgangEXForms}
+		\tikz[baseline=(X.base)]\path node[fill=yellow,draw=blue,rounded corners=1mm] (X) {\bf\color{blue}\fontfamily{qbk}\selectfont Câu \theex};
+		\xuatde
+		\end{minipage}
+		\egroup;
+		\end{scope}
+		\draw[vienbanga,line width=7pt,rounded corners=1mm] ($(AAex)+(-0.1,0.1)$) rectangle ($(BBex)+(0.1,-0.1)$);
+		\draw[vienbangb,line width=2pt,rounded corners=1mm] ($(AAex)+(-0.1,0.1)$) rectangle ($(BBex)+(0.1,-0.1)$) coordinate(rfoot);
+		\else
+		\fill[maubang] (0,0) coordinate(AAex) rectangle (\ChieuNgangEXForms+0.5cm,-\dAB-0.5) coordinate (BBex);
+		\dongkebang
+		\begin{scope}[yshift=-\adAB cm]
+		\path (\ChieuNgangEXForms/2+4,-0.2) node[mauchu] (vd)
+		\bgroup
+		\begin{minipage}{\ChieuNgangEXForms}
+		\tikz[baseline=(X.base)]\path node[fill=yellow,draw=blue,rounded corners=1mm] (X) {\bf\color{blue}\fontfamily{qbk}\selectfont Câu \theex};
+		\xuatde
+		\end{minipage}
+		\egroup;
+		\end{scope}
+		\draw[vienbanga,line width=7pt,rounded corners=1mm] ($(AAex)+(-0.1,0.1)$) rectangle ($(BBex)+(0.1,-0.1)$);
+		\draw[vienbangb,line width=2pt,rounded corners=1mm] ($(AAex)+(-0.1,0.1)$) rectangle ($(BBex)+(0.1,-0.1)$) coordinate(rfoot);
+		\fi
+		\path
+		($(AAex)$) coordinate(lhead)
+		($(AAex)+(\ChieuNgangEXForms+0.5cm,0)$) coordinate(rhead)
+		($(BBex)$) coordinate(rfoot)
+		($(BBex)-(\ChieuNgangEXForms+0.5cm,0)$) coordinate(lfoot)
+		($(rhead)!0.5!(lhead)$) coordinate(chead)
+		($(rfoot)!0.5!(lfoot)$) coordinate(cfoot);
+		\TrangTriExForms
+		\end{tikzpicture}
+		\Anloigiai
+	}
+
+\xdef\listexlg{}
+\xdef\listexlgd{}
+\newcommand{\nloigiai}[3][\xuatde]{
+	\gdef\nnoidung{
+		\tikz[baseline=(X.base)]\path node[fill=yellow,draw=blue,rounded corners=1mm] (X) {\bf\color{blue}\fontfamily{qbk}\selectfont Câu \theex};\color{mauchu}~#1\textbf{\color{maulg}\reflectbox{\Large\WritingHand}\, {\LARGE\fmmfamily Lời giải.}}\par
+		\def\ktA{#2}
+		\def\ktB{dau}
+		\def\ktC{ngat}
+		\def\ktD{tiep}
+		\ifx\ktA\ktB
+		\xuatloigiai\global\appto\listexlgd{#3}\listexlgd
+		\else\ifx\ktA\ktD
+		\global\appto\listexlg{#3}\listexlg
+		\else
+		\gdef\listexlg{}\global\appto\listexlg{#3}#3
+		\fi
+		\fi
+	}
+	\begin{tikzpicture}
+	\fill[maubang] (0,0) coordinate(AAex) rectangle (\ChieuNgangEXForms+0.5cm,-\ChieuDocEXForms) coordinate (BBex);
+	\dongkebang
+	\begin{scope}
+	\path (\ChieuNgangEXForms/2+4,0) node[below,mauchu] (vd)
+	\bgroup
+	\begin{minipage}{\ChieuNgangEXForms}
+	\tikzset{every node/.style={yshift=1mm}}
+		\nnoidung
+	\end{minipage}
+	\egroup;
+	\end{scope}
+	\draw[vienbanga,line width=7pt,rounded corners=1mm] ($(AAex)+(-0.1,0.1)$) rectangle ($(BBex)+(0.1,-0.1)$);
+	\draw[vienbangb,line width=2pt,rounded corners=1mm] ($(AAex)+(-0.1,0.1)$) rectangle ($(BBex)+(0.1,-0.1)$);
+	\path
+	($(AAex)$) coordinate(lhead)
+	($(AAex)+(\ChieuNgangEXForms+0.5cm,0)$) coordinate(rhead)
+	($(BBex)$) coordinate(rfoot)
+	($(BBex)-(\ChieuNgangEXForms+0.5cm,0)$) coordinate(lfoot)
+	($(rhead)!0.5!(lhead)$) coordinate(chead)
+	($(rfoot)!0.5!(lfoot)$) coordinate(cfoot);
+	\TrangTriExForms
+	\end{tikzpicture}
+}
+
+	\newcommand{\immini}[2]{
+		\setcounter{dapan}{0}\par
+		\renewcommand{\choice}[5][0]{\par
+			\begin{minipage}{\ChieuNgangEXForms}
+				\begin{tikzpicture}
+				\path node (a) {\khoanh(A) \exdapan{##2.}};
+				\path (a.south west) node[below right] (b) {\khoanh(B) \exdapan{##3.}};
+				\path (b.south west) node[below right] (c) {\khoanh(C) \exdapan{##4.}};
+				\path (c.south west) node[below right] {\khoanh(D) \exdapan{##5.}};
+				\end{tikzpicture}
+			\end{minipage}
+		}
+		\par
+		\begin{tikzpicture}
+		\begin{scope}
+		\clip (0,0);
+		\path node (XX) {#2};
+		\path (XX.west) coordinate (AA)  (XX.east) coordinate (BB);
+		\end{scope}
+		\tkzCalcLength[cm](AA,BB)\tkzGetLength{rX}
+		\pgfmathsetmacro{\rXX}{(\rX+0.5)}
+		\pgfmathsetmacro{\dXX}{(\ChieuNgangEXForms/1cm-\rXX)}
+		\path node (bentrai){
+			\begin{minipage}{\dXX cm}
+			\def\ChieuNgangEXForms{\dXX cm}
+			#1
+			\end{minipage}
+		};
+		\path ([xshift=0.25cm]$(bentrai.east)+(\rXX/2,0)$) node{
+			\begin{minipage}{\rX cm}
+			#2
+			\end{minipage}
+		};
+		\end{tikzpicture}
+		\par
+	}
+
+\definecolor{vienbanga}{RGB}{128,128,128}
+\definecolor{vienbangb}{RGB}{200,200,200}
+\def\LoaiBang#1{
+	\def\chonbang{#1}
+	\def\mauden{black}
+	\def\mauxanh{green}
+	\def\mauvang{yellow}
+	\ifx\chonbang\mauxanh
+	\definecolor{maubang}{RGB}{19,84,52}
+	\definecolor{mauchu}{RGB}{255,255,255}
+	\definecolor{maulg}{RGB}{0,255,0}
+	\AtBeginEnvironment{ex}{\definecolor{black}{RGB}{255, 255, 255}}
+	\AtBeginEnvironment{tikzpicture}{\definecolor{black}{RGB}{255, 255, 255}}
+	\else\ifx\chonbang\mauden
+	\definecolor{maubang}{RGB}{0,0,0}
+	\definecolor{mauchu}{RGB}{255,255,255}
+	\definecolor{maulg}{RGB}{255,255,0}
+	\AtBeginEnvironment{ex}{\definecolor{black}{RGB}{255, 255, 255}}
+	\AtBeginEnvironment{eframe}{\definecolor{black}{RGB}{255, 255, 255}}
+	\else\ifx\chonbang\mauvang
+	\definecolor{maubang}{HTML}{FFFAB3}
+	\definecolor{mauchu}{HTML}{1C1C1C}
+	\definecolor{maucau}{HTML}{ea4335}
+	\definecolor{maulg}{RGB}{0,255,0}
+	\AtBeginEnvironment{ex}{\definecolor{black}{HTML}{7D26CD}}
+	\AtBeginEnvironment{tikzpicture}{\definecolor{black}{HTML}{7D26CD}}
+	\else
+	\definecolor{maubang}{RGB}{255,255,255}
+	\definecolor{mauchu}{RGB}{0,0,0}
+	\definecolor{maulg}{RGB}{0,0,255}
+	\fi
+	\fi
+	\fi
+}
+
+%%%Khai báo tiêu đề môi trường \begin{name}
+\def\tieude#1{
+	\begin{exform}
+		\begin{minipage}{0.4\textwidth}
+			\begin{center}
+				\fontfamily{qag}\selectfont\textcolor{white}{
+					\TenToChuc \\
+					\textcolor{yellow}{\bfseries\TenDiaPhuong} \\
+					\TenTruong
+				} \\
+				\tikz\draw[yellow,thick] (0,0)--(4,0) node[midway,below]{\bf\fontfamily{qag}\selectfont \TenGiaoVien};
+			\end{center}
+		\end{minipage}
+		\begin{minipage}{0.6\textwidth}
+			\begin{center}
+				{\color{yellow}\fontfamily{qag}\selectfont
+					{\bfseries\TenKyThi} \\\color{white}
+				NĂM HỌC 2020 - 2021
+			}\\
+				\textbf{\fontfamily{anttlc}\selectfont Môn:\,\color{yellow} \TenMon}\\[1mm]
+				\tikz\draw[white,thick] (0,0)--(4,0) node[midway,below]{\fontfamily{qag}\selectfont \ThoiGian};
+			\end{center}
+		\end{minipage}
+	\end{exform}
+}
+
+}
+%%%%%%%%%%%%%%%%
+%\ExecuteOptions{image}
+\ProcessOptions\relax
+\def\dapso#1{}
+\def\tagEX#1{\quad(#1)}
+
+\NewEnviron{enumEX}[2][\textwidth]{
+	\global\let\xuatenumEX\BODY
+	\definecolor{black}{RGB}{255, 0, 0}
+	\begin{enumerate}
+		\xuatenumEX
+	\end{enumerate}
+}
+
+\NewEnviron{listEX}[1][\textwidth]{
+	\global\let\xuatlistEX\BODY
+	\begin{enumerate}
+		\xuatlistEX
+	\end{enumerate}
+}
+
+\def\NhapDuLieu#1{
+	\Opensolutionfile{anslg}[ans/anslg-DanAnEX-exforms]
+	\Opensolutionfile{ans}[ans/ans-DanAnEX-exforms]
+	\input{#1}
+	\Closesolutionfile{ans}
+	\Closesolutionfile{anslg}
+}
+
+\def\DanhSachDapAn#1{
+	\renewenvironment{dapanTNex}[1]{}{\hspace*{-2.5ex}}
+	\begin{center}
+		#1\\[0.5cm]
+		\input{ans/ans-DanAnEX-exforms}
+	\end{center}
+}
+
+\newcounter{sttTrue}
+\def\True{\setcounter{sttTrue}{\thedapan}}
+\AtEndEnvironment{ex}{
+	\ifnum\the\value{sttTrue}=1
+	\scantokens{\begin{dapanEX}A\end{dapanEX}}
+	\fi
+	\ifnum\the\value{sttTrue}=2
+	\scantokens{\begin{dapanEX}B\end{dapanEX}}
+	\fi
+	\ifnum\the\value{sttTrue}=3
+	\scantokens{\begin{dapanEX}C\end{dapanEX}}
+	\fi
+	\ifnum\the\value{sttTrue}=4
+	\scantokens{\begin{dapanEX}D\end{dapanEX}}
+	\fi
+	\setcounter{sttTrue}{0}
+}
+
+\newcounter{dapan}
+\setcounter{dapan}{0}
+\def\khoanh(#1){
+	\addtocounter{dapan}{1}
+	\tikz[baseline=(x.base)]\path node[draw=red,fill=yellow!30,circle,inner sep=2pt] (x)
+	{\bf\color{blue} #1};~%\fontfamily{lmtt}\selectfont
+}
+
+
+\def\exdapan#1{
+	\pgfmathsetmacro{\ktexdapan}{\ChieuNgangEXForms/1cm*0.92}
+	\begin{minipage}{\ktexdapan cm}
+		#1
+	\end{minipage}
+}
+
+\newcommand{\choice}[5][0]{
+	\setcounter{dapan}{0}\par
+	\begin{minipage}{\ChieuNgangEXForms}
+		\begin{tikzpicture}
+		\def\mot{
+			\path node (a) {\khoanh(A) \exdapan{#2.}};
+			\path (a.south west) node[below right] (b) {\khoanh(B) \exdapan{#3.}};
+			\path (b.south west) node[below right] (c) {\khoanh(C) \exdapan{#4.}};
+			\path (c.south west) node[below right] {\khoanh(D) \exdapan{#5.}};
+		}
+		\def\bon{
+			\path (\ChieuNgangEXForms/4*0,0) node {\khoanh(A){#2.}};
+			\path (\ChieuNgangEXForms/4*1,0) node {\khoanh(B){#3.}};
+			\path (\ChieuNgangEXForms/4*2,0) node {\khoanh(C){#4.}};
+			\path (\ChieuNgangEXForms/4*3,0) node {\khoanh(D){#5.}};
+		}
+		\def\hai{
+			\path (\ChieuNgangEXForms/2*0,0) node (a) {\khoanh(A) {#2.}};
+			\path (\ChieuNgangEXForms/2*1,0) node (b) {\khoanh(B) {#3.}};
+			\path (a.south west) node[below right] (c) {\khoanh(C) {#4.}};
+			\path (b.south west) node[below right] {\khoanh(D) {#5.}};
+		}
+		\ifnum #1=0
+		\begin{scope}
+		\clip (0,0);\path
+		node (x) {#2} (x.east) coordinate (11) (x.west) coordinate(12)
+		node (x) {#3} (x.east) coordinate (21) (x.west) coordinate(22)
+		node (x) {#4} (x.east) coordinate (31) (x.west) coordinate(32)
+		node (x) {#5} (x.east) coordinate (41) (x.west) coordinate(42);
+		\end{scope}
+		\tkzCalcLength[cm](11,12)\tkzGetLength{rx}\pgfmathsetmacro{\ra}{int(\rx+1)}
+		\tkzCalcLength[cm](21,22)\tkzGetLength{rx}\pgfmathsetmacro{\rb}{int(\rx+1)}
+		\tkzCalcLength[cm](31,32)\tkzGetLength{rx}\pgfmathsetmacro{\rc}{int(\rx+1)}
+		\tkzCalcLength[cm](41,42)\tkzGetLength{rx}\pgfmathsetmacro{\rd}{int(\rx+1)}
+		\pgfmathtruncatemacro{\r}{\ra}
+		\ifnum\r<\rb\pgfmathtruncatemacro{\r}{\rb}\fi
+		\ifnum\r<\rc\pgfmathtruncatemacro{\r}{\rc}\fi
+		\ifnum\r<\rd\pgfmathtruncatemacro{\r}{\rd}\fi
+		\pgfmathsetmacro{\rbon}{int(\ChieuNgangEXForms/4cm)}
+		\pgfmathsetmacro{\rhai}{int(\ChieuNgangEXForms/2cm)}
+		\ifnum\r<\rbon\bon\else\ifnum\r<\rhai\hai\else\def\kcthua{-0.75ex}\mot\fi\fi\fi
+		\ifnum#1=4\bon\fi\ifnum#1=2\hai\fi\ifnum#1=1\mot\fi
+		\end{tikzpicture}
+	\end{minipage}
+}
+
+\def\XuatDayDapAn#1{
+	\newcounter{sttdatn}
+	\def\tuychon{#1}
+	\def\day{day}
+	\def\bang{bang}
+	\ifx\tuychon\bang
+	\renewenvironment{dapanTNex}[1]{
+		\stepcounter{sttdatn}
+		\begin{tikzpicture}
+		\path node[draw,minimum width=1.2cm,inner sep=1mm]\bgroup
+		\thesttdatn.
+	}{\egroup;
+		\end{tikzpicture}}
+	\begin{exform}
+		\setcounter{sttdatn}{0}
+		\begin{minipage}{\textwidth}
+			\centering
+			{\bf\color{red} BẢNG ĐÁP ÁN TRẮC NGHIỆM} \\[1cm]
+			\input{ans/ans-DanAnEX-exforms}
+		\end{minipage}
+	\end{exform}
+	\else
+	\begin{exform}
+		\begin{tikzpicture}
+		\path node[draw,fill=yellow!30] (lg) {
+			\begin{minipage}{\ChieuNgangEXForms}
+			\renewenvironment{dapanTNex}[1]{}{\hspace*{-2.5ex}}
+			\begin{center}
+			{\color{red}\bf DÃY ĐÁP ÁN TRẮC NGHIỆM}\\[0.5cm]
+			\color{blue}\input{ans/ans-DanAnEX-exforms}
+			\end{center}
+			\end{minipage}
+		};
+		\end{tikzpicture}
+	\end{exform}
+	\fi
+}
+
+\def\XuatLoiGiai{
+	\renewenvironment{lloigiaiEX}{
+		\def\tkzTabDefaultBackgroundColor{yellow!30}
+		\begin{tikzpicture}
+		\path node[draw,fill=yellow!30] (lg) \bgroup
+		\begin{minipage}{\ChieuNgangEXForms}
+	}{
+		\end{minipage}
+		\egroup;
+		\path ([yshift=1mm]lg.north west) node[above right,draw=blue,rounded corners=1mm,fill=green!30]{\color{red}\fontfamily{qbk}\selectfont Lời giải};
+		\end{tikzpicture}
+	}
+	\input{ans/anslg-DanAnEX-exforms}
+}
+
+
+%%%Tùy chỉnh khác
+%\renewcommand{\name}[2]{}
+\renewcommand{\section}[1]{
+	\setcounter{ex}{0}\setcounter{bt}{0}
+	\begin{exform}
+		\begin{center}
+			\color{yellow}\bfseries\fontfamily{qag}\selectfont\Huge PHẦN \MakeUppercase{#1}
+		\end{center}
+	\end{exform}
+}
+
+\newcommand{\InDeMyTeX}[2][day]{
+	\foreach \de[count=\i] in {#2}{\tieude{Đề số \i}\NhapDuLieu{data/\de}}
+	\XuatDayDapAn{#1}%day/bang
+}
+%%%Trang trí cái bảng
+\def\TrangTriExForms{
+	\draw[line width=7.1pt,gray!20,rounded corners=1mm,]
+	($(lfoot)+(-0.1,0.3)$)|-($(lfoot)+(0.3,-0.1)$)
+	($(rfoot)+(0.1,0.3)$)|-($(rfoot)+(-0.3,-0.1)$)
+	($(lhead)+(-0.1,-0.3)$)|-($(lhead)+(0.3,0.1)$)
+	($(lhead)+(-0.1,-0.3)$)|-($(lhead)+(0.3,0.1)$)
+	($(rhead)+(0.1,-0.3)$)|-($(rhead)+(-0.3,0.1)$);
+}
